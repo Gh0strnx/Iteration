@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://6dksx0gbkhay"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/anchor.gd" id="1_q4sjl"]
+[ext_resource type="Script" path="res://Assets/Scripts/gun.gd" id="1_wdxk8"]
+[ext_resource type="Texture2D" uid="uid://lw17ocf0werq" path="res://Assets/Textures/round.png" id="2_n52q5"]
+
+[node name="anchor" type="Node2D"]
+script = ExtResource("1_q4sjl")
+
+[node name="Gun" type="Node2D" parent="."]
+position = Vector2(85, 0)
+script = ExtResource("1_wdxk8")
+
+[node name="Timer" type="Timer" parent="Gun"]
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Gun"]
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("2_n52q5")
+
+[connection signal="timeout" from="Gun/Timer" to="Gun" method="_on_timer_timeout"]
