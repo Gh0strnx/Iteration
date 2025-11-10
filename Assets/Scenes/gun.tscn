@@ -8,11 +8,10 @@
 script = ExtResource("1_q4sjl")
 
 [node name="Gun" type="Node2D" parent="."]
-position = Vector2(85, 0)
+position = Vector2(100, 0)
 script = ExtResource("1_wdxk8")
 
 [node name="Timer" type="Timer" parent="Gun"]
-autostart = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Gun"]
 scale = Vector2(0.06, 0.06)
