@@ -37,6 +37,6 @@ sprite_frames = SubResource("SpriteFrames_f7ys5")
 [node name="LightMoving" type="PointLight2D" parent="."]
 shadow_enabled = true
 texture = ExtResource("3_0ro6u")
-texture_scale = 43.13
+texture_scale = 50.0
 
 [node name="Gun" parent="." instance=ExtResource("4_g71tx")]

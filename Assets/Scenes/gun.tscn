@@ -2,19 +2,24 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/anchor.gd" id="1_q4sjl"]
 [ext_resource type="Script" path="res://Assets/Scripts/gun.gd" id="1_wdxk8"]
-[ext_resource type="Texture2D" uid="uid://lw17ocf0werq" path="res://Assets/Textures/round.png" id="2_n52q5"]
+[ext_resource type="Texture2D" uid="uid://l0sbruunslyu" path="res://Assets/Textures/Gun.png" id="3_5ttj0"]
 
 [node name="anchor" type="Node2D"]
 script = ExtResource("1_q4sjl")
 
 [node name="Gun" type="Node2D" parent="."]
-position = Vector2(100, 0)
+position = Vector2(139, -12)
 script = ExtResource("1_wdxk8")
 
-[node name="Timer" type="Timer" parent="Gun"]
+[node name="coolDown" type="Timer" parent="Gun"]
+
+[node name="Reload" type="Timer" parent="Gun"]
+wait_time = 5.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Gun"]
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("2_n52q5")
+position = Vector2(-35, 12)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_5ttj0")
 
-[connection signal="timeout" from="Gun/Timer" to="Gun" method="_on_timer_timeout"]
+[connection signal="timeout" from="Gun/coolDown" to="Gun" method="_on_timer_timeout"]
+[connection signal="timeout" from="Gun/Reload" to="Gun" method="_on_reload_timeout"]
