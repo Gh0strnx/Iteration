@@ -50,4 +50,4 @@ func spawn_bullet():
 	var bullet = bulletPrefab.instantiate()
 	bullet.position = global_position
 	bullet.look_at(get_global_mouse_position())
-	get_tree().root.add_child(bullet)
+	get_tree().root.get_node("Node2D").add_child(bullet)

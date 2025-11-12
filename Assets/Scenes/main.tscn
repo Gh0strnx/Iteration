@@ -218,3 +218,6 @@ editor_draw_limits = true
 [node name="Darkness" type="CanvasModulate" parent="."]
 light_mask = 9
 color = Color(0, 0, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
