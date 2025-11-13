@@ -23,7 +23,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_rwqxq")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
@@ -35,6 +35,7 @@ scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_f7ys5")
 
 [node name="LightMoving" type="PointLight2D" parent="."]
+texture_filter = 1
 shadow_enabled = true
 texture = ExtResource("3_0ro6u")
 texture_scale = 50.0
