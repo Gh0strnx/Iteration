@@ -1,7 +1,7 @@
 extends PointLight2D
 
 @onready var player: Node2D = get_tree().get_first_node_in_group("Player") as Node2D
-@onready var bullet_body: Node2D = get_parent() as Node2D
+@onready var bullet_body: Node2D = get_tree().get_first_node_in_group("bullet") as Node2D
 @export var waitTimeMult = 1
 
 func _ready() -> void:
@@ -37,5 +37,5 @@ func _physics_process(_delta: float) -> void:
 		else:
 			# First thing hit is NOT the bullet (wall, obstacle, etc.) → in shadow
 			visible = true
-			await get_tree().create_timer(0.15*waitTimeMult).timeout
+			#await get_tree().create_timer(0.15*waitTimeMult).timeout
 			energy = 0.6

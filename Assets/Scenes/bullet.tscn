@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://jhqbcjpswsq"]
+[gd_scene load_steps=10 format=3 uid="uid://jhqbcjpswsq"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/bullet.gd" id="1_g6wpv"]
 [ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="2_iukt2"]
@@ -25,7 +25,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Bullet" type="Area2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcw0m"]
+radius = 324.0
+
+[node name="FullArea" type="Area2D" groups=["bullet"]]
 script = ExtResource("1_g6wpv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -45,6 +48,11 @@ energy = 0.1
 texture = ExtResource("3_5vhso")
 texture_scale = 0.24
 script = ExtResource("4_i676a")
+
+[node name="Area2D" type="Area2D" parent="." groups=["bullet"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_lcw0m")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
