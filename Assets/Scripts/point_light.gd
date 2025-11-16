@@ -4,9 +4,9 @@ extends PointLight2D
 @onready var bullet_body: Node2D = get_tree().get_first_node_in_group("bullet") as Node2D
 @export var waitTimeMult = 1
 
-var light_intensity = 0.0
-var max_intensity = 0.65
-var fade_speed = 4
+@export var light_intensity = 0.0
+@export var max_intensity = 0.9
+@export var fade_speed = 4.5
 
 
 
