@@ -4,6 +4,12 @@ extends PointLight2D
 @onready var bullet_body: Node2D = get_tree().get_first_node_in_group("bullet") as Node2D
 @export var waitTimeMult = 1
 
+var light_intensity = 0.0
+var max_intensity = 0.65
+var fade_speed = 4
+
+
+
 func _ready() -> void:
 	hide()
 
@@ -37,5 +43,11 @@ func _physics_process(_delta: float) -> void:
 		else:
 			# First thing hit is NOT the bullet (wall, obstacle, etc.) → in shadow
 			visible = true
-			#await get_tree().create_timer(0.15*waitTimeMult).timeout
-			energy = 0.6
+	
+			if light_intensity < max_intensity:
+				light_intensity += fade_speed * _delta
+				energy = light_intensity
+		
+				
+			
+			
