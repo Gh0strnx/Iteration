@@ -8,12 +8,12 @@
 script = ExtResource("1_q4sjl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(104, 0)
+position = Vector2(112, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_5ttj0")
 
 [node name="Gun" type="Node2D" parent="Sprite2D"]
-position = Vector2(140, 0)
+position = Vector2(148, 0)
 scale = Vector2(4, 4)
 script = ExtResource("1_wdxk8")
 attackSpeed = 0.35

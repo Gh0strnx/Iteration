@@ -1,7 +1,7 @@
 extends PointLight2D
 
 @onready var player: Node2D = get_tree().get_first_node_in_group("Player") as Node2D
-@onready var bullet_body: Node2D = get_tree().get_first_node_in_group("bullet") as Node2D
+@onready var bullet_body: Node2D = get_parent() as Node2D
 @export var waitTimeMult = 1
 
 @export var light_intensity = 0.0
