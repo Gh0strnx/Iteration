@@ -8,14 +8,12 @@
 script = ExtResource("1_q4sjl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.231759, 0, 0.0470016, 1)
-position = Vector2(112, 0)
-scale = Vector2(0.25, 0.25)
+position = Vector2(98, 0)
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_5ttj0")
 
 [node name="Gun" type="Node2D" parent="Sprite2D"]
-position = Vector2(148, 0)
-scale = Vector2(4, 4)
+position = Vector2(74.2857, 0)
 script = ExtResource("1_wdxk8")
 attackSpeed = 0.35
 bulletsShot = 10
