@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=27 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
@@ -161,6 +161,23 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kqjyn"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Sprite2:flip_h")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sprite:flip_h")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Gun:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Gun:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_rwqxq")
 
@@ -196,3 +213,6 @@ texture_scale = 50.0
 [node name="Gun" parent="." instance=ExtResource("4_g71tx")]
 z_index = 2
 position = Vector2(0, -85)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kqjyn")
