@@ -1,4 +1,3 @@
-# gun.gd (attach to gun.tscn / your shooting node)
 extends Node2D
 
 @export var bulletAmount := 3
@@ -7,21 +6,29 @@ extends Node2D
 @export var bulletSpread := 0.05
 @export var bulletsShot := 1
 @export var timerSpeed := 0.2
-
-@export var projectile_parent_path: NodePath = NodePath("/root/Node2D") # change to your World/Projectiles node
+@export var projectile_parent_path: NodePath = NodePath("/root/Node2D")
 
 var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0
 
-var can_shoot: bool = true
-var reloading: bool = false
+var can_shoot := true
+var reloading := false
+
+var _owner_peer_id: int = 1
+var require_shoot_release := true
+
+
 
 @onready var cooldown: Timer = $coolDown
 @onready var reload_timer: Timer = $Reload
 
 func _ready() -> void:
+	_owner_peer_id = _find_owner_peer_id()
 	currentBulletAmount = bulletAmount
 
+	require_shoot_release = Input.is_action_pressed("Shoot")
+	await get_tree().process_frame
+	
 	cooldown.wait_time = attackSpeed
 	cooldown.one_shot = true
 	cooldown.timeout.connect(_on_cooldown_timeout)
@@ -31,10 +38,13 @@ func _ready() -> void:
 	reload_timer.timeout.connect(_on_reload_timeout)
 
 func _physics_process(_delta: float) -> void:
-	# Only the local player should read mouse + input.
-	# If you have a proper authority setup, prefer:
-	# if not is_multiplayer_authority(): return
-	# If not, use your own local-player check here.
+	if multiplayer.get_unique_id() != _owner_peer_id:
+		return
+		
+	if require_shoot_release:
+		if Input.is_action_pressed("Shoot"):
+			return
+		require_shoot_release = false
 
 	if Input.is_action_just_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0:
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
@@ -47,13 +57,20 @@ func _physics_process(_delta: float) -> void:
 		can_shoot = false
 		reload_timer.start()
 
+func _find_owner_peer_id() -> int:
+	var n: Node = self
+	while n != null:
+		if n.is_in_group("Player"):
+			return int(str(n.name))
+		n = n.get_parent()
+	return 1
+
 @rpc("any_peer", "call_local")
 func _fire_burst(aim_dir: Vector2) -> void:
 	can_shoot = false
 	currentBulletAmount -= bulletsShot
 	if currentBulletAmount < 0:
 		currentBulletAmount = 0
-
 	_burst_shoot(aim_dir)
 
 func _on_cooldown_timeout() -> void:
@@ -77,19 +94,16 @@ func _burst_shoot(aim_dir: Vector2) -> void:
 
 func _spawn_bullet_with_spread(base_dir: Vector2) -> void:
 	var dir := base_dir.normalized()
-
-	# Optional spread (radians). bulletSpread was already in your script.
 	if bulletSpread > 0.0:
 		var half := bulletSpread * 0.5
 		dir = dir.rotated(randf_range(-half, half)).normalized()
-
 	spawn_bullet(dir)
 
 func spawn_bullet(aim_dir: Vector2) -> void:
 	var bullet = bulletPrefab.instantiate()
 	bullet.global_position = global_position
 	bullet.dir = aim_dir.normalized()
-	bullet.rotation = bullet.dir.angle() # visual only
+	bullet.rotation = bullet.dir.angle()
 
 	var parent: Node = get_node(projectile_parent_path)
 	parent.add_child(bullet)
