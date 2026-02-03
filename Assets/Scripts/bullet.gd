@@ -3,6 +3,7 @@ extends Area2D
 
 @export var speed: float = 720.0
 @export var bullet_bounces: int = 0 
+@export var damage = 1.0
 
 
 var dir: Vector2 = Vector2.RIGHT

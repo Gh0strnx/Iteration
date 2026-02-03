@@ -1,6 +1,6 @@
 extends Control
 
-@export var Address = '172.20.10.3'
+@export var Address = '127.0.0.1'
 @export var port = 8910
 var peer
 
@@ -79,3 +79,8 @@ func _on_join_button_down() -> void:
 func _on_start_game_button_down() -> void:
 	StartGame.rpc()
 	
+
+
+func _on_address_input_text_changed(new_text: String) -> void:
+	Address = $NameInput2.text
+	print(Address)

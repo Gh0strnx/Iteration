@@ -1,38 +1,37 @@
 extends CharacterBody2D
 
-@export var speed = 700  # speed in pixels/sec
-
-
+@export var speed := 700.0
+@export var health := 10.0
+@export var syncedPosition: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 
-func _physics_process(delta):
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		var direction = Input.get_vector("left", "right", "up", "down")
+func _physics_process(delta: float) -> void:
+	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
+
+	if is_authority:
+		var direction := Input.get_vector("left", "right", "up", "down")
 		velocity = direction * speed
-		
-		if velocity:
+
+		if velocity.length() > 0.0:
 			$Sprite.play("run")
 			$Sprite2.play("run")
 		else:
 			$Sprite.play("idle")
 			$Sprite2.play("idle")
-			
-		#if Input.is_action_just_pressed("left"):
-			#$Sprite.flip_h = true
-			#$Sprite2.flip_h = true
-		#elif Input.is_action_just_pressed("right"):
-			#$Sprite.flip_h = false
-			#$Sprite2.flip_h = false
-			
-	
-		
-		$Sprite.flip_h = get_global_mouse_position().x < global_position.x
-		$Sprite2.flip_h = get_global_mouse_position().x < global_position.x
-		
-		
+
+		var facing_left := get_global_mouse_position().x < global_position.x
+		$Sprite.flip_h = facing_left
+		$Sprite2.flip_h = facing_left
 
 		move_and_slide()
-	
+
+		# Sync the result after movement
+		syncedPosition = global_position
+	else:
+		# IMPORTANT: assign the lerp result 
+		global_position = global_position.lerp(syncedPosition, delta * 10.0)
+		
 		

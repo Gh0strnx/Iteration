@@ -22,6 +22,7 @@ properties/4/spawn = true
 properties/4/replication_mode = 1
 
 [node name="anchor" type="Node2D"]
+z_as_relative = false
 script = ExtResource("1_q4sjl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

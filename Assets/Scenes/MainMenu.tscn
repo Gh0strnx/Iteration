@@ -104,6 +104,30 @@ mouse_force_pass_scroll_events = false
 bbcode_enabled = true
 text = "[center]NAME"
 
+[node name="NameInput2" type="LineEdit" parent="."]
+offset_left = -325.0
+offset_top = 158.0
+offset_right = 328.0
+offset_bottom = 189.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NameInput2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -21.0
+offset_right = -1.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+bbcode_enabled = true
+text = "[center]Address
+"
+
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
+[connection signal="text_changed" from="NameInput2" to="." method="_on_address_input_text_changed"]
