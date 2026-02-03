@@ -5,8 +5,10 @@ extends CharacterBody2D
 @export var syncedPosition: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+	
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	
 
 func _physics_process(delta: float) -> void:
 	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()

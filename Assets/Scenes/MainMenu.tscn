@@ -105,6 +105,7 @@ bbcode_enabled = true
 text = "[center]NAME"
 
 [node name="NameInput2" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -325.0
 offset_top = 158.0
 offset_right = 328.0

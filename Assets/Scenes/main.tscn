@@ -431,6 +431,7 @@ texture = ExtResource("6_8ftyi")
 texture_scale = 50.0
 
 [node name="Wall Aesthetics" type="TileMapLayer" parent="."]
+visible = false
 light_mask = 2
 visibility_layer = 2
 z_index = 3
@@ -439,27 +440,6 @@ tile_map_data = PackedByteArray("AADw/wwAAwAEAAAAAADw/w0AAwAEAAAAAADw/w4AAwAEAAA
 tile_set = SubResource("TileSet_lvpku")
 
 [node name="Light" type="PointLight2D" parent="Wall Aesthetics"]
-blend_mode = 2
-range_item_cull_mask = 2
-texture = ExtResource("6_8ftyi")
-texture_scale = 38.0
-script = ExtResource("5_3mtd7")
-
-[node name="Light2" type="PointLight2D" parent="Wall Aesthetics"]
-blend_mode = 2
-range_item_cull_mask = 2
-texture = ExtResource("6_8ftyi")
-texture_scale = 38.0
-script = ExtResource("5_3mtd7")
-
-[node name="Light3" type="PointLight2D" parent="Wall Aesthetics"]
-blend_mode = 2
-range_item_cull_mask = 2
-texture = ExtResource("6_8ftyi")
-texture_scale = 38.0
-script = ExtResource("5_3mtd7")
-
-[node name="Light4" type="PointLight2D" parent="Wall Aesthetics"]
 blend_mode = 2
 range_item_cull_mask = 2
 texture = ExtResource("6_8ftyi")
