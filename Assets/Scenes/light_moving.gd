@@ -8,7 +8,7 @@ func _ready() -> void:
 	
 	
 		
-	if str(multiplayer.get_unique_id()) == str(get_parent().name):
+	if GameManager.localPlayer == get_parent():
 		show()
 	
 

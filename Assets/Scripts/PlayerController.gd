@@ -36,4 +36,4 @@ func _physics_process(delta: float) -> void:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
 		
-		
+	

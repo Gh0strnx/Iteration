@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=29 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="3_0ro6u"]
 [ext_resource type="Script" path="res://Assets/Scenes/light_moving.gd" id="4_8b7iu"]
 [ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/gun.tscn" id="4_g71tx"]
+[ext_resource type="Script" path="res://Assets/Scenes/PlayerChecker.gd" id="6_u86sp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 54.0
@@ -199,8 +200,8 @@ position = Vector2(0, -74)
 shape = SubResource("CapsuleShape2D_kkybe")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-light_mask = 2
-z_index = 2
+light_mask = 3
+z_index = 3
 texture_filter = 1
 position = Vector2(-10, -35)
 scale = Vector2(2, 2)
@@ -208,8 +209,8 @@ sprite_frames = SubResource("SpriteFrames_f7ys5")
 animation = &"run"
 
 [node name="Sprite2" type="AnimatedSprite2D" parent="."]
-light_mask = 2
-z_index = 4
+light_mask = 3
+z_index = 5
 texture_filter = 1
 position = Vector2(-10, -163)
 scale = Vector2(2, 2)
@@ -231,3 +232,6 @@ position = Vector2(0, -85)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kqjyn")
+
+[node name="PlayerChecker" type="Node2D" parent="."]
+script = ExtResource("6_u86sp")
