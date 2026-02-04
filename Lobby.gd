@@ -16,19 +16,28 @@ func lobbyCode():
 	for _address in IP.get_local_addresses():
 		if _address.begins_with("192.168") or _address.begins_with("10.") or _address.begins_with("172."):
 			ip = _address
-			
-			
+
+	if ip == null:
+		return
+
 	if allowcodes:
-		code = ip
-		ip = " "+ip
+		code = ip + str(GameManager.port)
+
 		if ip.begins_with("192.168"):
-			code = ip.replace(" 192.168", "a")
+			code = code.replace("192.168", "a")
 		elif ip.begins_with("10."):
-			code = ip.replace(" 10.", "b")
+			code = code.replace("10.", "b")
 		elif ip.begins_with("172."):
-			code = ip.replace(" 172. ", "c")
+			code = code.replace("172.", "c")
+		
+		if code.contains("8910"):
+			code = code.replace("8910", "A")
+		else:
+			return
+
 		print(code)
 		print(ip)
 	else:
 		code = ip
+
 		
