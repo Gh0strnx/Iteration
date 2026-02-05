@@ -4,6 +4,8 @@ var Players = {}
 
 var localPlayer : CharacterBody2D
 var port
+var ip
+var lobbyCode 
 
 
 # Called when the node enters the scene tree for the first time.
