@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var health := 10.0
 @export var syncedPosition: Vector2 = Vector2.ZERO
 
+
 func _ready() -> void:
 	
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
@@ -35,5 +36,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
-		
 	
+	
+
+	
+		

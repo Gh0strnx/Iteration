@@ -37,7 +37,6 @@ shape = SubResource("CircleShape2D_tq7tn")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(1, 0.823529, 0.270588, 1)
-light_mask = 2
 z_index = 5
 material = SubResource("ShaderMaterial_vwc0l")
 position = Vector2(3.8147e-06, 3.8147e-06)
