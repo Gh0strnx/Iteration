@@ -37,10 +37,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
-		
-	if not alive:
-		GameManager.localPlayer = null
-		self.queue_free()
 	
 func hurt_player(damage):
 	GameManager.localPlayer.health -= damage
