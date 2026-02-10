@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Assets/Scenes/SceneManager.gd" id="1_ctwyd"]
 [ext_resource type="Texture2D" uid="uid://dxnsv220iai5i" path="res://Assets/Textures/tile.png" id="1_oow0p"]
 [ext_resource type="Texture2D" uid="uid://ca2ofyvo1gjlb" path="res://Assets/Textures/Sprite-0001.png" id="4_a7x66"]
-[ext_resource type="PackedScene" uid="uid://bwge4tqvfy0s" path="res://Assets/Scenes/player.tscn" id="4_wx5bt"]
+[ext_resource type="PackedScene" uid="uid://bwge4tqvfy0s" path="res://Assets/Scenes/Player.tscn" id="4_wx5bt"]
 [ext_resource type="Script" path="res://Assets/Scripts/wallLight.gd" id="5_3mtd7"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="6_8ftyi"]
 [ext_resource type="Script" path="res://Lobby.gd" id="9_5h156"]

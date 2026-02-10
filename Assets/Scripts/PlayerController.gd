@@ -39,6 +39,11 @@ func _physics_process(delta: float) -> void:
 	
 	if !alive:
 		GameManager.localPlayer = null
+	
+		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
+			node.hide()
+		
+		$Player.hide()
 		$Collision.disabled = true
 	
 func hurt_player(damage):
