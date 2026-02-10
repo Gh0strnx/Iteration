@@ -42,6 +42,8 @@ func hurt_player(damage):
 	GameManager.localPlayer.health -= damage
 	print(health)
 	if health <= 0:
+		GameManager.localPlayer = null
+		get_tree().queue_free()
 		alive = false
 		pass
 	

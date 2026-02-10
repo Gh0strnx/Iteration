@@ -1,7 +1,7 @@
 [gd_scene load_steps=36 format=4 uid="uid://cpiybb75qq6ww"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_h78fy"]
-[ext_resource type="PackedScene" uid="uid://bwge4tqvfy0s" path="res://Assets/Scenes/Player.tscn" id="2_hi8ln"]
+[ext_resource type="PackedScene" uid="uid://bwge4tqvfy0s" path="res://Assets/Scenes/player.tscn" id="2_hi8ln"]
 [ext_resource type="Texture2D" uid="uid://867iar475dkg" path="res://Assets/Textures/tiles.png" id="3_cjfmq"]
 [ext_resource type="Texture2D" uid="uid://5477ubs2ylns" path="res://Assets/Textures/box1.png" id="4_4wykt"]
 [ext_resource type="Texture2D" uid="uid://ca2ofyvo1gjlb" path="res://Assets/Textures/Sprite-0001.png" id="5_omrqn"]

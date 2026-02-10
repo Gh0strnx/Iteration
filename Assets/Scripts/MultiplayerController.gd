@@ -45,7 +45,6 @@ func SendPlayerInformation(name, id):
 			"name": name,
 			"id": id,
 			"score": 0,
-			"alive": true
 		}
 		
 	if multiplayer.is_server():
