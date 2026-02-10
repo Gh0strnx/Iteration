@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://6dksx0gbkhay"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/anchor.gd" id="1_q4sjl"]
-[ext_resource type="Script" path="res://Assets/Scripts/gun.gd" id="1_wdxk8"]
+[ext_resource type="Script" path="res://Assets/Scripts/Anchor.gd" id="1_q4sjl"]
+[ext_resource type="Script" path="res://Assets/Scripts/Gun.gd" id="1_wdxk8"]
 [ext_resource type="Texture2D" uid="uid://l0sbruunslyu" path="res://Assets/Textures/Gun.png" id="3_5ttj0"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qxs42"]

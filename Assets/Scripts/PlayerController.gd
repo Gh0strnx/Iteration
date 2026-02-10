@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed := 700.0
 @export var health := 10.0
 @export var syncedPosition: Vector2 = Vector2.ZERO
+var alive = true
 
 
 func _ready() -> void:
@@ -37,7 +38,12 @@ func _physics_process(delta: float) -> void:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
 	
+func hurt_player(damage):
+	GameManager.localPlayer.health -= damage
+	print(health)
+	if health <= 0:
+		alive = false
+		pass
 	
 
-	
 		
