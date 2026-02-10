@@ -17,5 +17,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	global_position += dir * speed * delta
 
-func _on_body_entered(_body: Node2D) -> void:
+func _on_body_entered(body):
+
+	if body == GameManager.localPlayer && body.has_method("hurt_player"):
+		body.hurt_player(damage)
 	queue_free()

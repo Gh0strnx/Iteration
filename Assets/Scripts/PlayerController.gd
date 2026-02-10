@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 @export var speed := 700.0
-@export var health := 10.0
+@export var health := 3.0
 @export var syncedPosition: Vector2 = Vector2.ZERO
-
+var alive = true
 
 func _ready() -> void:
 	
@@ -14,7 +14,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
 
-	if is_authority:
+	if is_authority && alive:
 		var direction := Input.get_vector("left", "right", "up", "down")
 		velocity = direction * speed
 
@@ -37,7 +37,15 @@ func _physics_process(delta: float) -> void:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
 	
+	if !alive:
+		GameManager.localPlayer = null
+		$Collision.disabled = true
 	
+func hurt_player(damage):
+	GameManager.localPlayer.health -= damage
+	print(health)
+	if health <= 0:
+		alive = false
+		pass
 
-	
 		
