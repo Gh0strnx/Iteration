@@ -1,16 +1,5 @@
 [gd_scene load_steps=36 format=4 uid="uid://cpiybb75qq6ww"]
 
-<<<<<<< HEAD
-[ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_h78fy"]
-[ext_resource type="PackedScene" uid="uid://bwge4tqvfy0s" path="res://Assets/Scenes/player.tscn" id="2_hi8ln"]
-[ext_resource type="Texture2D" uid="uid://867iar475dkg" path="res://Assets/Textures/tiles.png" id="3_cjfmq"]
-[ext_resource type="Texture2D" uid="uid://5477ubs2ylns" path="res://Assets/Textures/box1.png" id="4_4wykt"]
-[ext_resource type="Texture2D" uid="uid://ca2ofyvo1gjlb" path="res://Assets/Textures/Sprite-0001.png" id="5_omrqn"]
-[ext_resource type="Texture2D" uid="uid://dxnsv220iai5i" path="res://Assets/Textures/tile.png" id="6_3qxcr"]
-[ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="7_slkfc"]
-[ext_resource type="Script" path="res://Assets/Scripts/WallLight.gd" id="8_f3c0b"]
-[ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="9_xvq2k"]
-=======
 [ext_resource type="Texture2D" uid="uid://867iar475dkg" path="res://Assets/Textures/tiles.png" id="1_3cw1b"]
 [ext_resource type="Texture2D" uid="uid://5477ubs2ylns" path="res://Assets/Textures/box1.png" id="1_26iis"]
 [ext_resource type="Script" path="res://Assets/Scenes/SceneManager.gd" id="1_ctwyd"]
@@ -20,7 +9,6 @@
 [ext_resource type="Script" path="res://Assets/Scripts/wallLight.gd" id="5_3mtd7"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="6_8ftyi"]
 [ext_resource type="Script" path="res://Lobby.gd" id="9_5h156"]
->>>>>>> parent of 90f7028 (Made naming abit more consistent.)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mu740"]
 texture = ExtResource("1_3cw1b")

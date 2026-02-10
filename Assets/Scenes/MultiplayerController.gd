@@ -44,11 +44,7 @@ func SendPlayerInformation(name, id):
 		GameManager.Players[id] = {
 			"name": name,
 			"id": id,
-<<<<<<< HEAD:Assets/Scripts/MultiplayerController.gd
-			"score": 0,
-=======
 			"score": 0
->>>>>>> parent of 90f7028 (Made naming abit more consistent.):Assets/Scenes/MultiplayerController.gd
 		}
 		
 	if multiplayer.is_server():
