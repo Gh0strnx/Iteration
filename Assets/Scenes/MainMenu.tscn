@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b75fdcljlniv1"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
+[ext_resource type="Script" path="res://Assets/Scenes/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="1_y8oa6"]
 
 [node name="Control" type="Control"]

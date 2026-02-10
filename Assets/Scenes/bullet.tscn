@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://jhqbcjpswsq"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Bullet.gd" id="1_tbb6p"]
-[ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="2_a1d45"]
-[ext_resource type="Texture2D" uid="uid://tydp4xnaa2in" path="res://Assets/Textures/Untitled design.png" id="3_hckx0"]
-[ext_resource type="Script" path="res://Assets/Scripts/PointLight.gd" id="4_kvahk"]
+[ext_resource type="Script" path="res://Assets/Scripts/bullet.gd" id="1_g6wpv"]
+[ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="2_iukt2"]
+[ext_resource type="Texture2D" uid="uid://tydp4xnaa2in" path="res://Assets/Textures/Untitled design.png" id="3_5vhso"]
+[ext_resource type="Script" path="res://Assets/Scripts/point_light.gd" id="4_i676a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tq7tn"]
 radius = 12.0
@@ -11,7 +11,7 @@ radius = 12.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vwc0l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xm7yd"]
-atlas = ExtResource("2_a1d45")
+atlas = ExtResource("2_iukt2")
 region = Rect2(128, 0, 256, 256)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0bg36"]
@@ -29,7 +29,7 @@ animations = [{
 radius = 324.0
 
 [node name="FullArea" type="Area2D" groups=["bullet"]]
-script = ExtResource("1_tbb6p")
+script = ExtResource("1_g6wpv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.27374e-13, 2.27374e-13)
@@ -45,9 +45,9 @@ sprite_frames = SubResource("SpriteFrames_0bg36")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 energy = 0.1
-texture = ExtResource("3_hckx0")
+texture = ExtResource("3_5vhso")
 texture_scale = 0.24
-script = ExtResource("4_kvahk")
+script = ExtResource("4_i676a")
 
 [node name="Area2D" type="Area2D" parent="." groups=["bullet"]]
 
