@@ -5,7 +5,7 @@ extends Area2D
 @export var damage = 1.0
 @export var speed: float = 720.0
 @export var bullet_bounces: int = 0 
-@export var range = 100
+@export var bulletRange = 100
 
 
 

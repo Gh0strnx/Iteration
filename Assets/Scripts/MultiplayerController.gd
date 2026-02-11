@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 # called by server and client
@@ -82,6 +82,6 @@ func _on_start_game_button_down() -> void:
 	
 
 
-func _on_address_input_text_changed(new_text: String) -> void:
+func _on_address_input_text_changed(_new_text: String) -> void:
 	Address = $NameInput2.text
 	print(Address)

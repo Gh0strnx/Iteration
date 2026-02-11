@@ -18,7 +18,7 @@ func _ready() -> void:
 	print(GameManager.port)
 	print(GameManager.lobbyCode)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func lobbyCode():

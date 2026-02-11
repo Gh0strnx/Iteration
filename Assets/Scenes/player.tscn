@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="3_0ro6u"]
-[ext_resource type="Script" path="res://Assets/Scenes/light_moving.gd" id="4_8b7iu"]
-[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/gun.tscn" id="4_g71tx"]
-[ext_resource type="Script" path="res://Assets/Scenes/PlayerChecker.gd" id="6_u86sp"]
+[ext_resource type="Script" path="res://Assets/Scripts/light_moving.gd" id="4_b0jy7"]
+[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 54.0
@@ -209,6 +209,7 @@ properties/13/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_rwqxq")
+health = 3.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -74)
@@ -238,7 +239,7 @@ position = Vector2(0, -77)
 shadow_enabled = true
 texture = ExtResource("3_0ro6u")
 texture_scale = 50.0
-script = ExtResource("4_8b7iu")
+script = ExtResource("4_b0jy7")
 
 [node name="Gun" parent="." instance=ExtResource("4_g71tx")]
 z_index = 3
@@ -248,4 +249,4 @@ position = Vector2(0, -85)
 replication_config = SubResource("SceneReplicationConfig_kqjyn")
 
 [node name="PlayerChecker" type="Node2D" parent="."]
-script = ExtResource("6_u86sp")
+script = ExtResource("6_qdtce")

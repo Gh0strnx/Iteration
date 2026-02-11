@@ -1,9 +1,13 @@
 extends CharacterBody2D
 
 @export var speed := 700.0
-@export var health := 3.0
+@export var health := 10.0
+@export var soundRadius = 0
+@export var volume = 0
+@export var blockCooldown = 3
 @export var syncedPosition: Vector2 = Vector2.ZERO
 var alive = true
+var canBlock = true
 
 func _ready() -> void:
 	
@@ -43,7 +47,10 @@ func _physics_process(delta: float) -> void:
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			node.hide()
 		
-		$Player.hide()
+		$Sprite.hide()
+		$Sprite2.hide()
+		$Gun.hide()
+		$LightMoving.hide()
 		$Collision.disabled = true
 	
 func hurt_player(damage):
