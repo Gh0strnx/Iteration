@@ -17,7 +17,6 @@ script = ExtResource("1_ctwyd")
 PlayerScene = ExtResource("4_wx5bt")
 
 [node name="Darkness" type="CanvasModulate" parent="." groups=["global_canvas_modulate"]]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Ground" type="TileMapLayer" parent="."]
