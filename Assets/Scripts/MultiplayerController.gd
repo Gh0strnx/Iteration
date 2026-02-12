@@ -3,7 +3,8 @@ extends Control
 var Address = '127.0.0.1'
 @export var port = 8910
 var peer
-
+var hosting = false
+var allowStart = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +22,7 @@ func _process(_delta: float) -> void:
 
 # called by server and client
 func peer_connected(id):
+	allowStart = true
 	print("Player Connected " + str(id))
 	
 # called by server and client
@@ -58,6 +60,7 @@ func _on_host_button_down() -> void:
 		print("cannot host: " + error)
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	hosting = true
 	
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for Players!")
@@ -65,16 +68,18 @@ func _on_host_button_down() -> void:
 	
 @rpc("any_peer", "call_local")
 func StartGame():
-	var scene = load("res://Assets/Scenes/main.tscn").instantiate()
-	get_tree().root.add_child(scene)
-	self.hide()
+	if allowStart && hosting && multiplayer.get_unique_id() == 1:
+		var scene = load("res://Assets/Scenes/main.tscn").instantiate()
+		get_tree().root.add_child(scene)
+		self.hide()
 
 
 func _on_join_button_down() -> void:
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(Address, port)
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
+	if !hosting:
+		peer = ENetMultiplayerPeer.new()
+		peer.create_client(Address, port)
+		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+		multiplayer.set_multiplayer_peer(peer)
 
 
 func _on_start_game_button_down() -> void:
