@@ -102,7 +102,7 @@ func _spawn_bullet_with_spread(base_dir: Vector2) -> void:
 	spawn_bullet(dir)
 
 func spawn_bullet(aim_dir: Vector2) -> void:
-	# "Muzzle" is a Marker2D placed at the barrel of the gun.
 	var b = Bullet.instantiate()
-	b.start(global_position, rotation)
+	var angle := aim_dir.angle()
+	b.start(global_position, angle)
 	get_tree().root.add_child(b)

@@ -5,14 +5,19 @@ extends CharacterBody2D
 @export var speed: float = 1050.0
 @export var bulletBounces: int = 0
 @export var bulletRange = 3.5
-var dir
+var dir: float = 0.0
 
-func start(_position, _direction):
-	dir = _direction
+func start(_position: Vector2, _direction: float) -> void:
 	position = _position
-	velocity = Vector2(speed, 0).rotated(dir)
+	dir = _direction
+	velocity = Vector2.RIGHT.rotated(dir) * speed
+
+
 
 func _physics_process(delta):
+
+	DropOff()
+	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		if bulletBounces != -1:
@@ -25,16 +30,7 @@ func _physics_process(delta):
 			queue_free()
 			
 
-#
-#var dir: Vector2 = Vector2.RIGHT
-#
-#func _ready() -> void:
-	#dir = dir.normalized()
-#
-#func _physics_process(delta: float) -> void:
-	#global_position += dir * speed * delta
-	#
-	#DropOff()
+
 
 func _on_body_entered(body):
 
