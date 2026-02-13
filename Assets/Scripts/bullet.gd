@@ -1,23 +1,40 @@
-
-extends Area2D
+extends CharacterBody2D
 
 
 @export var damage = 1.0
 @export var speed: float = 1050.0
-@export var bullet_bounces: int = 0 
+@export var bulletBounces: int = 0
 @export var bulletRange = 3.5
+var dir
 
+func start(_position, _direction):
+	dir = _direction
+	position = _position
+	velocity = Vector2(speed, 0).rotated(dir)
 
+func _physics_process(delta):
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		if bulletBounces != -1:
+				velocity = velocity.bounce(collision.get_normal())
+				bulletBounces = bulletBounces-1
+				print(bulletBounces)
+		if collision.get_collider().has_method("hurt_player"):
+			collision.get_collider().hurt_player(damage)
+		if bulletBounces == -1:
+			queue_free()
+			
 
-var dir: Vector2 = Vector2.RIGHT
-
-func _ready() -> void:
-	dir = dir.normalized()
-
-func _physics_process(delta: float) -> void:
-	global_position += dir * speed * delta
-	
-	DropOff()
+#
+#var dir: Vector2 = Vector2.RIGHT
+#
+#func _ready() -> void:
+	#dir = dir.normalized()
+#
+#func _physics_process(delta: float) -> void:
+	#global_position += dir * speed * delta
+	#
+	#DropOff()
 
 func _on_body_entered(body):
 

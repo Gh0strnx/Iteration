@@ -68,7 +68,7 @@ func _on_host_button_down() -> void:
 	
 @rpc("any_peer", "call_local")
 func StartGame():
-	if allowStart && hosting && multiplayer.get_unique_id() == 1:
+	if allowStart:
 		var scene = load("res://Assets/Scenes/main.tscn").instantiate()
 		get_tree().root.add_child(scene)
 		self.hide()

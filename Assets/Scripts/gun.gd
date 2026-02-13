@@ -7,6 +7,7 @@ extends Node2D
 @export var bulletsShot := 1
 @export var timerSpeed := 0.2
 @export var projectile_parent_path: NodePath = NodePath("/root/Node2D")
+var Bullet = preload("res://assets/Scenes/bullet.tscn")
 
 var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0
@@ -38,6 +39,7 @@ func _ready() -> void:
 	reload_timer.timeout.connect(_on_reload_timeout)
 
 func _physics_process(_delta: float) -> void:
+	
 	if multiplayer.get_unique_id() != _owner_peer_id:
 		return
 		
@@ -100,10 +102,7 @@ func _spawn_bullet_with_spread(base_dir: Vector2) -> void:
 	spawn_bullet(dir)
 
 func spawn_bullet(aim_dir: Vector2) -> void:
-	var bullet = bulletPrefab.instantiate()
-	bullet.global_position = global_position
-	bullet.dir = aim_dir.normalized()
-	bullet.rotation = bullet.dir.angle()
-
-	var parent: Node = get_node(projectile_parent_path)
-	parent.add_child(bullet)
+	# "Muzzle" is a Marker2D placed at the barrel of the gun.
+	var b = Bullet.instantiate()
+	b.start(global_position, rotation)
+	get_tree().root.add_child(b)
