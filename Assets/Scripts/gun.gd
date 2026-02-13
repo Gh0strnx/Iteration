@@ -6,7 +6,6 @@ extends Node2D
 @export var bulletSpread := 0.05
 @export var bulletsShot := 1
 @export var timerSpeed := 0.2
-@export var projectile_parent_path: NodePath = NodePath("/root/Node2D")
 var Bullet = preload("res://assets/Scenes/bullet.tscn")
 
 var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")

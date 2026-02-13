@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 	
 func hurt_player(damage):
 	GameManager.localPlayer.health -= damage
-	print(health)
+	print("Player health" + str(health))
 	if health <= 0:
 		alive = false
 		pass
