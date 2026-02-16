@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var speed: float = 1050.0
 @export var bulletBounces: int = 10
 @export var bulletRange = 3.5
+@export var poison = 0
 var dir: float = 0.0
 
 func start(_position: Vector2, _direction: float) -> void:

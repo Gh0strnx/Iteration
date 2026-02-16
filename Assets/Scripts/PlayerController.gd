@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var soundRadius = 0
 @export var volume = 0
 @export var blockCooldown = 3
+@export var LifeSteal = 0
+@export var Regeneration = 0
 @export var syncedPosition: Vector2 = Vector2.ZERO
 var alive = true
 var canBlock = true
