@@ -24,29 +24,29 @@ func start(_position: Vector2, _direction: float) -> void:
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		if bulletBounces != -1:
-				velocity = velocity.bounce(collision.get_normal())
-				bulletBounces = bulletBounces-1
-				print("bullet bounces left: " + str(bulletBounces))
 		if collision.get_collider().has_method("hurt_player"):
 			if collision.get_collider().name == GameManager.localPlayer.name:
 				if selfDamage == true:
 					collision.get_collider().hurt_player(damage)
-				else:
-					pass
+					queue_free()
 			else:
 				collision.get_collider().hurt_player(damage)
+				queue_free()
+		if bulletBounces != -1:
+				velocity = velocity.bounce(collision.get_normal())
+				bulletBounces = bulletBounces-1
 		if bulletBounces == -1:
 			queue_free()
+		
 			
 	DropOff()
 
 
-func _on_body_entered(body):
-
-	if body == GameManager.localPlayer && body.has_method("hurt_player"):
-		body.hurt_player(damage)
-	queue_free()
+#func _on_body_entered(body):
+#
+	#if body == GameManager.localPlayer && body.has_method("hurt_player"):
+		#body.hurt_player(damage)
+	#queue_free()
 
 func DropOff():
 	if bulletRange < 3.5:

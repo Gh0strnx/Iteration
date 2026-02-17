@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=4 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="1_y8oa6"]
+[ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="3_7qn0k"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -125,10 +126,38 @@ grow_vertical = 2
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
 bbcode_enabled = true
-text = "[center]Address
+text = "[center]ENTER CODE
+"
+
+[node name="NameInput3" type="LineEdit" parent="."]
+offset_left = -325.0
+offset_top = 257.0
+offset_right = 328.0
+offset_bottom = 288.0
+editable = false
+script = ExtResource("3_7qn0k")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NameInput3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -21.0
+offset_right = -1.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+bbcode_enabled = true
+text = "[center]HOST CODE
 "
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="Host" to="NameInput3" method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="Join" to="NameInput3" method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
 [connection signal="text_changed" from="NameInput2" to="." method="_on_address_input_text_changed"]
+[connection signal="text_changed" from="NameInput3" to="." method="_on_address_input_text_changed"]

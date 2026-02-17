@@ -1,6 +1,6 @@
 extends Control
 
-var Address = '127.0.0.1'
+
 @export var port = 8910
 var peer
 var hosting = false
@@ -75,9 +75,10 @@ func StartGame():
 
 
 func _on_join_button_down() -> void:
+	await get_tree().process_frame
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
-		peer.create_client(Address, port)
+		peer.create_client(GameManager.ip, port)
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		multiplayer.set_multiplayer_peer(peer)
 
@@ -88,5 +89,9 @@ func _on_start_game_button_down() -> void:
 
 
 func _on_address_input_text_changed(_new_text: String) -> void:
-	Address = $NameInput2.text
-	print(Address)
+	if $NameInput2.text == null:
+		GameManager.lobbyCode = GameManager.lobbyCode.ip
+	else: 
+		GameManager.lobbyCode = $NameInput2.text
+	
+	print(GameManager.lobbyCode)

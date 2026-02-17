@@ -12,7 +12,7 @@ extends Node2D
 @export var bulletsShot := 1
 #How big of a gap is there between the bullets from bulletsShot - IMPLEMENTED
 @export var timerSpeed := 0.2
-var Bullet = preload("res://assets/Scenes/bullet.tscn")
+var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 
 var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0
@@ -41,7 +41,7 @@ func _ready() -> void:
 
 	reload_timer.wait_time = reloadTime
 	reload_timer.one_shot = true
-	reload_timer.timeout.connect(_on_reload_timeout)
+	#reload_timer.timeout.connect(_on_reload_timeout)
 
 func _physics_process(_delta: float) -> void:
 	

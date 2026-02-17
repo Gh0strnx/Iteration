@@ -12,8 +12,7 @@ var list4 = "JKLMNOPQRSTUVW"
 var list5 = "XYZ"
 
 func _ready() -> void:
-	lobbyCode()
-	deLobbyCode(code)
+
 	print(GameManager.ip)
 	print(GameManager.port)
 	print(GameManager.lobbyCode)
@@ -50,6 +49,7 @@ func lobbyCode():
 		code = ip
 	GameManager.lobbyCode = code
 	
+	
 
 func deLobbyCode(_code: String) -> void:
 	code = _code
@@ -73,3 +73,13 @@ func deLobbyCode(_code: String) -> void:
 
 	GameManager.ip = ip
 	GameManager.port = port
+
+
+func _on_host_button_down() -> void:
+	lobbyCode()
+	self.text = str(GameManager.lobbyCode)
+
+
+func _on_join_button_down() -> void:
+	deLobbyCode($/root/Control/NameInput2.text)
+	
