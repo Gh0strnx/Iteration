@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
 ##movement speed of player - IMPLEMENTED
-@export var speed := 700.0
+@export var speed := 7.0
 ##health of player - IMPLEMENTED
 @export var health := 10.0
 ##How far away player can be heard - NOT IMPLEMENTED
-@export var soundRadius = 0
+@export var soundRadius = 5
 ##How loud the player is - NOT IMPLEMENTED
-@export var volume = 0
+@export var volume = 100
 ##How long is the cooldown on blocking - NOT IMPLEMENTED
 @export var blockCooldown = 3
 ##How much health do u gain from hurting someone - NOT IMPLEMENTED
@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 
 	if is_authority && alive:
 		var direction := Input.get_vector("left", "right", "up", "down")
-		velocity = direction * speed
+		velocity = direction * (speed * 100)
 
 		if velocity.length() > 0.0:
 			$Sprite.play("run")

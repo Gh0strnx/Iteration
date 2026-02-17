@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 ##Can the player damage themselves - IMPLEMENTED
-@export var selfDamage = false
+@export var selfDamage = true
 ##How much damage does a bullet do - IMPLEMENTED
 @export var damage = 1.0
 ##How fast is a bullet - IMPLEMENTED

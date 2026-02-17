@@ -209,7 +209,6 @@ properties/13/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_rwqxq")
-health = 3.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -74)
