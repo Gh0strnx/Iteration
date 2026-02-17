@@ -1,10 +1,16 @@
 extends Node2D
 
+##How many bullets does the player have - IMPLEMENTED
 @export var bulletAmount := 3
+##How long does it take for player to reload - IMPLEMENTED
 @export var reloadTime := 3.0
+##How fast can the player shoot - IMPLEMENTED
 @export var attackSpeed := 0.4
+##How innaccurate are the bullets - IMPLEMENTED
 @export var bulletSpread := 0.05
+##How many bullets get shot from one click - IMPLEMENTED
 @export var bulletsShot := 1
+#How big of a gap is there between the bullets from bulletsShot - IMPLEMENTED
 @export var timerSpeed := 0.2
 var Bullet = preload("res://assets/Scenes/bullet.tscn")
 

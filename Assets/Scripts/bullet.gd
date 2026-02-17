@@ -1,17 +1,23 @@
 extends CharacterBody2D
 
+##Can the player damage themselves - IMPLEMENTED
 @export var selfDamage = false
+##How much damage does a bullet do - IMPLEMENTED
 @export var damage = 1.0
-@export var speed: float = 1050.0
-@export var bulletBounces: int = 10
+##How fast is a bullet - IMPLEMENTED
+@export var speed: float = 10.5
+##How many times can the bullet bounce - IMPLEMENTED
+@export var bulletBounces: int = 0
+##How far does the bullet go before stopping - NOT IMPLEMENTED
 @export var bulletRange = 3.5
+##How much damage over time (poison) does the bullet do - NOT IMPLEMENTED
 @export var poison = 0
 var dir: float = 0.0
 
 func start(_position: Vector2, _direction: float) -> void:
 	position = _position
 	dir = _direction
-	velocity = Vector2.RIGHT.rotated(dir) * speed
+	velocity = Vector2.RIGHT.rotated(dir) * (speed * 100)
 
 
 

@@ -1,14 +1,23 @@
 extends CharacterBody2D
 
+##movement speed of player - IMPLEMENTED
 @export var speed := 700.0
+##health of player - IMPLEMENTED
 @export var health := 10.0
+##How far away player can be heard - NOT IMPLEMENTED
 @export var soundRadius = 0
+##How loud the player is - NOT IMPLEMENTED
 @export var volume = 0
+##How long is the cooldown on blocking - NOT IMPLEMENTED
 @export var blockCooldown = 3
+##How much health do u gain from hurting someone - NOT IMPLEMENTED
 @export var LifeSteal = 0
+##How much health do u regenerate over time. - NOT IMPLEMENTED
 @export var Regeneration = 0
 @export var syncedPosition: Vector2 = Vector2.ZERO
+##Is player alive
 var alive = true
+##Can the player block
 var canBlock = true
 
 func _ready() -> void:
