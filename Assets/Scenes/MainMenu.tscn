@@ -130,6 +130,7 @@ text = "[center]ENTER CODE
 "
 
 [node name="NameInput3" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = -325.0
 offset_top = 257.0
 offset_right = 328.0

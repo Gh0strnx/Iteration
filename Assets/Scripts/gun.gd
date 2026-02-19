@@ -14,7 +14,7 @@ extends Node2D
 @export var timerSpeed := 0.2
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 
-var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
+#var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0
 
 var can_shoot := true

@@ -75,6 +75,9 @@ func StartGame():
 
 
 func _on_join_button_down() -> void:
+	if $NameInput2.text == "":
+		GameManager.ip = '127.0.0.1' ##THIS ISNT LEGIT ONLY FOR DEBUGGING
+		print(GameManager.ip)
 	await get_tree().process_frame
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
@@ -89,9 +92,5 @@ func _on_start_game_button_down() -> void:
 
 
 func _on_address_input_text_changed(_new_text: String) -> void:
-	if $NameInput2.text == null:
-		GameManager.lobbyCode = GameManager.lobbyCode.ip
-	else: 
-		GameManager.lobbyCode = $NameInput2.text
+	GameManager.lobbyCode = $NameInput2.text
 	
-	print(GameManager.lobbyCode)

@@ -81,5 +81,8 @@ func _on_host_button_down() -> void:
 
 
 func _on_join_button_down() -> void:
-	deLobbyCode($/root/Control/NameInput2.text)
-	
+	if $/root/Control/NameInput2.text != "":
+		deLobbyCode($/root/Control/NameInput2.text)
+	else:
+		GameManager.ip = '127.0.0.1'
+		

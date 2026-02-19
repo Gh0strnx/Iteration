@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=30 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/light_moving.gd" id="4_b0jy7"]
 [ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
+[ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="7_87tgf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 54.0
@@ -249,3 +250,6 @@ replication_config = SubResource("SceneReplicationConfig_kqjyn")
 
 [node name="PlayerChecker" type="Node2D" parent="."]
 script = ExtResource("6_qdtce")
+
+[node name="CardManager" type="Node2D" parent="."]
+script = ExtResource("7_87tgf")
