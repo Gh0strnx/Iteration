@@ -6,20 +6,30 @@ func _process(delta: float) -> void:
 	pass
 
 func Bounce():
-	pass
+	$Gun.bulletBounces += 1
+	$Gun.speed -= 1.05
 
 func Refract():
-	pass
+	$Gun.bulletBounces += 2
+	$Gun.speed += 1.05
 
 func BubbleWrap():
-	pass
+	$Gun.selfDamage = false
+	GameManager.localPlayer.health += 1
+	$Gun.bulletBounces += 3
+	GameManager.localPlayer.speed -= 0.7
+	
 	
 func Bandaid():
-	pass
+	GameManager.localPlayer.health += 1
+	
 	
 func Medkit():
+	GameManager.localPlayer.health += 2.5
 	pass
 	
 func Cannon():
-	pass
-	
+	$Gun.bulletSize += 0.25
+	$Gun.damage += 0.25
+	$Gun.speed -= 2.625
+	GameManager.localPlayer.speed -= 0.7

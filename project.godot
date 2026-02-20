@@ -24,6 +24,7 @@ GameManager="*res://Assets/Scripts/GameManager.gd"
 global_canvas_modulate=""
 Player=""
 bullet=""
+alivePlayers=""
 
 [input]
 

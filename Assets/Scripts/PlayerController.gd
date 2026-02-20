@@ -5,9 +5,9 @@ extends CharacterBody2D
 ##health of player - IMPLEMENTED
 @export var health := 10.0
 ##How far away player can be heard - NOT IMPLEMENTED
-@export var soundRadius = 5
+@export var soundRadius = 480
 ##How loud the player is - NOT IMPLEMENTED
-@export var volume = 100
+@export var volumeIncreaser = 0
 ##How long is the cooldown on blocking - NOT IMPLEMENTED
 @export var blockCooldown = 3
 ##How much health do u gain from hurting someone - NOT IMPLEMENTED
@@ -36,9 +36,11 @@ func _physics_process(delta: float) -> void:
 		if velocity.length() > 0.0:
 			$Sprite.play("run")
 			$Sprite2.play("run")
+			$AudioStreamPlayer2D.playing = true
 		else:
 			$Sprite.play("idle")
 			$Sprite2.play("idle")
+			$AudioStreamPlayer2D.playing = false
 
 		var facing_left := get_global_mouse_position().x < global_position.x
 		$Sprite.flip_h = facing_left
@@ -51,6 +53,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
+		
+	## SOUND STUFF
+	$AudioStreamPlayer2D.volume_db = volumeIncreaser
+	$AudioStreamPlayer2D.max_distance = soundRadius
+		
 	
 	if !alive:
 		GameManager.localPlayer = null
@@ -63,6 +70,7 @@ func _physics_process(delta: float) -> void:
 		$Gun.hide()
 		$LightMoving.hide()
 		$Collision.disabled = true
+		remove_from_group("alivePlayers")
 	
 func hurt_player(damage):
 	GameManager.localPlayer.health -= damage

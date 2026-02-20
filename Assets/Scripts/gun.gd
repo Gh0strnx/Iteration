@@ -10,9 +10,25 @@ extends Node2D
 @export var bulletSpread := 0.05
 ##How many bullets get shot from one click - IMPLEMENTED
 @export var bulletsShot := 1
-#How big of a gap is there between the bullets from bulletsShot - IMPLEMENTED
+##How big of a gap is there between the bullets from bulletsShot - IMPLEMENTED
 @export var timerSpeed := 0.2
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
+
+### BULLET VARIABLES
+##Can the player damage themselves - IMPLEMENTED
+@export var selfDamage = true
+##How much damage does a bullet do - IMPLEMENTED
+@export var damage = 1.0
+##How fast is a bullet - IMPLEMENTED
+@export var speed: float = 10.5
+##How many times can the bullet bounce - IMPLEMENTED
+@export var bulletBounces: int = 0
+##How far does the bullet go before stopping - NOT IMPLEMENTED
+@export var bulletRange = 3.5
+##How much damage over time (poison) does the bullet do - NOT IMPLEMENTED
+@export var poison = 0
+##Bullet size increaser
+@export var bulletSize = 1
 
 #var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0
@@ -108,6 +124,14 @@ func _spawn_bullet_with_spread(base_dir: Vector2) -> void:
 
 func spawn_bullet(aim_dir: Vector2) -> void:
 	var b = Bullet.instantiate()
+	b.selfDamage = selfDamage
+	b.damage = damage
+	b.speed = speed
+	b.bulletBounces = bulletBounces
+	b.bulletRange = bulletRange
+	
+	
+	
 	var angle := aim_dir.angle()
 	b.start(global_position, angle)
 	get_tree().root.add_child(b)

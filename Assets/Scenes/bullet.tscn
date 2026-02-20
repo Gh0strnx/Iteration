@@ -30,7 +30,6 @@ radius = 324.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_1ap7j")
-bulletBounces = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.27374e-13, 2.27374e-13)

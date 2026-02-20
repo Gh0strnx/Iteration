@@ -1,7 +1,7 @@
 extends Node
 
 var Players = {}
-
+var ran = false
 var localPlayer : CharacterBody2D
 var port
 var ip
@@ -16,4 +16,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
+		print("Game Finished" + str(get_tree().get_nodes_in_group("alivePlayers")))	
+		ran = true
 	pass
