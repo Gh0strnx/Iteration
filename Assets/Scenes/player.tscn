@@ -209,6 +209,7 @@ properties/13/spawn = true
 properties/13/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["Player", "alivePlayers"]]
+motion_mode = 1
 script = ExtResource("1_rwqxq")
 health = 3.0
 
