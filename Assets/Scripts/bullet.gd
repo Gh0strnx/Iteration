@@ -36,9 +36,11 @@ func _physics_process(delta):
 			else:
 				collision.get_collider().hurt_player(damage)
 				queue_free()
+				
 		if bulletBounces != -1:
 				velocity = velocity.bounce(collision.get_normal())
 				bulletBounces = bulletBounces-1
+				
 		if bulletBounces == -1:
 			queue_free()
 		

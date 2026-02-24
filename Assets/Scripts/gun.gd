@@ -1,34 +1,34 @@
 extends Node2D
 
 ##How many bullets does the player have - IMPLEMENTED
-@export var bulletAmount := 3
+@export_range (1, 99999) var bulletAmount: int = 3
 ##How long does it take for player to reload - IMPLEMENTED
-@export var reloadTime := 3.0
+@export_range (0.01, 99999) var reloadTime: float = 3.0
 ##How fast can the player shoot - IMPLEMENTED
-@export var attackSpeed := 0.4
+@export_range (0.005, 99999) var attackSpeed: float = 0.4
 ##How innaccurate are the bullets - IMPLEMENTED
-@export var bulletSpread := 0.05
+@export_range (0, 99999) var bulletSpread: float = 0.05
 ##How many bullets get shot from one click - IMPLEMENTED
-@export var bulletsShot := 1
+@export_range (1, 99999) var bulletsShot: int = 1
 ##How big of a gap is there between the bullets from bulletsShot - IMPLEMENTED
-@export var timerSpeed := 0.2
+@export_range (0.001, 99999) var timerSpeed := 0.2
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 
 ### BULLET VARIABLES
 ##Can the player damage themselves - IMPLEMENTED
 @export var selfDamage = true
 ##How much damage does a bullet do - IMPLEMENTED
-@export var damage = 1.0
+@export_range (0.25, 99999) var damage: float = 1.0
 ##How fast is a bullet - IMPLEMENTED
-@export var speed: float = 10.5
+@export_range (0.05, 99999) var speed: float = 10.5
 ##How many times can the bullet bounce - IMPLEMENTED
-@export var bulletBounces: int = 0
+@export_range (0, 99999) var bulletBounces: int = 0
 ##How far does the bullet go before stopping - NOT IMPLEMENTED
-@export var bulletRange = 3.5
+@export_range (0.2, 99999) var bulletRange: float = 3.5
 ##How much damage over time (poison) does the bullet do - NOT IMPLEMENTED
-@export var poison = 0
+@export_range (0, 99999) var poison: float = 0
 ##Bullet size increaser
-@export var bulletSize = 1
+@export_range (0.25, 99999) var bulletSize: float = 1
 
 #var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
 var currentBulletAmount := 0

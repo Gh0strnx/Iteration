@@ -1,19 +1,19 @@
 extends CharacterBody2D
 
 ##movement speed of player - IMPLEMENTED
-@export var speed := 7.0
+@export_range (0.01, 99999) var speed: float = 7.0
 ##health of player - IMPLEMENTED
-@export var health := 10.0
+@export_range (1, 99999) var health: float = 10.0
 ##How far away player can be heard - NOT IMPLEMENTED
-@export var soundRadius = 480
+@export_range (0.1, 99999) var soundRadius: float = 480
 ##How loud the player is - NOT IMPLEMENTED
-@export var volumeIncreaser = 0
+@export_range (0.1, 99999) var volumeIncreaser: float = 0
 ##How long is the cooldown on blocking - NOT IMPLEMENTED
-@export var blockCooldown = 3
+@export_range (0.05, 99999) var blockCooldown: float = 3
 ##How much health do u gain from hurting someone - NOT IMPLEMENTED
-@export var LifeSteal = 0
+@export_range (0, 99999) var LifeSteal: float = 0
 ##How much health do u regenerate over time. - NOT IMPLEMENTED
-@export var Regeneration = 0
+@export_range (0, 99999) var Regeneration: float = 0
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
 var alive = true
