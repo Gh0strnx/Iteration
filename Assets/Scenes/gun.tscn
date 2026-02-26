@@ -33,7 +33,6 @@ texture = ExtResource("2_om7vp")
 [node name="Gun" type="Node2D" parent="Sprite2D"]
 position = Vector2(74.2857, 0)
 script = ExtResource("3_4kqa5")
-attackSpeed = 0.35
 
 [node name="coolDown" type="Timer" parent="Sprite2D/Gun"]
 

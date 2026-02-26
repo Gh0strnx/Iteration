@@ -3,7 +3,7 @@ extends CharacterBody2D
 ##movement speed of player - IMPLEMENTED
 @export_range (0.01, 99999) var speed: float = 7.0
 ##health of player - IMPLEMENTED
-@export_range (1, 99999) var health: float = 10.0
+@export_range (0.25, 99999) var health: float = 10.0
 ##How far away player can be heard - NOT IMPLEMENTED
 @export_range (0.1, 99999) var soundRadius: float = 480
 ##How loud the player is - NOT IMPLEMENTED
@@ -21,6 +21,12 @@ var alive = true
 var canBlock = true
 
 func _ready() -> void:
+	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
+	
+	if GameManager.localPlayer == self:
+		$AudioListener2D.current = true
+	else:
+		$AudioListener2D.current = false
 	
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
@@ -36,12 +42,13 @@ func _physics_process(delta: float) -> void:
 		if velocity.length() > 0.0:
 			$Sprite.play("run")
 			$Sprite2.play("run")
-			$AudioStreamPlayer2D.playing = true
+			if !$AudioStreamPlayer2D.playing:
+				$AudioStreamPlayer2D.play()
 		else:
 			$Sprite.play("idle")
 			$Sprite2.play("idle")
-			$AudioStreamPlayer2D.playing = false
-
+			if $AudioStreamPlayer2D.playing:
+				$AudioStreamPlayer2D.stop()
 		var facing_left := get_global_mouse_position().x < global_position.x
 		$Sprite.flip_h = facing_left
 		$Sprite2.flip_h = facing_left
@@ -71,6 +78,9 @@ func _physics_process(delta: float) -> void:
 		$LightMoving.hide()
 		$Collision.disabled = true
 		remove_from_group("alivePlayers")
+		
+	if Input.is_action_pressed("Block"):
+		pass
 	
 func hurt_player(damage):
 	GameManager.localPlayer.health -= damage

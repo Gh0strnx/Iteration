@@ -24,18 +24,16 @@ var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 ##How many times can the bullet bounce - IMPLEMENTED
 @export_range (0, 99999) var bulletBounces: int = 0
 ##How far does the bullet go before stopping - NOT IMPLEMENTED
-@export_range (0.2, 99999) var bulletRange: float = 3.5
+@export_range (0.2, 3.5) var bulletRange: float = 3.5
 ##How much damage over time (poison) does the bullet do - NOT IMPLEMENTED
 @export_range (0, 99999) var poison: float = 0
 ##Bullet size increaser
 @export_range (0.25, 99999) var bulletSize: float = 1
 
-#var bulletPrefab := preload("res://Assets/Scenes/bullet.tscn")
-var currentBulletAmount := 0
 
+var currentBulletAmount := 0
 var can_shoot := true
 var reloading := false
-
 var _owner_peer_id: int = 1
 var require_shoot_release := true
 

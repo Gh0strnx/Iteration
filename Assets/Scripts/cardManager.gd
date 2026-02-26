@@ -1,5 +1,5 @@
 extends Node2D
-@onready var gun = $Gun
+@onready var gun = $"../Gun"
 var player = GameManager.localPlayer
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

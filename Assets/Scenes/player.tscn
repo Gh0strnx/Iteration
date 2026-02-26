@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=31 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
@@ -6,7 +6,8 @@
 [ext_resource type="Script" path="res://Assets/Scripts/light_moving.gd" id="4_b0jy7"]
 [ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
-[ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="7_87tgf"]
+[ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
+[ext_resource type="AudioStream" uid="uid://0nbo4ddmmfdp" path="res://Assets/Audio/footstep.mp3" id="8_2oga3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 54.0
@@ -207,11 +208,20 @@ properties/12/replication_mode = 1
 properties/13/path = NodePath("Gun:visible")
 properties/13/spawn = true
 properties/13/replication_mode = 1
+properties/14/path = NodePath("AudioStreamPlayer2D:playing")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath("AudioStreamPlayer2D:max_distance")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("AudioStreamPlayer2D:volume_db")
+properties/16/spawn = true
+properties/16/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" groups=["Player", "alivePlayers"]]
 motion_mode = 1
 script = ExtResource("1_rwqxq")
-health = 3.0
+soundRadius = 200.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -74)
@@ -257,4 +267,10 @@ script = ExtResource("6_qdtce")
 script = ExtResource("7_87tgf")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_2oga3")
+volume_db = 12.0
+pitch_scale = 1.22
 max_distance = 480.0
+parameters/looping = true
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
