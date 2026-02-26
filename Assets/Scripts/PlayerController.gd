@@ -19,6 +19,7 @@ extends CharacterBody2D
 var alive = true
 ##Can the player block
 var canBlock = true
+var blocking = false
 
 func _ready() -> void:
 	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
@@ -65,6 +66,7 @@ func _physics_process(delta: float) -> void:
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
 		
+	block()
 	
 	if !alive:
 		GameManager.localPlayer = null
@@ -88,5 +90,17 @@ func hurt_player(damage):
 	if health <= 0:
 		alive = false
 		pass
+		
+func block():
+	if Input.is_action_just_pressed("Block"):
+		canBlock = false
+		blocking = true
+		await get_tree().create_timer(0.3).timeout
+		blocking = false
+		await get_tree().create_timer(blockCooldown).timeout
+		canBlock = true
+		
+		
+		
 
 		

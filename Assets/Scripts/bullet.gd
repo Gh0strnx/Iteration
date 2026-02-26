@@ -28,7 +28,7 @@ func start(_position: Vector2, _direction: float) -> void:
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		if collision.get_collider().has_method("hurt_player"):
+		if collision.get_collider().has_method("hurt_player") && GameManager.localPlayer.blocking == false:
 			if collision.get_collider().name == GameManager.localPlayer.name:
 				if selfDamage == true:
 					collision.get_collider().hurt_player(damage)
