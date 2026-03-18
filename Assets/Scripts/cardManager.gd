@@ -26,9 +26,16 @@ func FastBall():
 func Bandaid():
 	player.health += 1
 	
+func Medicine():
+	player.health += 2.5
+	player.Regeneration += 0.1
+	gun.attackSpeed += 0.25
+	
 func Electrolyte():
 	gun.speed += 1.05
 	player.speed += 0.7
+	
+
 	
 func Rage():
 	gun.damage += 0.25
@@ -43,6 +50,7 @@ func Refract():
 	
 func Medkit():
 	player.health += 2.5
+	player.Regeneration += 0.15
 	pass
 	
 	

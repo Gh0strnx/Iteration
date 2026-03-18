@@ -6,11 +6,11 @@ extends CharacterBody2D
 @export_range (0.25, 99999) var health: float = 10.0
 ##How far away player can be heard - NOT IMPLEMENTED
 @export_range (0.1, 99999) var soundRadius: float = 480
-##How loud the player is - NOT IMPLEMENTED
+##How loud the player is - IMPLEMENTED
 @export_range (0.1, 99999) var volumeIncreaser: float = 0
-##How long is the cooldown on blocking - NOT IMPLEMENTED
-@export_range (0.05, 99999) var blockCooldown: float = 3
-##How much health do u gain from hurting someone - NOT IMPLEMENTED
+##How long is the cooldown on blocking -  IMPLEMENTED
+@export_range (0.05, 99999) var blockCooldown: float = 5
+##How much health do u gain from hurting someone - IMPLEMENTED
 @export_range (0, 99999) var LifeSteal: float = 0
 ##How much health do u regenerate over time. - NOT IMPLEMENTED
 @export_range (0, 99999) var Regeneration: float = 0
@@ -20,8 +20,10 @@ var alive = true
 ##Can the player block
 var canBlock = true
 var blocking = false
+@onready var max_health: float = health
 
 func _ready() -> void:
+
 	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
 	
 	if GameManager.localPlayer == self:
@@ -65,7 +67,12 @@ func _physics_process(delta: float) -> void:
 	## SOUND STUFF
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
+	
+	##regen
+	if Regeneration > 0.0 and alive:
+		regenerate(delta)
 		
+	##block
 	block()
 	
 	if !alive:
@@ -102,5 +109,7 @@ func block():
 		
 		
 		
-
-		
+func regenerate(delta: float) -> void:
+	if health < max_health:
+		health = min(health + Regeneration * delta, max_health)
+	
