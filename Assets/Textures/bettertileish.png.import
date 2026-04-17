@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cshak0y2mbeqw"
-path="res://.godot/imported/soot sprite.png-e29b89003157620f7f516eaa83badac7.ctex"
+uid="uid://bb0coe6fanxca"
+path="res://.godot/imported/bettertileish.png-cfe3769aa8666bbc39ca057a90ff1b11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/soot sprite.png"
-dest_files=["res://.godot/imported/soot sprite.png-e29b89003157620f7f516eaa83badac7.ctex"]
+source_file="res://Assets/Textures/bettertileish.png"
+dest_files=["res://.godot/imported/bettertileish.png-cfe3769aa8666bbc39ca057a90ff1b11.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c63mrds0rnoxu"
-path="res://.godot/imported/BetterPlayer(Notfinal).png-06903701d461476e402a9e8f2a143dd5.ctex"
+uid="uid://d0637mnsieltw"
+path="res://.godot/imported/Decals.png-6f09cef23ad27afbff38c55580a501b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Textures/BetterPlayer(Notfinal).png"
-dest_files=["res://.godot/imported/BetterPlayer(Notfinal).png-06903701d461476e402a9e8f2a143dd5.ctex"]
+source_file="res://Assets/Textures/Decals.png"
+dest_files=["res://.godot/imported/Decals.png-6f09cef23ad27afbff38c55580a501b4.ctex"]
 
 [params]
 
