@@ -222,6 +222,7 @@ properties/16/replication_mode = 1
 motion_mode = 1
 script = ExtResource("1_rwqxq")
 soundRadius = 200.0
+Regeneration = 1.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -74)

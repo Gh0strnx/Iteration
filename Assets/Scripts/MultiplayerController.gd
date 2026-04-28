@@ -46,12 +46,18 @@ func SendPlayerInformation(name, id):
 		GameManager.Players[id] = {
 			"name": name,
 			"id": id,
-			"score": 0
+			"score": 0,
+			"alive": true, ##luca added
+			"colour": "red"
 		}
 		
 	if multiplayer.is_server():
 		for i in GameManager.Players:
 			SendPlayerInformation.rpc(GameManager.Players[i].name, i )
+		
+	
+
+
 
 func _on_host_button_down() -> void:
 	peer = ENetMultiplayerPeer.new()

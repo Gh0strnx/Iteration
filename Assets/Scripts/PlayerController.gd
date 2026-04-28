@@ -8,22 +8,23 @@ extends CharacterBody2D
 @export_range (0.1, 99999) var soundRadius: float = 480
 ##How loud the player is - IMPLEMENTED
 @export_range (0.1, 99999) var volumeIncreaser: float = 0
-##How long is the cooldown on blocking -  IMPLEMENTED
+##How long is the cooldown on blocking -  IMPLEMENTED (KINDA)
 @export_range (0.05, 99999) var blockCooldown: float = 5
 ##How much health do u gain from hurting someone - IMPLEMENTED
 @export_range (0, 99999) var LifeSteal: float = 0
 ##How much health do u regenerate over time. - NOT IMPLEMENTED
-@export_range (0, 99999) var Regeneration: float = 0
+@export_range (0, 99999) var Regeneration: float = 10
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
 var alive = true
 ##Can the player block
 var canBlock = true
 var blocking = false
+var id: int = 0
 @onready var max_health: float = health
 
 func _ready() -> void:
-
+	id = str(name).to_int()
 	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
 	
 	if GameManager.localPlayer == self:
@@ -32,7 +33,7 @@ func _ready() -> void:
 		$AudioListener2D.current = false
 	
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	
 
 func _physics_process(delta: float) -> void:
@@ -76,7 +77,7 @@ func _physics_process(delta: float) -> void:
 	block()
 	
 	if !alive:
-		GameManager.localPlayer = null
+		#GameManager.localPlayer = null
 	
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			node.hide()
@@ -93,10 +94,11 @@ func _physics_process(delta: float) -> void:
 	
 func hurt_player(damage):
 	GameManager.localPlayer.health -= damage
+	
 	print("Player health" + str(health))
 	if health <= 0:
 		alive = false
-		pass
+		GameManager.Players[id].alive = false
 		
 func block():
 	if Input.is_action_just_pressed("Block"):
@@ -111,5 +113,4 @@ func block():
 		
 func regenerate(delta: float) -> void:
 	if health < max_health:
-		health = min(health + Regeneration * delta, max_health)
-	
+		health = snappedf(min(health + Regeneration * delta, max_health), 0.1)

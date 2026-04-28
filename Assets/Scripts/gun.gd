@@ -1,7 +1,7 @@
 extends Node2D
 
 ##How many bullets does the player have - IMPLEMENTED
-@export_range (1, 99999) var bulletAmount: int = 3
+@export_range (1, 99999) var bulletAmount: int = 10
 ##How long does it take for player to reload - IMPLEMENTED
 @export_range (0.01, 99999) var reloadTime: float = 3.0
 ##How fast can the player shoot - IMPLEMENTED

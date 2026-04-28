@@ -17,6 +17,15 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
-		print("Game Finished" + str(get_tree().get_nodes_in_group("alivePlayers")))	
+		print("Game Finished" + str(get_tree().get_nodes_in_group("alivePlayers")))
+		var winningplayerid = get_tree().get_nodes_in_group("alivePlayers")[0].id
+		
+		Players[winningplayerid].score += 1
+		UpdatePlayerScore.rpc(Players)
 		ran = true
-	pass
+	#print(Players)
+
+@rpc("authority","call_remote") #runs on all clients
+func UpdatePlayerScore(dict):
+	print("i am ", multiplayer.get_unique_id(), " and i am updating my dictionary to ", Players)
+	GameManager.Players = dict
