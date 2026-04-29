@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 ##movement speed of player - IMPLEMENTED
-@export_range (0.01, 99999) var speed: float = 7.0
+@export_range (0.01, 99999) var speed: float = 7.6
 ##health of player - IMPLEMENTED
-@export_range (0.25, 99999) var health: float = 10.0
+@export_range (0.25, 99999) var health: float = 4
 ##How far away player can be heard - NOT IMPLEMENTED
 @export_range (0.1, 99999) var soundRadius: float = 480
 ##How loud the player is - IMPLEMENTED
@@ -15,7 +15,7 @@ extends CharacterBody2D
 ##How long it takes to regenerate - MAYBE IMPLEMENTED
 @export_range (0,99999) var regenTime: float = 3.0
 ##Regeneration Amount - MAYBE IMPLEMENTED
-@export_range (0, 99999) var Regeneration: float = 10
+@export_range (0, 99999) var Regeneration: float = 0.25
 
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
@@ -26,12 +26,17 @@ var blocking = false
 var id: int = 0
 ##Regeneration timer current
 var regen_timer: float = 0.0
+## Flag to ensure dead cleanup only runs once
+var death_processed: bool = false
 @onready var max_health: float = health
 
 func _ready() -> void:
 	id = str(name).to_int()
 	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
 	
+	#shader stuff
+	$Sprite.material = $Sprite.material.duplicate()
+	$Sprite2.material = $Sprite2.material.duplicate()
 	enable_outline(false)
 	
 	if GameManager.localPlayer == self:
@@ -42,6 +47,8 @@ func _ready() -> void:
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	var player_name = GameManager.Players[id].name
+	if player_name == null or player_name == "":
+		player_name = "Player " + str(id)
 	$"Control/VBoxContainer/Label".text = player_name
 	$"Control/VBoxContainer/ProgressBar".max_value = max_health
 	$"Control/VBoxContainer/ProgressBar".value = max_health
@@ -67,11 +74,26 @@ func _physics_process(delta: float) -> void:
 		var facing_left := get_global_mouse_position().x < global_position.x
 		$Sprite.flip_h = facing_left
 		$Sprite2.flip_h = facing_left
+		if facing_left == true:
+			$Control/Anchor/Block.position.x = 20
+		else:
+			$Control/Anchor/Block.position.x = -60
 
 		move_and_slide()
 
 		# Sync the result after movement
 		syncedPosition = global_position
+		
+		## REGENERATION - only runs when alive and is authority
+		regen_timer += delta
+		if regen_timer >= regenTime:
+			regen_timer = 0.0
+			regenerate()
+		
+		## BLOCK INPUT
+		if Input.is_action_just_pressed("Block") && canBlock:
+			block()
+			
 	else:
 		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
@@ -80,35 +102,18 @@ func _physics_process(delta: float) -> void:
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
 	
-	## REGENERATION
-	regen_timer += delta
-	if regen_timer >= regenTime:
-		regen_timer = 0.0
-		regenerate()
+	if !alive && !death_processed:
+		death_processed = true
 		
-	
-	
-	if !alive:
-		#GameManager.localPlayer = null
-	
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			if !GameManager.localPlayer.is_in_group("alivePlayers"):
 				node.hide()
 		
-		#$Sprite.hide()
-		#$Sprite2.hide()
-		#$Gun.hide()
-		#$LightMoving.hide()
-		#$Control.hide()
 		hide()
 		$Collision.disabled = true
 		remove_from_group("alivePlayers")
 		
-	if Input.is_action_pressed("Block"):
-		pass
-	
 func hurt_player(damage):
-	#GameManager.localPlayer.health -= damage
 	self.health -= damage
 	
 	print("Player health " + str(health), "   NAME: ", name)
@@ -118,25 +123,19 @@ func hurt_player(damage):
 	$"Control/VBoxContainer/ProgressBar".value = health
 		
 func block():
-	if Input.is_action_just_pressed("Block"):
-		canBlock = false
-		blocking = true
-		enable_outline(true)
-		await get_tree().create_timer(0.3).timeout
-		blocking = false
-		enable_outline(false)
-		await get_tree().create_timer(blockCooldown).timeout
-		canBlock = true
-		
-		
+	canBlock = false
+	blocking = true
+	enable_outline(true)
+	await get_tree().create_timer(0.3).timeout
+	blocking = false
+	enable_outline(false)
+	await get_tree().create_timer(blockCooldown).timeout
+	canBlock = true
 		
 func regenerate() -> void:
 	if health < max_health:
 		health = snappedf(min(health + Regeneration, max_health), 0.1)
-
-
-
-
+		$"Control/VBoxContainer/ProgressBar".value = health
 
 func enable_outline(enabled: bool, color: Color = Color.WHITE):
 	var mat = $Sprite.material as ShaderMaterial

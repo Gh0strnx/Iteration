@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://6dksx0gbkhay"]
+[gd_scene load_steps=8 format=3 uid="uid://6dksx0gbkhay"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/anchor.gd" id="1_vj7b3"]
 [ext_resource type="Texture2D" uid="uid://l0sbruunslyu" path="res://Assets/Textures/Gun.png" id="2_om7vp"]
 [ext_resource type="Script" path="res://Assets/Scripts/gun.gd" id="3_4kqa5"]
+[ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="4_5hbdj"]
+[ext_resource type="Texture2D" uid="uid://j6yyp65xtla" path="res://Assets/Textures/ProgressBarfullcircle.png" id="4_ghfhu"]
+[ext_resource type="Texture2D" uid="uid://dl5o5d8oimxqj" path="res://Assets/Textures/progress-bar-frame.png" id="5_se671"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qxs42"]
 properties/0/path = NodePath(".:rotation")
@@ -26,7 +29,7 @@ z_as_relative = false
 script = ExtResource("1_vj7b3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(98, 0)
+position = Vector2(108, 0)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_om7vp")
 
@@ -41,6 +44,38 @@ wait_time = 5.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qxs42")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 104.0
+offset_top = -52.0
+offset_right = 144.0
+offset_bottom = -12.0
+
+[node name="Reload" type="TextureProgressBar" parent="Control"]
+z_index = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 116.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+value = 50.0
+fill_mode = 4
+texture_under = ExtResource("4_ghfhu")
+texture_over = ExtResource("5_se671")
+texture_progress = ExtResource("4_5hbdj")
+tint_under = Color(0, 0, 0, 0.490196)
+tint_over = Color(0, 0, 0, 1)
+tint_progress = Color(0.999999, 0.36525, 0.0960292, 1)
 
 [connection signal="timeout" from="Sprite2D/Gun/coolDown" to="Sprite2D/Gun" method="_on_timer_timeout"]
 [connection signal="timeout" from="Sprite2D/Gun/Reload" to="Sprite2D/Gun" method="_on_reload_timeout"]
