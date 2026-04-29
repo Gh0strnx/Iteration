@@ -47,7 +47,6 @@ func SendPlayerInformation(name, id):
 			"name": name,
 			"id": id,
 			"score": 0,
-			"alive": true, ##luca added
 			"colour": "red"
 		}
 		

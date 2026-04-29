@@ -43,7 +43,7 @@ script = ExtResource("5_3mtd7")
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(0, -185)
-zoom = Vector2(0.55, 0.55)
+zoom = Vector2(0.2, 0.2)
 editor_draw_limits = true
 
 [node name="SpawnLocations" type="Node2D" parent="."]

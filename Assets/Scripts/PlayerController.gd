@@ -12,8 +12,11 @@ extends CharacterBody2D
 @export_range (0.05, 99999) var blockCooldown: float = 5
 ##How much health do u gain from hurting someone - IMPLEMENTED
 @export_range (0, 99999) var LifeSteal: float = 0
-##How much health do u regenerate over time. - NOT IMPLEMENTED
+##How long it takes to regenerate - MAYBE IMPLEMENTED
+@export_range (0,99999) var regenTime: float = 3.0
+##Regeneration Amount - MAYBE IMPLEMENTED
 @export_range (0, 99999) var Regeneration: float = 10
+
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
 var alive = true
@@ -21,11 +24,15 @@ var alive = true
 var canBlock = true
 var blocking = false
 var id: int = 0
+##Regeneration timer current
+var regen_timer: float = 0.0
 @onready var max_health: float = health
 
 func _ready() -> void:
 	id = str(name).to_int()
 	var is_local := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
+	
+	enable_outline(false)
 	
 	if GameManager.localPlayer == self:
 		$AudioListener2D.current = true
@@ -34,6 +41,10 @@ func _ready() -> void:
 	
 	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(id)
+	var player_name = GameManager.Players[id].name
+	$"Control/VBoxContainer/Label".text = player_name
+	$"Control/VBoxContainer/ProgressBar".max_value = max_health
+	$"Control/VBoxContainer/ProgressBar".value = max_health
 	
 
 func _physics_process(delta: float) -> void:
@@ -69,23 +80,27 @@ func _physics_process(delta: float) -> void:
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
 	
-	##regen
-	if Regeneration > 0.0 and alive:
-		regenerate(delta)
+	## REGENERATION
+	regen_timer += delta
+	if regen_timer >= regenTime:
+		regen_timer = 0.0
+		regenerate()
 		
-	##block
-	block()
+	
 	
 	if !alive:
 		#GameManager.localPlayer = null
 	
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
-			node.hide()
+			if !GameManager.localPlayer.is_in_group("alivePlayers"):
+				node.hide()
 		
-		$Sprite.hide()
-		$Sprite2.hide()
-		$Gun.hide()
-		$LightMoving.hide()
+		#$Sprite.hide()
+		#$Sprite2.hide()
+		#$Gun.hide()
+		#$LightMoving.hide()
+		#$Control.hide()
+		hide()
 		$Collision.disabled = true
 		remove_from_group("alivePlayers")
 		
@@ -93,24 +108,41 @@ func _physics_process(delta: float) -> void:
 		pass
 	
 func hurt_player(damage):
-	GameManager.localPlayer.health -= damage
+	#GameManager.localPlayer.health -= damage
+	self.health -= damage
 	
-	print("Player health" + str(health))
+	print("Player health " + str(health), "   NAME: ", name)
 	if health <= 0:
 		alive = false
 		GameManager.Players[id].alive = false
+	$"Control/VBoxContainer/ProgressBar".value = health
 		
 func block():
 	if Input.is_action_just_pressed("Block"):
 		canBlock = false
 		blocking = true
+		enable_outline(true)
 		await get_tree().create_timer(0.3).timeout
 		blocking = false
+		enable_outline(false)
 		await get_tree().create_timer(blockCooldown).timeout
 		canBlock = true
 		
 		
 		
-func regenerate(delta: float) -> void:
+func regenerate() -> void:
 	if health < max_health:
-		health = snappedf(min(health + Regeneration * delta, max_health), 0.1)
+		health = snappedf(min(health + Regeneration, max_health), 0.1)
+
+
+
+
+
+func enable_outline(enabled: bool, color: Color = Color.WHITE):
+	var mat = $Sprite.material as ShaderMaterial
+	mat.set_shader_parameter("outline_enabled", enabled)
+	mat.set_shader_parameter("outline_color", color)
+	
+	var mat2 = $Sprite2.material as ShaderMaterial
+	mat2.set_shader_parameter("outline_enabled", enabled)
+	mat2.set_shader_parameter("outline_color", color)
