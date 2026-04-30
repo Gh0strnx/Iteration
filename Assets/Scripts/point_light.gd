@@ -15,7 +15,7 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	# Safety: if something is missing, keep the light on
+	
 	if GameManager.localPlayer == null or bullet_body == null:
 		visible = true
 		return

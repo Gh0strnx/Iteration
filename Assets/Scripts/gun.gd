@@ -55,7 +55,10 @@ func _ready() -> void:
 
 	reload_timer.wait_time = reloadTime
 	reload_timer.one_shot = true
-	#reload_timer.timeout.connect(_on_reload_timeout)
+	reload_timer.timeout.connect(_on_reload_timeout)
+	
+	$".."/".."/Control/Reload.max_value = reloadTime
+	$".."/".."/Control/Reload.value = 0
 
 func _physics_process(_delta: float) -> void:
 	
@@ -66,6 +69,7 @@ func _physics_process(_delta: float) -> void:
 		if Input.is_action_pressed("Shoot"):
 			return
 		require_shoot_release = false
+		
 
 	if Input.is_action_just_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0:
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
@@ -77,6 +81,11 @@ func _physics_process(_delta: float) -> void:
 		reloading = true
 		can_shoot = false
 		reload_timer.start()
+		$".."/".."/Control/Reload.show()
+		$".."/".."/Control/Reload.max_value = reloadTime
+		
+	if reloading:
+		$".."/".."/Control/Reload.value = reloadTime - reload_timer.time_left
 
 func _find_owner_peer_id() -> int:
 	var n: Node = self
@@ -101,6 +110,7 @@ func _on_cooldown_timeout() -> void:
 func _on_reload_timeout() -> void:
 	currentBulletAmount = bulletAmount
 	reloading = false
+	$".."/".."/Control/Reload.hide()
 	can_shoot = true
 
 func _burst_shoot(aim_dir: Vector2) -> void:
@@ -127,8 +137,6 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	b.speed = speed
 	b.bulletBounces = bulletBounces
 	b.bulletRange = bulletRange
-	
-	
 	
 	var angle := aim_dir.angle()
 	b.start(global_position, angle)

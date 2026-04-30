@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=37 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Texture2D" uid="uid://dw3phgcdo740n" path="res://Assets/Textures/test.png" id="2_n2kff"]
@@ -9,9 +9,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
 [ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
 [ext_resource type="AudioStream" uid="uid://0nbo4ddmmfdp" path="res://Assets/Audio/footstep.mp3" id="8_2oga3"]
-[ext_resource type="Texture2D" uid="uid://j6yyp65xtla" path="res://Assets/Textures/ProgressBarfullcircle.png" id="10_bc4y4"]
 [ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="10_iv638"]
-[ext_resource type="Texture2D" uid="uid://dl5o5d8oimxqj" path="res://Assets/Textures/progress-bar-frame.png" id="11_gfk8q"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 51.3043
@@ -371,10 +369,10 @@ offset_top = 24.0
 offset_right = 68.0
 offset_bottom = 152.0
 scale = Vector2(0.3, 0.3)
+step = 0.01
 value = 98.0
 fill_mode = 4
-texture_under = ExtResource("10_bc4y4")
-texture_over = ExtResource("11_gfk8q")
 texture_progress = ExtResource("10_iv638")
 tint_under = Color(0.298039, 0.164706, 0.0705882, 1)
 tint_over = Color(0.298039, 0.164706, 0.0705882, 1)
+tint_progress = Color(0.164706, 1, 1, 1)

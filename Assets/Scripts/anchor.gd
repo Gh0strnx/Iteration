@@ -6,17 +6,10 @@ extends Node2D
 var _owner_peer_id: int = 1
 
 func _ready() -> void:
-	# This gun is instanced under the Player.
-	# In your project, SceneManager.gd sets Player.name = str(peer_id)
 	_owner_peer_id = int(str(get_parent().name))
-
-
-	# Make this gun node owned by that peer, so only they drive it.
 	sync.set_multiplayer_authority(_owner_peer_id)
 
 func _process(_delta: float) -> void:
-	# Only the owning machine rotates using its mouse.
-	# Rotation then replicates through MultiplayerSynchronizer.
 	if multiplayer.get_unique_id() != _owner_peer_id:
 		return
 
@@ -26,6 +19,5 @@ func _process(_delta: float) -> void:
 
 	rotation = aim_dir.angle()
 
-	# Flip gun sprite when aiming left
 	var deg := wrapf(rad_to_deg(rotation), -180.0, 180.0)
 	sprite.flip_v = not (deg > -90.0 and deg < 90.0)

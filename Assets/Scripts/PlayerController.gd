@@ -28,6 +28,9 @@ var id: int = 0
 var regen_timer: float = 0.0
 ## Flag to ensure dead cleanup only runs once
 var death_processed: bool = false
+## Block cooldown tracking
+var block_cooldown_timer: float = 0.0
+var block_cooldown_active: bool = false
 @onready var max_health: float = health
 
 func _ready() -> void:
@@ -44,7 +47,6 @@ func _ready() -> void:
 	else:
 		$AudioListener2D.current = false
 	
-	# This only works if the node name is actually the peer id (like "1", "2", etc).
 	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	var player_name = GameManager.Players[id].name
 	if player_name == null or player_name == "":
@@ -52,6 +54,11 @@ func _ready() -> void:
 	$"Control/VBoxContainer/Label".text = player_name
 	$"Control/VBoxContainer/ProgressBar".max_value = max_health
 	$"Control/VBoxContainer/ProgressBar".value = max_health
+	
+	# Initialize block cooldown bar
+	$"Control/Anchor/Block".hide()
+	$"Control/Anchor/Block".max_value = blockCooldown
+	$"Control/Anchor/Block".value = blockCooldown
 	
 
 func _physics_process(delta: float) -> void:
@@ -90,12 +97,21 @@ func _physics_process(delta: float) -> void:
 			regen_timer = 0.0
 			regenerate()
 		
+		## BLOCK COOLDOWN BAR UPDATE
+		if block_cooldown_active:
+			block_cooldown_timer += delta
+			var fill_ratio: float = block_cooldown_timer / blockCooldown
+			$"Control/Anchor/Block".value = block_cooldown_timer
+			if block_cooldown_timer >= blockCooldown:
+				block_cooldown_active = false
+				block_cooldown_timer = 0.0
+				$"Control/Anchor/Block".hide()
+		
 		## BLOCK INPUT
 		if Input.is_action_just_pressed("Block") && canBlock:
 			block()
 			
 	else:
-		# IMPORTANT: assign the lerp result 
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
 		
 	## SOUND STUFF
@@ -126,6 +142,14 @@ func block():
 	canBlock = false
 	blocking = true
 	enable_outline(true)
+	
+	# Show and reset the block cooldown bar immediately
+	$"Control/Anchor/Block".max_value = blockCooldown
+	$"Control/Anchor/Block".value = 0.0
+	$"Control/Anchor/Block".show()
+	block_cooldown_timer = 0.0
+	block_cooldown_active = true
+	
 	await get_tree().create_timer(0.3).timeout
 	blocking = false
 	enable_outline(false)
