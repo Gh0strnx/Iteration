@@ -120,7 +120,8 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	b.bulletSize = bulletSize
 
 	# pass the owning player to the bullet
-	var shooter_node = get_tree().root.find_child(str(_owner_peer_id), true, false)
+	var shooter_node = get_parent().get_parent().get_parent()
+	print(shooter_node)
 	b.shooter = shooter_node
 
 	var angle := aim_dir.angle()

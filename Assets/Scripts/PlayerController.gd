@@ -19,10 +19,10 @@ extends CharacterBody2D
 
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
-var alive = true
+@export var alive = true
 ##Can the player block
 var canBlock = true
-var blocking = false
+@export var blocking = false
 var id: int = 0
 ##Regeneration timer current
 var regen_timer: float = 0.0
