@@ -9,13 +9,13 @@ extends CharacterBody2D
 ##How loud the player is - IMPLEMENTED
 @export_range (0.1, 99999) var volumeIncreaser: float = 0
 ##How long is the cooldown on blocking -  IMPLEMENTED
-@export_range (0.05, 99999) var blockCooldown: float = 5
-##How much health do u gain from hurting someone - Maybe implemented
+@export_range (0.05, 99999) var blockCooldown: float = 6
+##How much health % do u gain from hurting someone - implemented
 @export_range (0, 100) var LifeSteal: float = 0
 ##How long it takes to regenerate - IMPLEMENTED (probably need to test)
-@export_range (0,99999) var regenTime: float = 3.0
+@export_range (0,99999) var regenTime: float = 4.0
 ##Regeneration Amount - IMPLEMENTED (need to test)
-@export_range (0, 99999) var Regeneration: float = 0.25
+@export_range (0, 99999) var Regeneration: float = 0
 
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive

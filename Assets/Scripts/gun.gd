@@ -1,10 +1,16 @@
 extends Node2D
 
-@export_range (1, 99999) var bulletAmount: int = 10
+##HOW MANY BULLETS DOES THE PLAYER HAVE BEFORE RELOAD
+@export_range (1, 99999) var bulletAmount: int = 4
+##HOW LONG IS RELOAD TIME
 @export_range (0.01, 99999) var reloadTime: float = 3.0
+##HOW QUICKLY CAN U SHOOT THE NEXT BULLET AFTER PREV
 @export_range (0.005, 99999) var attackSpeed: float = 0.4
-@export_range (0, 99999) var bulletSpread: float = 0.05
+##HOW ACCURATE ARE YOUR BULLETS (HIGHER NUMBER LESS ACCURATE)
+@export_range (0, 99999) var bulletSpread: float = 0.1
+##HOW MANY BULLETS DO YOU SHOOT AT A TIME (BURST)
 @export_range (1, 99999) var bulletsShot: int = 1
+##IGNORE FOR THE MOST PART (FOR COMBINATION OF BULLETSHOT AND ATTACK SPEED)
 @export_range (0.001, 99999) var timerSpeed := 0.2
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 
