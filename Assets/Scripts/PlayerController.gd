@@ -17,6 +17,8 @@ extends CharacterBody2D
 ##Regeneration Amount - IMPLEMENTED (need to test)
 @export_range (0, 99999) var Regeneration: float = 0
 
+@export var colorSetting: String = "WHITE"
+
 @export var syncedPosition: Vector2 = Vector2.ZERO
 ##Is player alive
 @export var alive = true
@@ -162,10 +164,11 @@ func regenerate() -> void:
 		$"Control/VBoxContainer/ProgressBar".value = health
 
 func enable_outline(enabled: bool, color: Color = Color.WHITE):
+	var actual_color = Color.from_string(colorSetting, Color.WHITE)
 	var mat = $Sprite.material as ShaderMaterial
 	mat.set_shader_parameter("outline_enabled", enabled)
-	mat.set_shader_parameter("outline_color", color)
+	mat.set_shader_parameter("outline_color", actual_color)
 	
 	var mat2 = $Sprite2.material as ShaderMaterial
 	mat2.set_shader_parameter("outline_enabled", enabled)
-	mat2.set_shader_parameter("outline_color", color)
+	mat2.set_shader_parameter("outline_color", actual_color)

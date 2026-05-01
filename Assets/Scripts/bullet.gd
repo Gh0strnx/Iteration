@@ -20,7 +20,7 @@ func start(_position: Vector2, _direction: float) -> void:
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		if collision.get_collider().has_method("hurt_player") && GameManager.localPlayer.blocking == false:
+		if collision.get_collider().has_method("hurt_player") && collision.get_collider().blocking == false:
 			print(GameManager.localPlayer.name)
 			if collision.get_collider().name == GameManager.localPlayer.name:
 				if selfDamage == true:
@@ -35,7 +35,15 @@ func _physics_process(delta):
 					shooter.health = snappedf(min(shooter.health + shooter.LifeSteal, shooter.max_health), 0.1)
 					shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
 				queue_free()
-				
+			
+		else: 
+			if collision.get_collider().blocking == true:
+				collision.get_collider().colorSetting = "CYAN"
+				await get_tree().create_timer(0.15).timeout
+				collision.get_collider().colorSetting = "WHITE"
+			
+			
+		
 		if bulletBounces != -1:
 			velocity = velocity.bounce(collision.get_normal())
 			bulletBounces = bulletBounces - 1
