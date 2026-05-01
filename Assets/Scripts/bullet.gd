@@ -25,29 +25,33 @@ func _physics_process(delta):
 			if collision.get_collider().name == GameManager.localPlayer.name:
 				if selfDamage == true:
 					collision.get_collider().hurt_player(damage)
+					if poison > 0:
+						collision.get_collider().apply_poison(damage * (poison / 100.0))
 					if shooter && shooter.LifeSteal > 0:
 						shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 						shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
 					queue_free()
 			else:
 				collision.get_collider().hurt_player(damage)
+				if poison > 0:
+					collision.get_collider().apply_poison(damage * (poison / 100.0))
 				if shooter && shooter.LifeSteal > 0:
-					shooter.health = snappedf(min(shooter.health + shooter.LifeSteal, shooter.max_health), 0.1)
+					shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 					shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
 				queue_free()
-			
-		else: 
-			if collision.get_collider().blocking == true:
+
+		else:
+			if collision.get_collider().has_method("enable_outline") && collision.get_collider().blocking == true:
 				collision.get_collider().colorSetting = "CYAN"
+				collision.get_collider().enable_outline(true)
 				await get_tree().create_timer(0.15).timeout
 				collision.get_collider().colorSetting = "WHITE"
-			
-			
-		
+				collision.get_collider().enable_outline(false)
+
 		if bulletBounces != -1:
 			velocity = velocity.bounce(collision.get_normal())
 			bulletBounces = bulletBounces - 1
-			
+
 		if bulletBounces == -1:
 			queue_free()
 
