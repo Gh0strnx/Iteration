@@ -76,13 +76,13 @@ func deLobbyCode(_code: String) -> void:
 
 
 func _on_host_button_down() -> void:
-	lobbyCode()
-	self.text = str(GameManager.lobbyCode)
+		lobbyCode()
+		self.text = str(GameManager.lobbyCode)
 
 
 func _on_join_button_down() -> void:
-	if $/root/Control/NameInput2.text != "":
-		deLobbyCode($/root/Control/NameInput2.text)
+	if $"/root/Control/Menu Stuff/NameInput2".text != "":
+		deLobbyCode($"/root/Control/Menu Stuff/NameInput2".text)
 	else:
 		GameManager.ip = '127.0.0.1'
 		
