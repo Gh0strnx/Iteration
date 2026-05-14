@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 
 @export var port = 8910
@@ -14,11 +14,6 @@ func _ready() -> void:
 	$"Menu Stuff/NameInput2".hide()
 	$"Menu Stuff/NameInput3".hide()
 	$"Menu Stuff/HBoxContainer/StartGame".hide()
-	$"Score tracker/VBoxContainer/Player1Score".hide()
-	$"Score tracker/VBoxContainer/Player2Score".hide()
-	$"Score tracker/VBoxContainer/Player3Score".hide()
-	$"Score tracker/VBoxContainer/Player4Score".hide()
-	$"Score tracker".hide()
 	$"Menu Stuff/HBoxContainer/StartGame".hide()
 	GameManager.port = port
 	multiplayer.peer_connected.connect(peer_connected)
@@ -59,7 +54,8 @@ func SendPlayerInformation(name, id):
 			"name": name,
 			"id": id,
 			"score": 0,
-			"colour": "red"
+			"colour": "red",
+			"index": ""
 		}
 		
 	if multiplayer.is_server():
@@ -98,17 +94,7 @@ func StartGame():
 		var scene = load("res://Assets/Scenes/main.tscn").instantiate()
 		get_tree().root.add_child(scene)
 		$"Menu Stuff".hide()
-		$"Score tracker".show()
-		await get_tree().process_frame
-		var alive_players_size = get_tree().get_nodes_in_group("alivePlayers").size()
-		if alive_players_size >= 1:
-			$"Score tracker/VBoxContainer/Player1Score".show()
-		if alive_players_size >= 2:
-			$"Score tracker/VBoxContainer/Player2Score".show()
-		if alive_players_size >= 3:
-			$"Score tracker/VBoxContainer/Player3Score".show()
-		if alive_players_size >= 4:
-			$"Score tracker/VBoxContainer/Player4Score".show()
+		
 			
 
 

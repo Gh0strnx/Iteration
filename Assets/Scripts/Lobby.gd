@@ -24,6 +24,7 @@ func lobbyCode():
 	for _address in IP.get_local_addresses():
 		if _address.begins_with("192.168") or _address.begins_with("10.") or _address.begins_with("172."):
 			ip = _address
+			print(ip)
 			
 	if ip == null:
 		return

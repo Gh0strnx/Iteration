@@ -16,9 +16,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	
-	if GameManager.localPlayer == null or bullet_body == null:
-		visible = true
-		return
+	#if GameManager.localPlayer == null or bullet_body == null:
+		#visible = true
+		#return
 
 	var from: Vector2 = GameManager.localPlayer.global_position
 	var to: Vector2 = bullet_body.global_position
@@ -28,6 +28,7 @@ func _physics_process(_delta: float) -> void:
 	params.collide_with_bodies = true
 	params.collide_with_areas = true
 	params.exclude = [GameManager.localPlayer]  # ignore the player itself
+	
 
 	var result: Dictionary = space_state.intersect_ray(params)
 

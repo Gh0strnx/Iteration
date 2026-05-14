@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://jhqbcjpswsq"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/bullet.gd" id="1_1ap7j"]
-[ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="2_iukt2"]
+[ext_resource type="Texture2D" uid="uid://j6yyp65xtla" path="res://Assets/Textures/ProgressBarfullcircle.png" id="2_r8b8w"]
 [ext_resource type="Texture2D" uid="uid://tydp4xnaa2in" path="res://Assets/Textures/Untitled design.png" id="3_5vhso"]
 [ext_resource type="Script" path="res://Assets/Scripts/point_light.gd" id="4_i676a"]
 
@@ -10,15 +10,15 @@ radius = 12.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vwc0l"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xm7yd"]
-atlas = ExtResource("2_iukt2")
-region = Rect2(128, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0p4wc"]
+atlas = ExtResource("2_r8b8w")
+region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0bg36"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xm7yd")
+"texture": SubResource("AtlasTexture_0p4wc")
 }],
 "loop": true,
 "name": &"default",
@@ -51,6 +51,7 @@ texture_scale = 0.24
 script = ExtResource("4_i676a")
 
 [node name="Area2D" type="Area2D" parent="." groups=["bullet"]]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_lcw0m")

@@ -1,25 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=4 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://dol42528clwua" path="res://Assets/Textures/Dangrek/Dangrek-Regular.ttf" id="2_lnnif"]
 [ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="3_7qn0k"]
-[ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="4_ud8hc"]
 
-[node name="Control" type="Control"]
-light_mask = 0
-z_index = 1
-z_as_relative = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Control" type="CanvasLayer"]
+layer = 2
 script = ExtResource("1_sli30")
 
 [node name="TitleScreen" type="Control" parent="."]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -73,7 +64,7 @@ flat = true
 alignment = 0
 
 [node name="Menu Stuff" type="Control" parent="."]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -98,6 +89,7 @@ alignment = 1
 
 [node name="Host" type="Button" parent="Menu Stuff/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_lnnif")
 theme_override_font_sizes/font_size = 60
 text = "HOST "
@@ -105,6 +97,7 @@ flat = true
 
 [node name="StartGame" type="Button" parent="Menu Stuff/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_lnnif")
 theme_override_font_sizes/font_size = 60
 text = "START "
@@ -112,6 +105,7 @@ flat = true
 
 [node name="Join" type="Button" parent="Menu Stuff/HBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_lnnif")
 theme_override_font_sizes/font_size = 60
 text = "JOIN "
@@ -147,9 +141,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -326.5
-offset_top = -148.0
-offset_right = 326.5
+offset_left = -98.5
+offset_top = -198.0
+offset_right = 98.5
 offset_bottom = -117.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -178,10 +172,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -0.5
 offset_top = -15.0
-offset_right = 651.5
-offset_bottom = -11.0
+offset_right = 196.0
+offset_bottom = -10.0
 grow_vertical = 0
 
 [node name="NameInput3" type="LineEdit" parent="Menu Stuff"]
@@ -226,6 +219,7 @@ anchor_bottom = 1.0
 offset_top = -100.0
 offset_right = 115.0
 grow_vertical = 0
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_lnnif")
 theme_override_font_sizes/font_size = 50
 text = " QUIT "
@@ -241,61 +235,6 @@ offset_top = -28.0
 offset_right = 127.0
 offset_bottom = -24.0
 grow_vertical = 0
-
-[node name="Score tracker" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Score tracker"]
-z_index = 100
-z_as_relative = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2880.0
-offset_top = -1900.0
-offset_bottom = -736.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.3, 0.3)
-
-[node name="Player1Score" type="TextureProgressBar" parent="Score tracker/VBoxContainer"]
-light_mask = 7
-layout_mode = 2
-max_value = 10.0
-step = 0.5
-value = 2.0
-texture_under = ExtResource("4_ud8hc")
-texture_progress = ExtResource("4_ud8hc")
-tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
-
-[node name="Player2Score" type="TextureProgressBar" parent="Score tracker/VBoxContainer"]
-light_mask = 7
-layout_mode = 2
-max_value = 10.0
-step = 0.5
-texture_under = ExtResource("4_ud8hc")
-texture_progress = ExtResource("4_ud8hc")
-tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
-
-[node name="Player3Score" type="TextureProgressBar" parent="Score tracker/VBoxContainer"]
-light_mask = 7
-layout_mode = 2
-max_value = 10.0
-step = 0.5
-texture_under = ExtResource("4_ud8hc")
-texture_progress = ExtResource("4_ud8hc")
-tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
-
-[node name="Player4Score" type="TextureProgressBar" parent="Score tracker/VBoxContainer"]
-light_mask = 7
-layout_mode = 2
-max_value = 10.0
-step = 0.5
-texture_under = ExtResource("4_ud8hc")
-texture_progress = ExtResource("4_ud8hc")
-tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
 
 [connection signal="button_down" from="TitleScreen/VBoxContainer/PLAY" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="Menu Stuff/HBoxContainer/Host" to="." method="_on_host_button_down"]
