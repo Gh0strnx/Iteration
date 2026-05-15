@@ -29,11 +29,13 @@ animations = [{
 radius = 324.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(2, 2)
 motion_mode = 1
 script = ExtResource("1_1ap7j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.27374e-13, 2.27374e-13)
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_tq7tn")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -41,7 +43,7 @@ self_modulate = Color(1, 0.823529, 0.270588, 1)
 z_index = 5
 material = SubResource("ShaderMaterial_vwc0l")
 position = Vector2(3.8147e-06, 3.8147e-06)
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_0bg36")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

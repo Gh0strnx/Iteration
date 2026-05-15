@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://dol42528clwua" path="res://Assets/Textures/Dangrek/Dangrek-Regular.ttf" id="2_lnnif"]
-[ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="3_7qn0k"]
+[ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="3_7qn0k"]
 
 [node name="Control" type="CanvasLayer"]
 layer = 2
