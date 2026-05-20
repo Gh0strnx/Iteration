@@ -23,8 +23,8 @@ var block_cooldown_active: bool = false
 
 func _ready() -> void:
 	id = str(name).to_int()
+	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	$Sprite.material = $Sprite.material.duplicate()
-	$Sprite2.material = $Sprite2.material.duplicate()
 	enable_outline(false)
 	
 	if GameManager.localPlayer == self:
@@ -32,17 +32,21 @@ func _ready() -> void:
 	else:
 		$AudioListener2D.current = false
 	
-	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	var player_name = GameManager.Players[id].name
 	if player_name == null or player_name == "":
 		player_name = "Player " + str(id)
 	$"Control/VBoxContainer/Label".text = player_name
 	$"Control/VBoxContainer/ProgressBar".max_value = max_health
 	$"Control/VBoxContainer/ProgressBar".value = max_health
-	
 	$"Control/Anchor/Block".hide()
 	$"Control/Anchor/Block".max_value = blockCooldown
 	$"Control/Anchor/Block".value = blockCooldown
+
+func apply_player_colour():
+	var hex = GameManager.Players[id].get("hex", "ffffff")
+	var colour = Color("#" + hex)
+	var mat = $Sprite.material as ShaderMaterial
+	mat.set_shader_parameter("player_color", colour)
 
 func _physics_process(delta: float) -> void:
 	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
@@ -53,18 +57,16 @@ func _physics_process(delta: float) -> void:
 
 		if velocity.length() > 0.0:
 			$Sprite.play("run")
-			$Sprite2.play("run")
 			if !$AudioStreamPlayer2D.playing:
 				$AudioStreamPlayer2D.play()
 		else:
 			$Sprite.play("idle")
-			$Sprite2.play("idle")
 			if $AudioStreamPlayer2D.playing:
 				$AudioStreamPlayer2D.stop()
 
-		var facing_left := get_global_mouse_position().x < global_position.x
+		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
-		$Sprite2.flip_h = facing_left
+		
 		if facing_left == true:
 			$Control/Anchor/Block.position.x = 20
 		else:
@@ -144,6 +146,3 @@ func enable_outline(enabled: bool, color: Color = Color.WHITE):
 	var mat = $Sprite.material as ShaderMaterial
 	mat.set_shader_parameter("outline_enabled", enabled)
 	mat.set_shader_parameter("outline_color", actual_color)
-	var mat2 = $Sprite2.material as ShaderMaterial
-	mat2.set_shader_parameter("outline_enabled", enabled)
-	mat2.set_shader_parameter("outline_color", actual_color)

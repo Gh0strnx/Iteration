@@ -15,8 +15,8 @@ func _ready() -> void:
 	
 	$"Control2/StartButton".disabled = true
 	$"Control2/CountdownLabel".hide()
-	
 	$"Control2/WarningLabel".hide()
+	
 	$"Control2/HBoxContainer/1".hide()
 	$"Control2/HBoxContainer/2".hide()
 	$"Control2/HBoxContainer/3".hide()
@@ -56,7 +56,6 @@ func _ready() -> void:
 	
 	PlayerChecker(alive_players_size)
 	sync_name.rpc(id, name)
-	
 	
 	GameManager.Players[id].colour = colour_keys[0]
 	GameManager.Players[id].hex = colours[colour_keys[0]]
@@ -143,10 +142,8 @@ func Done():
 	$"../Map".show()
 	for player in get_tree().get_nodes_in_group("alivePlayers"):
 		player.show()
+		player.apply_player_colour()
 	get_tree().paused = false
-	
-	#print(GameManager.Players)
-
 
 func ColourChanger():
 	if not GameManager.Players.has(id):
@@ -220,6 +217,7 @@ func readyUp():
 	canChange = false
 	GameManager.Players[id].ready = true
 	check_all_ready()
+	sync_player_colour.rpc_id(1, id, GameManager.Players[id].colour, GameManager.Players[id].hex)
 	
 	match index:
 		0:
@@ -263,6 +261,18 @@ func unready():
 			$"Control2/HBoxContainer/4/Icon".modulate = Color.WHITE
 			$"Control2/HBoxContainer/4/READY".hide()
 			$"Control2/HBoxContainer/4/COLOUR".show()
+
+@rpc("any_peer", "reliable")
+func sync_player_colour(player_id: int, colour: String, hex: String):
+	if multiplayer.is_server():
+		GameManager.Players[player_id].colour = colour
+		GameManager.Players[player_id].hex = hex
+		broadcast_player_colour.rpc(player_id, colour, hex)
+
+@rpc("authority", "reliable")
+func broadcast_player_colour(player_id: int, colour: String, hex: String):
+	GameManager.Players[player_id].colour = colour
+	GameManager.Players[player_id].hex = hex
 
 @rpc("any_peer", "reliable")
 func sync_ready(sender_id: int, is_ready: bool):

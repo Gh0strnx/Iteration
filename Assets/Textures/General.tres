@@ -1,9 +1,8 @@
-[gd_resource type="TileSet" load_steps=71 format=3 uid="uid://b8oin6f7ijye3"]
+[gd_resource type="TileSet" load_steps=70 format=3 uid="uid://b8oin6f7ijye3"]
 
 [ext_resource type="Texture2D" uid="uid://867iar475dkg" path="res://Assets/Textures/tiles.png" id="1_qeqa7"]
 [ext_resource type="Texture2D" uid="uid://5477ubs2ylns" path="res://Assets/Textures/box1.png" id="2_48eib"]
 [ext_resource type="Texture2D" uid="uid://bb0coe6fanxca" path="res://Assets/Textures/bettertileish.png" id="3_0gi1p"]
-[ext_resource type="Texture2D" uid="uid://dxnsv220iai5i" path="res://Assets/Textures/tile.png" id="4_u4lhs"]
 [ext_resource type="Texture2D" uid="uid://d0637mnsieltw" path="res://Assets/Textures/Decals.png" id="5_gwww8"]
 [ext_resource type="Texture2D" uid="uid://ri14xpoysupe" path="res://Assets/Textures/buildings.png" id="6_70r4g"]
 
@@ -837,7 +836,6 @@ texture_region_size = Vector2i(128, 128)
 11:1/1/flip_h = true
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sju5r"]
-texture = ExtResource("4_u4lhs")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 
