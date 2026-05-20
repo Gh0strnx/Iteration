@@ -1,21 +1,405 @@
-[gd_scene load_steps=2 format=3 uid="uid://5hjp882cwyi0"]
+[gd_scene load_steps=8 format=3 uid="uid://5hjp882cwyi0"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="1_1vnxw"]
+[ext_resource type="Texture2D" uid="uid://d0av8gaq6si3m" path="res://Assets/Textures/base.png" id="2_2r7m5"]
+[ext_resource type="Texture2D" uid="uid://daj7ytsg12xeh" path="res://Assets/Textures/BackdropLobby.png" id="2_i4re0"]
+[ext_resource type="Texture2D" uid="uid://buhh4bnl00p7p" path="res://Assets/Textures/dogicon.png" id="3_6cqrr"]
+[ext_resource type="Texture2D" uid="uid://c8kxr0dnj7a0q" path="res://Assets/Textures/dogoverlay.png" id="4_xpqf2"]
+[ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="6_sqx2p"]
+[ext_resource type="FontFile" uid="uid://b6pujfnc3bs7e" path="res://Assets/Fonts/Geo/Geo-Italic.ttf" id="7_fw8yi"]
 
-[node name="Lobby" type="Control"]
+[node name="Lobby" type="CanvasLayer"]
+script = ExtResource("1_1vnxw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -260.0
+offset_top = -177.0
+offset_right = 1392.0
+offset_bottom = 920.0
+color = Color(0, 0.0705882, 0.145098, 1)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Control"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_i4re0")
+
+[node name="Control2" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_1vnxw")
 
-[node name="TextureRect" type="ColorRect" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control2"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_right = 336.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.154002, 0.126897, 0.457526, 1)
+theme_override_constants/separation = 224
+alignment = 1
+
+[node name="1" type="Control" parent="Control2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="Sprite2D" parent="Control2/HBoxContainer/1"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2r7m5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/1/Icon"]
+modulate = Color(1, 0.0627451, 0.243137, 1)
+texture = ExtResource("3_6cqrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/1"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_xpqf2")
+
+[node name="READY" type="RichTextLabel" parent="Control2/HBoxContainer/1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]READY[/center]"
+
+[node name="COLOUR" type="RichTextLabel" parent="Control2/HBoxContainer/1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]RED[/center]"
+
+[node name="NAME" type="RichTextLabel" parent="Control2/HBoxContainer/1"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = 90.0
+offset_right = 50.0
+offset_bottom = 90.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]PLAYER1234567[/center]"
+autowrap_mode = 1
+visible_characters = 10
+visible_ratio = 0.909091
+
+[node name="2" type="Control" parent="Control2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="Sprite2D" parent="Control2/HBoxContainer/2"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2r7m5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/2/Icon"]
+modulate = Color(1, 0.0627451, 0.243137, 1)
+texture = ExtResource("3_6cqrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/2"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_xpqf2")
+
+[node name="READY" type="RichTextLabel" parent="Control2/HBoxContainer/2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]READY[/center]"
+
+[node name="COLOUR" type="RichTextLabel" parent="Control2/HBoxContainer/2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]RED[/center]"
+
+[node name="NAME" type="RichTextLabel" parent="Control2/HBoxContainer/2"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = 90.0
+offset_right = 50.0
+offset_bottom = 90.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]PLAYER1234567[/center]"
+visible_characters = 10
+visible_ratio = 0.769231
+
+[node name="3" type="Control" parent="Control2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="Sprite2D" parent="Control2/HBoxContainer/3"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2r7m5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/3/Icon"]
+modulate = Color(1, 0.0627451, 0.243137, 1)
+texture = ExtResource("3_6cqrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/3"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_xpqf2")
+
+[node name="READY" type="RichTextLabel" parent="Control2/HBoxContainer/3"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]READY[/center]"
+
+[node name="COLOUR" type="RichTextLabel" parent="Control2/HBoxContainer/3"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]RED[/center]"
+
+[node name="NAME" type="RichTextLabel" parent="Control2/HBoxContainer/3"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = 90.0
+offset_right = 50.0
+offset_bottom = 90.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]PLAYER1234567[/center]"
+visible_characters = 10
+visible_ratio = 0.769231
+
+[node name="4" type="Control" parent="Control2/HBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="Sprite2D" parent="Control2/HBoxContainer/4"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2r7m5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/4/Icon"]
+modulate = Color(1, 0.0627451, 0.243137, 1)
+texture = ExtResource("3_6cqrr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/4"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_xpqf2")
+
+[node name="READY" type="RichTextLabel" parent="Control2/HBoxContainer/4"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]READY[/center]"
+
+[node name="COLOUR" type="RichTextLabel" parent="Control2/HBoxContainer/4"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -107.0
+offset_right = 50.0
+offset_bottom = -107.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]RED[/center]"
+
+[node name="NAME" type="RichTextLabel" parent="Control2/HBoxContainer/4"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = 90.0
+offset_right = 50.0
+offset_bottom = 90.0
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]PLAYER1234567[/center]"
+visible_characters = 10
+visible_ratio = 0.769231
+
+[node name="StartButton" type="Button" parent="Control2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -206.0
+offset_top = -136.0
+offset_right = -53.0
+offset_bottom = -65.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 60
+text = "START"
+flat = true
+
+[node name="ESCinstructions" type="RichTextLabel" parent="Control2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -197.0
+offset_top = -83.0
+offset_right = -53.0
+offset_bottom = -43.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 20
+text = "Press ESC to stop"
+
+[node name="CountdownLabel" type="RichTextLabel" parent="Control2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -248.0
+offset_top = -159.0
+offset_right = -188.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("6_sqx2p")
+theme_override_font_sizes/normal_font_size = 116
+text = "3"
+
+[node name="WarningLabel" type="RichTextLabel" parent="Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = 116.0
+offset_right = 352.0
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.827451, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("7_fw8yi")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[center]COLOUR ALREADY IN USE[/center]"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control2/WarningLabel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = 3.0
+offset_right = 352.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.827451, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("7_fw8yi")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]CHOOSE ANOTHER COLOUR[/center]"
+
+[connection signal="pressed" from="Control2/StartButton" to="." method="_on_start_button_pressed"]

@@ -54,7 +54,8 @@ func SendPlayerInformation(name, id):
 			"name": name,
 			"id": id,
 			"score": 0,
-			"colour": "red",
+			"colour": "RED",
+			"hex": "ff103e",
 			"index": ""
 		}
 		
