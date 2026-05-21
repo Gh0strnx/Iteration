@@ -159,16 +159,16 @@ func ColourChanger():
 	
 	match index:
 		0:
-			$"Control2/HBoxContainer/1/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/1/Face".modulate = colour
 			$"Control2/HBoxContainer/1/COLOUR".text = "[center]%s[/center]" % colour_name
 		1:
-			$"Control2/HBoxContainer/2/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/2/Face".modulate = colour
 			$"Control2/HBoxContainer/2/COLOUR".text = "[center]%s[/center]" % colour_name
 		2:
-			$"Control2/HBoxContainer/3/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/3/Face".modulate = colour
 			$"Control2/HBoxContainer/3/COLOUR".text = "[center]%s[/center]" % colour_name
 		3:
-			$"Control2/HBoxContainer/4/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/4/Face".modulate = colour
 			$"Control2/HBoxContainer/4/COLOUR".text = "[center]%s[/center]" % colour_name
 
 @rpc("any_peer", "reliable")
@@ -186,16 +186,16 @@ func sync_colour(sender_id: int, colour_index: int):
 	
 	match player_index:
 		0:
-			$"Control2/HBoxContainer/1/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/1/Face".modulate = colour
 			$"Control2/HBoxContainer/1/COLOUR".text = "[center]%s[/center]" % colour_name
 		1:
-			$"Control2/HBoxContainer/2/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/2/Face".modulate = colour
 			$"Control2/HBoxContainer/2/COLOUR".text = "[center]%s[/center]" % colour_name
 		2:
-			$"Control2/HBoxContainer/3/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/3/Face".modulate = colour
 			$"Control2/HBoxContainer/3/COLOUR".text = "[center]%s[/center]" % colour_name
 		3:
-			$"Control2/HBoxContainer/4/Icon/Sprite2D2".modulate = colour
+			$"Control2/HBoxContainer/4/Face".modulate = colour
 			$"Control2/HBoxContainer/4/COLOUR".text = "[center]%s[/center]" % colour_name
 
 @rpc("any_peer", "reliable")

@@ -64,8 +64,9 @@ layout_mode = 2
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_2r7m5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/1/Icon"]
+[node name="Face" type="Sprite2D" parent="Control2/HBoxContainer/1"]
 modulate = Color(1, 0.0627451, 0.243137, 1)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_6cqrr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/1"]
@@ -129,8 +130,9 @@ layout_mode = 2
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_2r7m5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/2/Icon"]
+[node name="Face" type="Sprite2D" parent="Control2/HBoxContainer/2"]
 modulate = Color(1, 0.0627451, 0.243137, 1)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_6cqrr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/2"]
@@ -193,8 +195,9 @@ layout_mode = 2
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_2r7m5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/3/Icon"]
+[node name="Face" type="Sprite2D" parent="Control2/HBoxContainer/3"]
 modulate = Color(1, 0.0627451, 0.243137, 1)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_6cqrr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/3"]
@@ -257,8 +260,9 @@ layout_mode = 2
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_2r7m5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Control2/HBoxContainer/4/Icon"]
+[node name="Face" type="Sprite2D" parent="Control2/HBoxContainer/4"]
 modulate = Color(1, 0.0627451, 0.243137, 1)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_6cqrr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control2/HBoxContainer/4"]

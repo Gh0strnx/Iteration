@@ -37,7 +37,7 @@ func peer_disconnected(id):
 func connected_to_server():
 	print("Connected")
 	#name input (1, name, multiplayer...)
-	SendPlayerInformation.rpc_id(1, $"SettingsScreen/Vbox/NAME".text, multiplayer.get_unique_id())
+	SendPlayerInformation.rpc_id(1, $"SettingsScreen/Vbox/NAME".text.strip_edges(), multiplayer.get_unique_id())
 	
 #called by client
 func connection_failed():
@@ -75,7 +75,7 @@ func _on_host_button_down() -> void:
 		
 		multiplayer.set_multiplayer_peer(peer)
 		print("Waiting for Players!")
-		SendPlayerInformation($"SettingsScreen/Vbox/NAME".text, multiplayer.get_unique_id())
+		SendPlayerInformation($"SettingsScreen/Vbox/NAME".text.strip_edges(), multiplayer.get_unique_id())
 		$HostScreen.show()
 		$TitleScreen.hide()
 		
