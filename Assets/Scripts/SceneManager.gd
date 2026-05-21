@@ -6,10 +6,22 @@ func _ready() -> void:
 	GameManager.scoreBar2 = $"/root/Node2D/Score tracker/VBoxContainer/Player2Score"
 	GameManager.scoreBar3 = $"/root/Node2D/Score tracker/VBoxContainer/Player3Score"
 	GameManager.scoreBar4 = $"/root/Node2D/Score tracker/VBoxContainer/Player4Score"
+	
+	GameManager.scoreBig1 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player1Score"
+	GameManager.scoreBig2 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player2Score"
+	GameManager.scoreBig3 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player3Score"
+	GameManager.scoreBig4 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player4Score"
+	GameManager.bigWin = $"/root/Node2D/Score tracker/BigWin"
+	
 	GameManager.scoreBar1.hide()
 	GameManager.scoreBar2.hide()
 	GameManager.scoreBar3.hide()
 	GameManager.scoreBar4.hide()
+	GameManager.scoreBig1.hide()
+	GameManager.scoreBig2.hide()
+	GameManager.scoreBig3.hide()
+	GameManager.scoreBig4.hide()
+	$"Score tracker/BigWin".hide()
 	
 	
 	
@@ -29,12 +41,16 @@ func _ready() -> void:
 	print(GameManager.scoreBar1.name)
 	if alive_players_size >= 1:
 		GameManager.scoreBar1.show()
+		GameManager.scoreBig1.show()
 	if alive_players_size >= 2:
 		GameManager.scoreBar2.show()
+		GameManager.scoreBig2.show()
 	if alive_players_size >= 3:
 		GameManager.scoreBar3.show()
+		GameManager.scoreBig3.show()
 	if alive_players_size >= 4:
 		GameManager.scoreBar4.show()
+		GameManager.scoreBig4.show()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

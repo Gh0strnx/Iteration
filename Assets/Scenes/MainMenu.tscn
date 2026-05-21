@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=10 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="2_n7cds"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="3_7qn0k"]
+[ext_resource type="Texture2D" uid="uid://c1ovxncwbb7t3" path="res://Assets/Textures/TitleArt.png" id="4_q6na8"]
 [ext_resource type="Shader" path="res://Assets/Textures/gradient.gdshader" id="5_xfywl"]
 [ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="6_vtbyp"]
 [ext_resource type="Texture2D" uid="uid://bd6gqc3tui3j7" path="res://Assets/Textures/buttonClicked.png" id="7_5fs4q"]
@@ -20,6 +21,12 @@ shader_parameter/angle = 0.0
 [node name="Control" type="CanvasLayer"]
 layer = 2
 script = ExtResource("1_sli30")
+
+[node name="TitleArt" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("4_q6na8")
 
 [node name="TitleScreen" type="Control" parent="."]
 layout_mode = 3
@@ -122,6 +129,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TITLE" type="Label" parent="HostScreen"]
+layout_mode = 0
 offset_left = -1.0
 offset_right = 488.0
 offset_bottom = 124.0
@@ -187,6 +195,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TITLE" type="Label" parent="JoinScreen"]
+layout_mode = 0
 offset_left = -1.0
 offset_right = 488.0
 offset_bottom = 124.0
@@ -236,6 +245,7 @@ alignment = 0
 
 [node name="ColorRect" type="ColorRect" parent="JoinScreen"]
 material = SubResource("ShaderMaterial_j0gmp")
+layout_mode = 0
 offset_left = 8.0
 offset_top = 175.0
 offset_right = 208.0
@@ -250,6 +260,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="SettingsScreen"]
+layout_mode = 0
 offset_left = -1.0
 offset_right = 488.0
 offset_bottom = 124.0
@@ -293,6 +304,7 @@ theme_override_font_sizes/font_size = 75
 text = "IP CODES"
 
 [node name="DESC" type="Label" parent="SettingsScreen/Vbox/ENABLE"]
+layout_mode = 0
 offset_left = 3.0
 offset_top = 60.0
 offset_right = 292.0
