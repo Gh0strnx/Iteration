@@ -11,10 +11,6 @@ var joinScreen = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$"Menu Stuff/NameInput2".hide()
-	$"Menu Stuff/NameInput3".hide()
-	$"Menu Stuff/HBoxContainer/StartGame".hide()
-	$"Menu Stuff/HBoxContainer/StartGame".hide()
 	GameManager.port = port
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
@@ -41,7 +37,7 @@ func peer_disconnected(id):
 func connected_to_server():
 	print("Connected")
 	#name input (1, name, multiplayer...)
-	SendPlayerInformation.rpc_id(1, $"Menu Stuff/NameInput".text, multiplayer.get_unique_id())
+	SendPlayerInformation.rpc_id(1, $"SettingsScreen/Vbox/NAME".text, multiplayer.get_unique_id())
 	
 #called by client
 func connection_failed():
@@ -79,78 +75,72 @@ func _on_host_button_down() -> void:
 		
 		multiplayer.set_multiplayer_peer(peer)
 		print("Waiting for Players!")
-		SendPlayerInformation($"Menu Stuff/NameInput".text, multiplayer.get_unique_id())
-		$"Menu Stuff/NameInput3".show()
-		$"Menu Stuff/HBoxContainer/StartGame".show()
-		$"Menu Stuff/HBoxContainer/Join".hide()
-		#$"Menu Stuff/HBoxContainer/Host".hide()
-		hostScreen = true
-		titleScreen = false
-		joinScreen = false
-		$"Menu Stuff/Back".text = " BACK "
+		SendPlayerInformation($"SettingsScreen/Vbox/NAME".text, multiplayer.get_unique_id())
+		$HostScreen.show()
+		$TitleScreen.hide()
+		
 	
 @rpc("any_peer", "call_local")
 func StartGame():
 	if allowStart:
 		var scene = load("res://Assets/Scenes/main.tscn").instantiate()
 		get_tree().root.add_child(scene)
-		$"Menu Stuff".hide()
+		
 		
 			
 
 
 func _on_join_button_down() -> void:
-	if $"Menu Stuff/NameInput2".text == "":
+	if $"JoinScreen/CODE".text == "":
 		GameManager.ip = '127.0.0.1' ##THIS ISNT LEGIT ONLY FOR DEBUGGING
 		print(GameManager.ip)
 	await get_tree().process_frame	
-	if joinScreen == false:
-		$"Menu Stuff/HBoxContainer/StartGame".hide()
-		$"Menu Stuff/HBoxContainer/Host".hide()
-		#$"Menu Stuff/HBoxContainer/Join".hide()
-		$"Menu Stuff/NameInput2".show()
-		joinScreen = true
-		titleScreen = false
-		hostScreen = false
-		$"Menu Stuff/Back".text = " BACK "
-	elif !hosting:
+	if !hosting:
 		peer = ENetMultiplayerPeer.new()
 		peer.create_client(GameManager.ip, port)
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		multiplayer.set_multiplayer_peer(peer)
 
-func _on_start_game_button_down() -> void:
+func _on_start_button_down() -> void:
 	StartGame.rpc()
 	
 
 
 func _on_address_input_text_changed(_new_text: String) -> void:
-	GameManager.lobbyCode = $"Menu Stuff/NameInput2".text
+	GameManager.lobbyCode = $JoinScreen/CODE.text
 	
 
 func _on_play_button_down() -> void:
-	$"Menu Stuff".show()
-	$"TitleScreen".hide()
+	$TitleScreen/StartUp.hide()
+	$TitleScreen/Selection.show()
+	
 
 
-func _on_back_button_down() -> void:
+func _on_quit_button_down() -> void:
 	if titleScreen == true:
 		get_tree().quit()
 		
 	
-	if joinScreen == true:
-		$"Menu Stuff/HBoxContainer/Host".show()
-		$"Menu Stuff/NameInput2".hide()
-		joinScreen = false
-		
-	if hostScreen == true:
-		$"Menu Stuff/NameInput3".hide()
-		$"Menu Stuff/HBoxContainer/StartGame".hide()
-		$"Menu Stuff/HBoxContainer/Join".show()
-		joinScreen = false
+
+
+func _on_settings_button_down() -> void:
+	$SettingsScreen.show()
+	$TitleScreen.hide()
+
+
+func _on_back_button_down() -> void:
+	$TitleScreen.show()
+	$TitleScreen/Selection.hide()
+	$TitleScreen/StartUp.show()
+	$HostScreen.hide()
+	$JoinScreen.hide()
+	$SettingsScreen.hide()
+	
+	if hosting:
 		multiplayer.multiplayer_peer.close()
 		hosting = false
-		
-	titleScreen = true
-	$"Menu Stuff/Back".text = " QUIT "
-		
+	
+
+func _on_firstjoin_button_down() -> void:
+	$JoinScreen.show()
+	$TitleScreen.hide()

@@ -1,247 +1,339 @@
-[gd_scene load_steps=4 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=9 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
-[ext_resource type="FontFile" uid="uid://dol42528clwua" path="res://Assets/Textures/Dangrek/Dangrek-Regular.ttf" id="2_lnnif"]
+[ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="2_n7cds"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="3_7qn0k"]
+[ext_resource type="Shader" path="res://Assets/Textures/gradient.gdshader" id="5_xfywl"]
+[ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="6_vtbyp"]
+[ext_resource type="Texture2D" uid="uid://bd6gqc3tui3j7" path="res://Assets/Textures/buttonClicked.png" id="7_5fs4q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p8mxw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0gmp"]
+shader = ExtResource("5_xfywl")
+shader_parameter/first_color = Color(1, 1, 1, 1)
+shader_parameter/second_color = Color(1, 1, 1, 0)
+shader_parameter/position = 0.0
+shader_parameter/size = 1.007
+shader_parameter/angle = 0.0
 
 [node name="Control" type="CanvasLayer"]
 layer = 2
 script = ExtResource("1_sli30")
 
 [node name="TitleScreen" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_7qn0k")
 
 [node name="Label" type="Label" parent="TitleScreen"]
 layout_mode = 0
-offset_top = -40.0
-offset_right = 454.0
-offset_bottom = 142.0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 100
-text = "DOGFIGHTS"
+offset_left = -1.0
+offset_right = 488.0
+offset_bottom = 124.0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 120
+text = "ITERATION"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TitleScreen"]
+[node name="StartUp" type="VBoxContainer" parent="TitleScreen"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -50.5
-offset_right = 69.0
-offset_bottom = 50.5
+offset_top = -111.0
+offset_right = 278.0
+offset_bottom = 187.0
 grow_vertical = 2
+theme_override_constants/separation = 20
 
-[node name="PLAY" type="Button" parent="TitleScreen/VBoxContainer"]
+[node name="PLAY" type="Button" parent="TitleScreen/StartUp"]
 layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
 text = "PLAY"
 flat = true
 alignment = 0
 
-[node name="SETTINGS" type="Button" parent="TitleScreen/VBoxContainer"]
+[node name="SETTINGS" type="Button" parent="TitleScreen/StartUp"]
 layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
 text = "SETTINGS"
 flat = true
 alignment = 0
 
-[node name="QUIT" type="Button" parent="TitleScreen/VBoxContainer"]
+[node name="QUIT" type="Button" parent="TitleScreen/StartUp"]
 layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
 text = "QUIT"
 flat = true
 alignment = 0
 
-[node name="Menu Stuff" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu Stuff"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -410.0
-offset_top = -59.0
-offset_right = 410.0
-offset_bottom = 59.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 200
-alignment = 1
-
-[node name="Host" type="Button" parent="Menu Stuff/HBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
-text = "HOST "
-flat = true
-
-[node name="StartGame" type="Button" parent="Menu Stuff/HBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
-text = "START "
-flat = true
-
-[node name="Join" type="Button" parent="Menu Stuff/HBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
-text = "JOIN "
-flat = true
-
-[node name="NameInput" type="LineEdit" parent="Menu Stuff"]
+[node name="Selection" type="VBoxContainer" parent="TitleScreen"]
 visible = false
-layout_mode = 0
-offset_left = -325.0
-offset_right = 328.0
-offset_bottom = 31.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Menu Stuff/NameInput"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1.0
-offset_top = -21.0
-offset_right = -1.0
-offset_bottom = -21.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -111.0
+offset_right = 418.0
+offset_bottom = 191.0
 grow_vertical = 2
-mouse_filter = 2
-mouse_force_pass_scroll_events = false
-bbcode_enabled = true
-text = "[center]NAME"
+theme_override_constants/separation = 20
 
-[node name="NameInput2" type="LineEdit" parent="Menu Stuff"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -98.5
-offset_top = -198.0
-offset_right = 98.5
-offset_bottom = -117.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 40
+[node name="HOST" type="Button" parent="TitleScreen/Selection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "HOST GAME"
 flat = true
+alignment = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Menu Stuff/NameInput2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -25.0
-offset_bottom = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-mouse_force_pass_scroll_events = false
-theme_override_fonts/normal_font = ExtResource("2_lnnif")
-bbcode_enabled = true
-text = "[center]ENTER CODE
-"
+[node name="firstJoin" type="Button" parent="TitleScreen/Selection"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "JOIN GAME"
+flat = true
+alignment = 0
 
-[node name="ColorRect" type="ColorRect" parent="Menu Stuff/NameInput2"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -15.0
-offset_right = 196.0
-offset_bottom = -10.0
-grow_vertical = 0
+[node name="BACK" type="Button" parent="TitleScreen/Selection"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "BACK"
+flat = true
+alignment = 0
 
-[node name="NameInput3" type="LineEdit" parent="Menu Stuff"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -326.0
-offset_top = 80.0
-offset_right = 327.0
-offset_bottom = 198.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 60
-alignment = 1
+[node name="HostScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TITLE" type="Label" parent="HostScreen"]
+offset_left = -1.0
+offset_right = 488.0
+offset_bottom = 124.0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 120
+text = "HOSTING"
+
+[node name="CODE" type="LineEdit" parent="HostScreen"]
+layout_mode = 0
+offset_top = 78.0
+offset_right = 489.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p8mxw")
 editable = false
 flat = true
-script = ExtResource("3_7qn0k")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Menu Stuff/NameInput3"]
+[node name="ColorRect" type="ColorRect" parent="HostScreen/CODE"]
+material = SubResource("ShaderMaterial_j0gmp")
+layout_mode = 0
+offset_left = 8.0
+offset_top = 97.0
+offset_right = 208.0
+offset_bottom = 105.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostScreen"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_bottom = -85.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 300.0
+offset_right = 278.0
+offset_bottom = 598.0
 grow_vertical = 2
-mouse_filter = 2
-mouse_force_pass_scroll_events = false
-theme_override_fonts/normal_font = ExtResource("2_lnnif")
-theme_override_font_sizes/normal_font_size = 40
-bbcode_enabled = true
-text = "[center]CODE 
-"
+theme_override_constants/separation = 20
 
-[node name="Back" type="Button" parent="Menu Stuff"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -100.0
-offset_right = 115.0
-grow_vertical = 0
+[node name="START" type="Button" parent="HostScreen/VBoxContainer"]
+layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("2_lnnif")
-theme_override_font_sizes/font_size = 50
-text = " QUIT "
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "START GAME"
+flat = true
+alignment = 0
+
+[node name="BACK" type="Button" parent="HostScreen/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "BACK"
+flat = true
+alignment = 0
+
+[node name="JoinScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TITLE" type="Label" parent="JoinScreen"]
+offset_left = -1.0
+offset_right = 488.0
+offset_bottom = 124.0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 120
+text = "ENTER CODE"
+
+[node name="CODE" type="LineEdit" parent="JoinScreen"]
+layout_mode = 0
+offset_top = 78.0
+offset_right = 489.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 100
+placeholder_text = "CODE..."
 flat = true
 
-[node name="ColorRect" type="ColorRect" parent="Menu Stuff/Back"]
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinScreen"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_top = -28.0
-offset_right = 127.0
-offset_bottom = -24.0
-grow_vertical = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 300.0
+offset_right = 278.0
+offset_bottom = 598.0
+grow_vertical = 2
+theme_override_constants/separation = 20
 
-[connection signal="button_down" from="TitleScreen/VBoxContainer/PLAY" to="." method="_on_play_button_down"]
-[connection signal="button_down" from="Menu Stuff/HBoxContainer/Host" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="Menu Stuff/HBoxContainer/Host" to="Menu Stuff/NameInput3" method="_on_host_button_down"]
-[connection signal="button_down" from="Menu Stuff/HBoxContainer/StartGame" to="." method="_on_start_game_button_down"]
-[connection signal="button_down" from="Menu Stuff/HBoxContainer/Join" to="." method="_on_join_button_down"]
-[connection signal="button_down" from="Menu Stuff/HBoxContainer/Join" to="Menu Stuff/NameInput3" method="_on_join_button_down"]
-[connection signal="text_changed" from="Menu Stuff/NameInput2" to="." method="_on_address_input_text_changed"]
-[connection signal="text_changed" from="Menu Stuff/NameInput3" to="." method="_on_address_input_text_changed"]
-[connection signal="button_down" from="Menu Stuff/Back" to="." method="_on_back_button_down"]
+[node name="START" type="Button" parent="JoinScreen/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "JOIN GAME"
+flat = true
+alignment = 0
+
+[node name="BACK" type="Button" parent="JoinScreen/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "BACK"
+flat = true
+alignment = 0
+
+[node name="ColorRect" type="ColorRect" parent="JoinScreen"]
+material = SubResource("ShaderMaterial_j0gmp")
+offset_left = 8.0
+offset_top = 175.0
+offset_right = 208.0
+offset_bottom = 183.0
+color = Color(0, 0, 0, 1)
+
+[node name="SettingsScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SettingsScreen"]
+offset_left = -1.0
+offset_right = 488.0
+offset_bottom = 124.0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 120
+text = "SETTINGS"
+
+[node name="Vbox" type="VBoxContainer" parent="SettingsScreen"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 194.0
+offset_right = 415.0
+offset_bottom = 492.0
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="NAME" type="LineEdit" parent="SettingsScreen/Vbox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+placeholder_text = "NAME..."
+max_length = 10
+flat = true
+
+[node name="ColorRect" type="ColorRect" parent="SettingsScreen/Vbox/NAME"]
+material = SubResource("ShaderMaterial_j0gmp")
+layout_mode = 2
+offset_left = 9.0
+offset_top = 72.0
+offset_right = 309.0
+offset_bottom = 80.0
+color = Color(0, 0, 0, 1)
+
+[node name="ENABLE" type="Label" parent="SettingsScreen/Vbox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "IP CODES"
+
+[node name="DESC" type="Label" parent="SettingsScreen/Vbox/ENABLE"]
+offset_left = 3.0
+offset_top = 60.0
+offset_right = 292.0
+offset_bottom = 82.0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 20
+text = "CHANGES LOBBY CODES TO IP ADRESSES"
+
+[node name="Button" type="TextureButton" parent="SettingsScreen/Vbox/ENABLE"]
+layout_mode = 0
+offset_left = 261.0
+offset_top = 19.0
+offset_right = 373.0
+offset_bottom = 131.0
+scale = Vector2(0.35, 0.35)
+toggle_mode = true
+texture_normal = ExtResource("6_vtbyp")
+texture_pressed = ExtResource("7_5fs4q")
+
+[node name="BACK" type="Button" parent="SettingsScreen/Vbox"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 75
+text = "BACK"
+flat = true
+alignment = 0
+
+[connection signal="button_down" from="TitleScreen/StartUp/PLAY" to="." method="_on_play_button_down"]
+[connection signal="button_down" from="TitleScreen/StartUp/SETTINGS" to="." method="_on_settings_button_down"]
+[connection signal="button_down" from="TitleScreen/StartUp/QUIT" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="TitleScreen/Selection/HOST" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="TitleScreen/Selection/HOST" to="TitleScreen" method="_on_host_button_down"]
+[connection signal="button_down" from="TitleScreen/Selection/firstJoin" to="." method="_on_firstjoin_button_down"]
+[connection signal="button_down" from="TitleScreen/Selection/BACK" to="." method="_on_back_button_down"]
+[connection signal="text_changed" from="HostScreen/CODE" to="." method="_on_address_input_text_changed"]
+[connection signal="button_down" from="HostScreen/VBoxContainer/START" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="HostScreen/VBoxContainer/BACK" to="." method="_on_back_button_down"]
+[connection signal="text_changed" from="JoinScreen/CODE" to="." method="_on_address_input_text_changed"]
+[connection signal="button_down" from="JoinScreen/VBoxContainer/START" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="JoinScreen/VBoxContainer/START" to="TitleScreen" method="_on_join_button_down"]
+[connection signal="button_down" from="JoinScreen/VBoxContainer/BACK" to="." method="_on_back_button_down"]
+[connection signal="toggled" from="SettingsScreen/Vbox/ENABLE/Button" to="TitleScreen" method="_on_button_toggled"]
+[connection signal="button_down" from="SettingsScreen/Vbox/BACK" to="." method="_on_back_button_down"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5hjp882cwyi0"]
+[gd_scene load_steps=9 format=3 uid="uid://5hjp882cwyi0"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="1_1vnxw"]
 [ext_resource type="Texture2D" uid="uid://d0av8gaq6si3m" path="res://Assets/Textures/base.png" id="2_2r7m5"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c8kxr0dnj7a0q" path="res://Assets/Textures/dogoverlay.png" id="4_xpqf2"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="6_sqx2p"]
 [ext_resource type="FontFile" uid="uid://b6pujfnc3bs7e" path="res://Assets/Fonts/Geo/Geo-Italic.ttf" id="7_fw8yi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n6ime"]
 
 [node name="Lobby" type="CanvasLayer"]
 script = ExtResource("1_1vnxw")
@@ -118,7 +120,7 @@ bbcode_enabled = true
 text = "[center]PLAYER1234567[/center]"
 autowrap_mode = 1
 visible_characters = 10
-visible_ratio = 0.909091
+visible_ratio = 0.769231
 
 [node name="2" type="Control" parent="Control2/HBoxContainer"]
 layout_mode = 2
@@ -327,6 +329,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_sqx2p")
 theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n6ime")
 text = "START"
 flat = true
 

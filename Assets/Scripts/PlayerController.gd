@@ -67,10 +67,7 @@ func _physics_process(delta: float) -> void:
 		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
 		
-		if facing_left == true:
-			$Control/Anchor/Block.position.x = 20
-		else:
-			$Control/Anchor/Block.position.x = -60
+	
 
 		move_and_slide()
 		syncedPosition = global_position

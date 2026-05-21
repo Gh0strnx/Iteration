@@ -77,13 +77,29 @@ func deLobbyCode(_code: String) -> void:
 
 
 func _on_host_button_down() -> void:
+		
 		lobbyCode()
-		self.text = str(GameManager.lobbyCode)
+		$"/root/Control/HostScreen/CODE".text = str(GameManager.lobbyCode)
+		$"/root/Control/HostScreen".show()
+		$"/root/Control/TitleScreen".hide()
+		
+		
 
 
 func _on_join_button_down() -> void:
-	if $"/root/Control/Menu Stuff/NameInput2".text != "":
-		deLobbyCode($"/root/Control/Menu Stuff/NameInput2".text)
+	if $"/root/Control/HostScreen/CODE".text != "":
+		deLobbyCode($"/root/Control/HostScreen/CODE".text)
 	else:
 		GameManager.ip = '127.0.0.1'
+		
+	
+
+
+func _on_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		allowcodes = false
+		print("toggled on")
+		
+	else:
+		allowcodes = true
 		

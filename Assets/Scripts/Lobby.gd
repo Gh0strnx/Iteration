@@ -13,6 +13,7 @@ func _ready() -> void:
 	colour_keys = colours.keys()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
+	$"../../Control".hide()
 	$"Control2/StartButton".disabled = true
 	$"Control2/CountdownLabel".hide()
 	$"Control2/WarningLabel".hide()

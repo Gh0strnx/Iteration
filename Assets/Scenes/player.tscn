@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=41 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Shader" path="res://Assets/Textures/player.gdshader" id="2_oocgc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
 [ext_resource type="AudioStream" uid="uid://0nbo4ddmmfdp" path="res://Assets/Audio/footstep.mp3" id="8_2oga3"]
 [ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="10_iv638"]
+[ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="10_q0yy0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
 radius = 45.2174
@@ -339,7 +340,8 @@ alignment = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+theme_override_fonts/font = ExtResource("10_q0yy0")
+theme_override_font_sizes/font_size = 36
 text = "vladdy daddy"
 horizontal_alignment = 2
 clip_text = true
@@ -347,7 +349,7 @@ text_overrun_behavior = 1
 ellipsis_char = "."
 uppercase = true
 max_lines_visible = 10
-visible_characters = 10
+visible_characters = 9
 visible_ratio = 0.833333
 
 [node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer"]
@@ -374,9 +376,9 @@ grow_vertical = 2
 [node name="Block" type="TextureProgressBar" parent="Control/Anchor"]
 z_index = 6
 layout_mode = 0
-offset_left = -93.913
+offset_left = -76.5217
 offset_top = 24.3478
-offset_right = 34.087
+offset_right = 51.4783
 offset_bottom = 152.348
 scale = Vector2(0.3, 0.3)
 step = 0.01
