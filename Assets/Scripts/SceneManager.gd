@@ -2,6 +2,13 @@ extends Node2D
 @export var PlayerScene : PackedScene
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	$Map/Map1/Ground.collision_enabled = false
+	$Map/Map1/Walls.collision_enabled = false
+	$Map/Map1/Roof.collision_enabled = false
+	$Map/Map1.hide()
+	
+	
 	GameManager.scoreBar1 = $"/root/Node2D/Score tracker/VBoxContainer/Player1Score"
 	GameManager.scoreBar2 = $"/root/Node2D/Score tracker/VBoxContainer/Player2Score"
 	GameManager.scoreBar3 = $"/root/Node2D/Score tracker/VBoxContainer/Player3Score"
