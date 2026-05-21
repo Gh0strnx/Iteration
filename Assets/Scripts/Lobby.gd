@@ -8,6 +8,7 @@ var index = null
 var countdown_timer = 0.0
 var counting_down = false
 var colorWarning = false
+var alreadyClicked = false
 
 func _ready() -> void:
 	colour_keys = colours.keys()
@@ -312,8 +313,11 @@ func check_all_ready():
 	$"Control2/StartButton".disabled = !all_ready or !multiplayer.is_server()
 
 func _on_start_button_pressed():
-	start_countdown()
-	start_countdown.rpc()
+	if !alreadyClicked: 
+		start_countdown()
+		start_countdown.rpc()
+		alreadyClicked = true
+	
 
 @rpc("authority", "reliable")
 func start_countdown():
@@ -333,6 +337,7 @@ func request_cancel_countdown():
 @rpc("authority", "reliable")
 func cancel_countdown():
 	counting_down = false
+	alreadyClicked = false
 	countdown_timer = 0.0
 	$"Control2/CountdownLabel".hide()
 
