@@ -1,10 +1,12 @@
 extends Node
 var Players = {}
+var playerNodes = {}
 var ran = false
 var localPlayer : CharacterBody2D
 var port
 var ip
 var lobbyCode
+var choice = null
 @onready var scoreBar1 = null
 @onready var scoreBar2 = null
 @onready var scoreBar3 = null
@@ -15,6 +17,9 @@ var lobbyCode
 @onready var scoreBig4 = null
 @onready var bigWin = null
 var winningplayerid = null
+var mapSelected = null
+var maps = null
+var prevchoice = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -94,8 +99,27 @@ func showBigWin():
 
 func HalfPointWin():
 	print("this is a half point win")
-	pass # TODO
+	Map()
 
 func FullPointWin():
 	print("this is a full point win")
 	pass # TODO
+
+func Map():
+	# Only the host picks the map
+	if not multiplayer.is_server():
+		return
+	
+	print(maps)
+	print("this actually happened")
+	var index = randi() % maps.size()
+	if maps[index] == prevchoice:
+		index = (index + 1) % maps.size()
+	choice = maps[index]
+	mapSelected = choice
+	prevchoice = choice
+	print(mapSelected)
+	
+	# Tell everyone (including self) which map index was chosen
+	$/root/Node2D.rpc("applyMap", index)
+	$/root/Node2D.applyMap(index)

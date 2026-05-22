@@ -181,7 +181,6 @@ visible = false
 [node name="Map" type="Node2D" parent="."]
 
 [node name="Darkness" type="CanvasModulate" parent="Map" groups=["global_canvas_modulate"]]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Camera" type="Camera2D" parent="Map"]

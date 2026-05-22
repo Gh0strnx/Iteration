@@ -350,3 +350,7 @@ func sync_countdown_display(number: int):
 func trigger_done():
 	$"Control2/CountdownLabel".hide()
 	Done()
+	GameManager.maps = [$"/root/Node2D/Map/Map1", $"/root/Node2D/Map/Map2", $"/root/Node2D/Map/Map3"]
+	await get_tree().process_frame
+	if multiplayer.is_server():
+		GameManager.Map()

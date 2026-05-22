@@ -1,30 +1,18 @@
 extends Node2D
 @export var PlayerScene : PackedScene
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	
-	$Map/Map1/Ground.collision_enabled = false
-	$Map/Map1/Walls.collision_enabled = false
-	$Map/Map1/Roof.collision_enabled = false
-	$Map/Map1.hide()
-	
-	$Map/Map2/Ground.collision_enabled = false
-	$Map/Map2/Walls.collision_enabled = false
-	$Map/Map2/Roof.collision_enabled = false
-	$Map/Map2.hide()
-	
-	
 	GameManager.scoreBar1 = $"/root/Node2D/Score tracker/VBoxContainer/Player1Score"
 	GameManager.scoreBar2 = $"/root/Node2D/Score tracker/VBoxContainer/Player2Score"
 	GameManager.scoreBar3 = $"/root/Node2D/Score tracker/VBoxContainer/Player3Score"
 	GameManager.scoreBar4 = $"/root/Node2D/Score tracker/VBoxContainer/Player4Score"
-	
+
 	GameManager.scoreBig1 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player1Score"
 	GameManager.scoreBig2 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player2Score"
 	GameManager.scoreBig3 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player3Score"
 	GameManager.scoreBig4 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player4Score"
 	GameManager.bigWin = $"/root/Node2D/Score tracker/BigWin"
-	
+
 	GameManager.scoreBar1.hide()
 	GameManager.scoreBar2.hide()
 	GameManager.scoreBar3.hide()
@@ -34,9 +22,8 @@ func _ready() -> void:
 	GameManager.scoreBig3.hide()
 	GameManager.scoreBig4.hide()
 	$"Score tracker/BigWin".hide()
-	
-	
-	
+
+	GameManager.playerNodes = {}
 	var index = 0
 	for i in GameManager.Players:
 		var currentPlayer = PlayerScene.instantiate()
@@ -45,10 +32,10 @@ func _ready() -> void:
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
 			if spawn.name == str(index):
 				currentPlayer.global_position = spawn.global_position
-				
 		GameManager.Players[i].index = index
+		GameManager.playerNodes[i] = currentPlayer
 		index += 1
-		
+
 	var alive_players_size = get_tree().get_nodes_in_group("alivePlayers").size()
 	print(GameManager.scoreBar1.name)
 	if alive_players_size >= 1:
@@ -64,7 +51,61 @@ func _ready() -> void:
 		GameManager.scoreBar4.show()
 		GameManager.scoreBig4.show()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+@rpc("authority", "call_local", "reliable")
+func applyMap(map_index: int):
+	print("applyMap called with index: ", map_index)
+	GameManager.mapSelected = GameManager.maps[map_index]
+	mapSelector()
+	resetPlayers()
+
+func resetPlayers():
+	GameManager.ran = false
+	for player in GameManager.playerNodes.values():
+		var player_index = GameManager.Players[player.id].index
+		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
+			if spawn.name == str(player_index):
+				player.global_position = spawn.global_position
+				player.syncedPosition = spawn.global_position
+		player.health = player.max_health
+		player.alive = true
+		player.death_processed = false
+		GameManager.Players[player.id].alive = true
+		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
+		player.canBlock = true
+		player.blocking = false
+		player.block_cooldown_active = false
+		player.block_cooldown_timer = 0.0
+		player.get_node("Control/Anchor/Block").hide()
+		player.get_node("Control/Anchor/Block").value = player.blockCooldown
+		player.regen_timer = 0.0
+		player.show()
+		player.get_node("Collision").disabled = false
+		if not player.is_in_group("alivePlayers"):
+			player.add_to_group("alivePlayers")
+
+func mapSelector():
+	print("mapselector actually happened")
+	$Map/Map1.show()
+	$Map/Map2.show()
+	$Map/Map3.show()
+	if GameManager.mapSelected != GameManager.maps[0]:
+		$Map/Map1/Ground.collision_enabled = false
+		$Map/Map1/Walls.collision_enabled = false
+		$Map/Map1/Roof.collision_enabled = false
+		$Map/Map1.hide()
+		print("map1 not chosen")
+	if GameManager.mapSelected != GameManager.maps[1]:
+		$Map/Map2/Ground.collision_enabled = false
+		$Map/Map2/Walls.collision_enabled = false
+		$Map/Map2/Roof.collision_enabled = false
+		$Map/Map2.hide()
+		print("map2 not chosen")
+	if GameManager.mapSelected != GameManager.maps[2]:
+		$Map/Map3/Ground.collision_enabled = false
+		$Map/Map3/Walls.collision_enabled = false
+		$Map/Map3/Roof.collision_enabled = false
+		$Map/Map3.hide()
+		print("map3 not chosen")
