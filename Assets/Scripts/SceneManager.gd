@@ -69,11 +69,13 @@ func resetPlayers():
 			if spawn.name == str(player_index):
 				player.global_position = spawn.global_position
 				player.syncedPosition = spawn.global_position
+		# Reset player stats
 		player.health = player.max_health
 		player.alive = true
 		player.death_processed = false
 		GameManager.Players[player.id].alive = true
 		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
+		# Reset block state
 		player.canBlock = true
 		player.blocking = false
 		player.block_cooldown_active = false
@@ -81,6 +83,17 @@ func resetPlayers():
 		player.get_node("Control/Anchor/Block").hide()
 		player.get_node("Control/Anchor/Block").value = player.blockCooldown
 		player.regen_timer = 0.0
+		# Reset gun
+		var gun = player.get_node("Gun/Sprite2D/gun")
+		gun.currentBulletAmount = gun.bulletAmount
+		gun.can_shoot = true
+		gun.reloading = false
+		gun.reload_timer.stop()
+		gun.cooldown.stop()
+		gun.require_shoot_release = false
+		player.get_node("Gun/Control/Reload").hide()
+		player.get_node("Gun/Control/Reload").value = 0
+		# Visibility and collision
 		player.show()
 		player.get_node("Collision").disabled = false
 		if not player.is_in_group("alivePlayers"):
@@ -91,6 +104,15 @@ func mapSelector():
 	$Map/Map1.show()
 	$Map/Map2.show()
 	$Map/Map3.show()
+	$Map/Map1/Ground.collision_enabled = true
+	$Map/Map1/Walls.collision_enabled = true
+	$Map/Map1/Roof.collision_enabled = true
+	$Map/Map2/Ground.collision_enabled = true
+	$Map/Map2/Walls.collision_enabled = true
+	$Map/Map2/Roof.collision_enabled = true
+	$Map/Map3/Ground.collision_enabled = true
+	$Map/Map3/Walls.collision_enabled = true
+	$Map/Map3/Roof.collision_enabled = true
 	if GameManager.mapSelected != GameManager.maps[0]:
 		$Map/Map1/Ground.collision_enabled = false
 		$Map/Map1/Walls.collision_enabled = false
