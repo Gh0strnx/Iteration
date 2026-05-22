@@ -1,5 +1,5 @@
 extends CanvasLayer
-var colours = {"RED": "ff103e", "ORANGE": "ff671a", "YELLOW": "f9c000", "GREEN": "58970a", "BLUE": "3597ff", "PURPLE": "9c2bf2", "WHITE": "fbe4e5", "BROWN": "7c5937", "PINK": "fe53ed"}
+var colours = {"RED": "ff4653", "ORANGE": "ff8350", "YELLOW": "ffce52", "GREEN": "a3eb46", "BLUE": "6eb1ff", "PURPLE": "bb80fc", "WHITE": "fbe4e5", "BROWN": "7c5937", "PINK": "fe86ef"}
 var colour_keys = []
 var current_index = 0
 var canChange = true

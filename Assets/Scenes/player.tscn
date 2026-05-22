@@ -13,7 +13,7 @@
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="10_q0yy0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kkybe"]
-radius = 45.2174
+radius = 46.9565
 height = 215.652
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1r6tf"]
@@ -272,6 +272,7 @@ script = ExtResource("1_rwqxq")
 soundRadius = 200.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.47826)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_kkybe")
 

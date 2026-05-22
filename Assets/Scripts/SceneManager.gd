@@ -8,6 +8,11 @@ func _ready() -> void:
 	$Map/Map1/Roof.collision_enabled = false
 	$Map/Map1.hide()
 	
+	$Map/Map2/Ground.collision_enabled = false
+	$Map/Map2/Walls.collision_enabled = false
+	$Map/Map2/Roof.collision_enabled = false
+	$Map/Map2.hide()
+	
 	
 	GameManager.scoreBar1 = $"/root/Node2D/Score tracker/VBoxContainer/Player1Score"
 	GameManager.scoreBar2 = $"/root/Node2D/Score tracker/VBoxContainer/Player2Score"
