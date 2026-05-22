@@ -14,7 +14,7 @@ func _ready() -> void:
 	colour_keys = colours.keys()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	$"Control2/GUIDE2".hide()
+	$"Control2/ESCinstructions".hide()
 	$"../../Control".hide()
 	$"Control2/StartButton".disabled = true
 	$"Control2/CountdownLabel".hide()
@@ -112,8 +112,8 @@ func _process(delta: float) -> void:
 			sync_ready.rpc(id, true)
 		
 	if Input.is_action_just_pressed("Unready") && !canChange:
-		$"Control2/GUIDE2".hide()
-		$"Control2/GUIDE".show()
+		$"Control2/ESCinstructions".hide()
+		$"Control2/SPACEinstructions".show()
 		unready()
 		sync_ready.rpc(id, false)
 		if multiplayer.is_server():
@@ -224,8 +224,8 @@ func sync_name(sender_id: int, player_name: String):
 
 func readyUp():
 	canChange = false
-	$"Control2/GUIDE".hide()
-	$"Control2/GUIDE2".show()
+	$"Control2/SPACEinstructions".hide()
+	$"Control2/ESCinstructions".show()
 	GameManager.Players[id].ready = true
 	check_all_ready()
 	sync_player_colour.rpc_id(1, id, GameManager.Players[id].colour, GameManager.Players[id].hex)

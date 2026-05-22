@@ -20,25 +20,38 @@ func start(_position: Vector2, _direction: float) -> void:
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		if collision.get_collider().has_method("hurt_player") && collision.get_collider().blocking == false:
-			print(GameManager.localPlayer.name)
-			if collision.get_collider().name == GameManager.localPlayer.name:
-				if selfDamage == true:
-					collision.get_collider().hurt_player(damage)
+		var collider = collision.get_collider()
+		if collider.has_method("hurt_player") && collider.blocking == false:
+			# Only the peer who owns the hit player applies damage
+			var hit_player_id = int(str(collider.name))
+			if multiplayer.get_unique_id() == hit_player_id:
+				if collider.name == GameManager.localPlayer.name:
+					if selfDamage == true:
+						collider.hurt_player(damage)
+						if poison > 0:
+							collider.apply_poison(damage * (poison / 100.0))
+						if shooter && shooter.LifeSteal > 0:
+							shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
+							shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
+				else:
+					collider.hurt_player(damage)
 					if poison > 0:
-						collision.get_collider().apply_poison(damage * (poison / 100.0))
+						collider.apply_poison(damage * (poison / 100.0))
 					if shooter && shooter.LifeSteal > 0:
 						shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 						shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
-					queue_free()
-			else:
-				collision.get_collider().hurt_player(damage)
-				if poison > 0:
-					collision.get_collider().apply_poison(damage * (poison / 100.0))
-				if shooter && shooter.LifeSteal > 0:
-					shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
-					shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
-				queue_free()
+		else:
+			if collider.has_method("enable_outline") && collider.blocking == true:
+				collider.colorSetting = "CYAN"
+				collider.enable_outline(true)
+				await get_tree().create_timer(0.15).timeout
+				collider.colorSetting = "WHITE"
+				collider.enable_outline(false)
+		if bulletBounces != -1:
+			velocity = velocity.bounce(collision.get_normal())
+			bulletBounces = bulletBounces - 1
+		if bulletBounces == -1:
+			queue_free()
 
 		else:
 			if collision.get_collider().has_method("enable_outline") && collision.get_collider().blocking == true:
