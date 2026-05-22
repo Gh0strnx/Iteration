@@ -325,19 +325,20 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -206.0
-offset_top = -136.0
+offset_left = -225.0
+offset_top = -132.0
 offset_right = -53.0
-offset_bottom = -65.0
+offset_bottom = -51.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_sqx2p")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 70
 theme_override_styles/focus = SubResource("StyleBoxEmpty_n6ime")
 text = "START"
 flat = true
 
 [node name="ESCinstructions" type="RichTextLabel" parent="Control2"]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -361,9 +362,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -248.0
+offset_left = -270.0
 offset_top = -159.0
-offset_right = -188.0
+offset_right = -210.0
 offset_bottom = -30.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -408,5 +409,47 @@ theme_override_fonts/normal_font = ExtResource("7_fw8yi")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]CHOOSE ANOTHER COLOUR[/center]"
+
+[node name="GUIDE" type="Label" parent="Control2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.5
+offset_top = -207.0
+offset_right = 104.5
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.973535, 0.973535, 0.973535, 0.505882)
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 18
+text = "[SPACE] TO READY
+A & D TO CHANGE COLOUR
+"
+horizontal_alignment = 1
+
+[node name="GUIDE2" type="Label" parent="Control2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.5
+offset_top = -207.0
+offset_right = 104.5
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.973535, 0.973535, 0.973535, 0.505882)
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 18
+text = "[ESC] TO UNREADY
+
+"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Control2/StartButton" to="." method="_on_start_button_pressed"]
