@@ -8,7 +8,6 @@ extends CharacterBody2D
 @export_range (0, 100) var LifeSteal: float = 0
 @export_range (0,99999) var regenTime: float = 4.0
 @export_range (0, 99999) var Regeneration: float = 0
-
 @export var colorSetting: String = "WHITE"
 @export var syncedPosition: Vector2 = Vector2.ZERO
 @export var alive = true
@@ -19,19 +18,20 @@ var regen_timer: float = 0.0
 var death_processed: bool = false
 var block_cooldown_timer: float = 0.0
 var block_cooldown_active: bool = false
-@onready var max_health: float = health
+var max_health: float = 0.0
 
 func _ready() -> void:
+	max_health = health
 	id = str(name).to_int()
 	$MultiplayerSynchronizer.set_multiplayer_authority(id)
 	$Sprite.material = $Sprite.material.duplicate()
 	enable_outline(false)
-	
+
 	if GameManager.localPlayer == self:
 		$AudioListener2D.current = true
 	else:
 		$AudioListener2D.current = false
-	
+
 	var player_name = GameManager.Players[id].name
 	if player_name == null or player_name == "":
 		player_name = "Player " + str(id)
@@ -47,6 +47,9 @@ func apply_player_colour():
 	var colour = Color("#" + hex)
 	var mat = $Sprite.material as ShaderMaterial
 	mat.set_shader_parameter("player_color", colour)
+
+func update_health_bar():
+	$"Control/VBoxContainer/ProgressBar".value = health
 
 func _physics_process(delta: float) -> void:
 	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
@@ -66,17 +69,15 @@ func _physics_process(delta: float) -> void:
 
 		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
-		
-	
 
 		move_and_slide()
 		syncedPosition = global_position
-		
+
 		regen_timer += delta
 		if regen_timer >= regenTime:
 			regen_timer = 0.0
 			regenerate()
-		
+
 		if block_cooldown_active:
 			block_cooldown_timer += delta
 			$"Control/Anchor/Block".value = block_cooldown_timer
@@ -84,16 +85,17 @@ func _physics_process(delta: float) -> void:
 				block_cooldown_active = false
 				block_cooldown_timer = 0.0
 				$"Control/Anchor/Block".hide()
-		
+
 		if Input.is_action_just_pressed("Block") && canBlock:
 			block()
-			
+
 	else:
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
-		
+		update_health_bar()
+
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
-	
+
 	if !alive && !death_processed:
 		death_processed = true
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
@@ -102,19 +104,18 @@ func _physics_process(delta: float) -> void:
 		hide()
 		$Collision.disabled = true
 		remove_from_group("alivePlayers")
-		
+
 func hurt_player(damage):
-	self.health -= damage
+	health -= damage
+	update_health_bar()
 	print("Player health " + str(health), "   NAME: ", name)
 	if health <= 0.001:
 		alive = false
 		GameManager.Players[id].alive = false
-	$"Control/VBoxContainer/ProgressBar".value = health
 
 func apply_poison(damage_per_second: float) -> void:
 	for i in range(3):
 		await get_tree().create_timer(1.0).timeout
-		$"Control/VBoxContainer/ProgressBar".value = health
 		if alive:
 			hurt_player(damage_per_second)
 
@@ -132,11 +133,11 @@ func block():
 	enable_outline(false)
 	await get_tree().create_timer(blockCooldown).timeout
 	canBlock = true
-		
+
 func regenerate() -> void:
 	if health < max_health:
 		health = snappedf(min(health + Regeneration, max_health), 0.1)
-		$"Control/VBoxContainer/ProgressBar".value = health
+		update_health_bar()
 
 func enable_outline(enabled: bool, color: Color = Color.WHITE):
 	var actual_color = Color.from_string(colorSetting, Color.WHITE)

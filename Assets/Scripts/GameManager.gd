@@ -27,6 +27,8 @@ func _ready() -> void:
 		bigWin.visible = false
 
 func _process(_delta: float) -> void:
+	if not multiplayer.is_server():
+		return
 	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
 		print("Game Finished" + str(get_tree().get_nodes_in_group("alivePlayers")))
 		winningplayerid = get_tree().get_nodes_in_group("alivePlayers")[0].id
@@ -34,24 +36,56 @@ func _process(_delta: float) -> void:
 		UpdatePlayerScore.rpc(Players)
 		ran = true
 		updateScores(winningplayerid)
+		RpcUpdateScores.rpc(winningplayerid)
 		for pid in Players:
 			UpdateColours(pid)
 			RpcUpdateColours.rpc(pid)
 		handleRoundEnd()
 
 func handleRoundEnd():
-	await showBigWin()
+	ShowBigWin.rpc()
+	await get_tree().create_timer(3.0).timeout
+	HideBigWin.rpc()
 	if Players[winningplayerid].score >= 1.0:
 		for pid in Players:
 			Players[pid].score = floor(Players[pid].score)
+		GameManager.Players = Players
 		UpdatePlayerScore.rpc(Players)
+		ResetScoreBars.rpc()
 		FullPointWin()
 	else:
 		HalfPointWin()
 
-@rpc("authority", "call_remote")
+@rpc("authority", "call_local")
+func ShowBigWin():
+	bigWin.show()
+
+@rpc("authority", "call_local")
+func HideBigWin():
+	bigWin.hide()
+
+@rpc("authority", "call_local")
+func ResetScoreBars():
+	for pid in Players:
+		var index = Players[pid].index
+		var floored_score = floor(Players[pid].score)
+		match index:
+			0:
+				scoreBar1.value = floored_score
+				scoreBig1.value = 0
+			1:
+				scoreBar2.value = floored_score
+				scoreBig2.value = 0
+			2:
+				scoreBar3.value = floored_score
+				scoreBig3.value = 0
+			3:
+				scoreBar4.value = floored_score
+				scoreBig4.value = 0
+
+@rpc("authority", "call_local")
 func UpdatePlayerScore(dict):
-	print("i am ", multiplayer.get_unique_id(), " and i am updating my dictionary to ", Players)
+	print("i am ", multiplayer.get_unique_id(), " and i am updating my dictionary to ", dict)
 	GameManager.Players = dict
 
 func updateScores(id):
@@ -75,9 +109,12 @@ func updateScores(id):
 			scoreBar4.tint_progress = GameManager.Players[id].hex
 			scoreBig4.value += 0.5
 
+@rpc("authority", "call_remote")
+func RpcUpdateScores(id):
+	updateScores(id)
+
 func UpdateColours(id):
 	var index = Players[id].index
-	print("this has run for UpdateColours with player id " + str(id) + " and index " + str(index))
 	match index:
 		0:
 			scoreBig1.modulate = GameManager.Players[id].hex
@@ -92,24 +129,33 @@ func UpdateColours(id):
 func RpcUpdateColours(id):
 	UpdateColours(id)
 
-func showBigWin():
-	bigWin.show()
-	await get_tree().create_timer(3.0).timeout
-	bigWin.hide()
-
 func HalfPointWin():
 	print("this is a half point win")
 	Map()
 
 func FullPointWin():
 	print("this is a full point win")
-	pass # TODO
+	var picked = get_tree().get_first_node_in_group("CardManager").pick_cards()
+	ShowCards.rpc(picked)
+
+@rpc("authority", "call_local", "reliable")
+func ShowCards(picked: Array):
+	var card_manager = get_tree().get_first_node_in_group("CardManager")
+	card_manager.show()
+	card_manager.show_cards(picked)
+
+@rpc("any_peer", "call_local", "reliable")
+func HideCards():
+	get_tree().get_first_node_in_group("CardManager").hide()
+
+@rpc("any_peer", "call_local")
+func RequestMap():
+	if multiplayer.is_server():
+		Map()
 
 func Map():
-	# Only the host picks the map
 	if not multiplayer.is_server():
 		return
-	
 	print(maps)
 	print("this actually happened")
 	var index = randi() % maps.size()
@@ -119,7 +165,5 @@ func Map():
 	mapSelected = choice
 	prevchoice = choice
 	print(mapSelected)
-	
-	# Tell everyone (including self) which map index was chosen
 	$/root/Node2D.rpc("applyMap", index)
 	$/root/Node2D.applyMap(index)

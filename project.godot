@@ -30,6 +30,7 @@ global_canvas_modulate=""
 Player=""
 bullet=""
 alivePlayers=""
+CardManager=""
 
 [input]
 

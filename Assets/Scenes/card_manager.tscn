@@ -1,0 +1,201 @@
+[gd_scene load_steps=16 format=3 uid="uid://4dlhlr0hus0i"]
+
+[ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="1_btohr"]
+[ext_resource type="Texture2D" uid="uid://cs1ii6nnd5s5n" path="res://Assets/Textures/Cards/CARD_01_-_BOUNCE.png" id="2_wtl7s"]
+[ext_resource type="Texture2D" uid="uid://1a63u5j5dqni" path="res://Assets/Textures/Cards/CARD_02_-_REFRACT.png" id="3_d8jgj"]
+[ext_resource type="Texture2D" uid="uid://xmqic4f62c5j" path="res://Assets/Textures/Cards/CARD_03_-_BUBBLEWRAP.png" id="4_vq3uw"]
+[ext_resource type="Texture2D" uid="uid://cfnofq23x51g2" path="res://Assets/Textures/Cards/CARD_04_-_BANDAID.png" id="5_h8k3h"]
+[ext_resource type="Texture2D" uid="uid://dbpaudv4bdv34" path="res://Assets/Textures/Cards/CARD_05_-_MEDKIT.png" id="6_2w48f"]
+[ext_resource type="Texture2D" uid="uid://bng70kq7gmv87" path="res://Assets/Textures/Cards/CARD_06_-_CANNON.png" id="7_qq7ya"]
+[ext_resource type="Texture2D" uid="uid://fw1uyijuy3ig" path="res://Assets/Textures/Cards/CARD_07_-_QUICK_RELOAD.png" id="8_vcf6f"]
+[ext_resource type="Texture2D" uid="uid://da2827laomqf3" path="res://Assets/Textures/Cards/CARD_08_-_DECAY.png" id="9_5r3n5"]
+[ext_resource type="Texture2D" uid="uid://rmd20v1wi3dw" path="res://Assets/Textures/Cards/CARD_09_-_GLASS_CANNON.png" id="10_4o1wt"]
+[ext_resource type="Texture2D" uid="uid://bp0t1ajnxnkvd" path="res://Assets/Textures/Cards/CARD_10_-_SHRAPNEL.png" id="11_lpjmr"]
+[ext_resource type="Texture2D" uid="uid://l23a6dl6gyu6" path="res://Assets/Textures/Cards/CARD_11_-_MEDICINE.png" id="12_ba6n1"]
+[ext_resource type="Texture2D" uid="uid://dnrxq5g8hassi" path="res://Assets/Textures/Cards/CARD_12_-_SNIPER.png" id="13_jrppp"]
+[ext_resource type="Texture2D" uid="uid://dj0r5ky4p5u1j" path="res://Assets/Textures/Background.png" id="14_d2oyv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wqc3s"]
+light_mode = 1
+
+[node name="CardManager" type="CanvasLayer" groups=["CardManager"]]
+script = ExtResource("1_btohr")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+
+[node name="Backdrop" type="TextureRect" parent="Control"]
+z_index = -2
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_wqc3s")
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("14_d2oyv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1724.33
+offset_top = 27.6667
+offset_right = 24675.7
+offset_bottom = 27.6667
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.15, 0.15)
+theme_override_constants/separation = 2100
+alignment = 1
+
+[node name="Bounce" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bounce"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_wtl7s")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Bounce"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Refract" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Refract"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_d8jgj")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Refract"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BubbleWrap" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/BubbleWrap"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_vq3uw")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Bandaid" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bandaid"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_h8k3h")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Bandaid"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Medkit" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medkit"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_2w48f")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Medkit"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Cannon" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Cannon"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_qq7ya")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Cannon"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="QuickReload" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/QuickReload"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_vcf6f")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/QuickReload"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Decay" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Decay"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("9_5r3n5")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Decay"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="GlassCannon" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/GlassCannon"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_4o1wt")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/GlassCannon"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Shrapnel" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Shrapnel"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("11_lpjmr")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Shrapnel"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Medicine" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medicine"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("12_ba6n1")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Medicine"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Sniper" type="Control" parent="Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Sniper"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("13_jrppp")
+
+[node name="DESC" type="Label" parent="Control/HBoxContainer/Sniper"]
+offset_right = 40.0
+offset_bottom = 23.0

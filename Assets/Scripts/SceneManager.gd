@@ -13,6 +13,7 @@ func _ready() -> void:
 	GameManager.scoreBig4 = $"/root/Node2D/Score tracker/BigWin/HBoxContainer/Player4Score"
 	GameManager.bigWin = $"/root/Node2D/Score tracker/BigWin"
 
+	get_tree().get_first_node_in_group("CardManager").hide()
 	GameManager.scoreBar1.hide()
 	GameManager.scoreBar2.hide()
 	GameManager.scoreBar3.hide()
@@ -60,6 +61,7 @@ func applyMap(map_index: int):
 	GameManager.mapSelected = GameManager.maps[map_index]
 	mapSelector()
 	resetPlayers()
+	print("ApplyMap is actually happening")
 
 func resetPlayers():
 	GameManager.ran = false
