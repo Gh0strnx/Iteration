@@ -63,11 +63,13 @@ func handleRoundEnd():
 
 @rpc("authority", "call_local")
 func ShowBigWin():
+	get_tree().paused = true
 	bigWin.show()
 	ran = true
 
 @rpc("authority", "call_local")
 func HideBigWin():
+	get_tree().paused = false
 	bigWin.hide()
 	ran = true
 
@@ -149,20 +151,20 @@ func RemoveScores():
 			3:
 				scoreBar4.value = floor(scoreBar4.value)
 				scoreBig4.value = 0
-				
 		Players[pid].roundPoints = 0
 		Players[pid].score = floor(Players[pid].score)
 
 @rpc("authority", "call_local", "reliable")
 func ShowCards(picked: Array):
+	get_tree().paused = true
 	var card_manager = get_tree().get_first_node_in_group("CardManager")
 	card_manager.show()
 	card_manager.show_cards(picked)
 
 @rpc("authority", "call_local", "reliable")
 func HideCards():
+	get_tree().paused = false
 	get_tree().get_first_node_in_group("CardManager").hide()
-	
 
 func Map():
 	if not multiplayer.is_server():

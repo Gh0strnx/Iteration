@@ -8,7 +8,6 @@ var player: CharacterBody2D:
 	get:
 		return GameManager.localPlayer
 
-
 var rng = RandomNumberGenerator.new()
 var CardsShown = 4
 
@@ -50,12 +49,12 @@ var weights = PackedFloat32Array([
 	epic_weight,     # BubbleWrap
 ])
 
-var current_index = 0
+var current_index = -1
 var shown_cards = []
 var is_loser = false
 
 func _ready() -> void:
-	pass
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
 	if not is_loser:
@@ -94,7 +93,7 @@ func show_cards(picked: Array):
 			print("card not found: ", card_name)
 
 	shown_cards.sort_custom(func(a, b): return a.get_index() < b.get_index())
-	current_index = 0
+	current_index = -1
 	is_loser = multiplayer.get_unique_id() != GameManager.winningplayerid
 
 func update_selection():
@@ -121,8 +120,8 @@ func apply_selected_card():
 
 @rpc("any_peer", "call_local", "reliable")
 func hidden():
+	get_tree().paused = false
 	self.hide()
-	
 
 func pick_cards() -> Array:
 	var picked = []

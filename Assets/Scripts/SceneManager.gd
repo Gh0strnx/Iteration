@@ -94,6 +94,9 @@ func resetPlayers():
 		gun.require_shoot_release = false
 		player.get_node("Gun/Control/Reload").hide()
 		player.get_node("Gun/Control/Reload").value = 0
+		#Remove bulletds
+		for bullet in get_tree().get_nodes_in_group("bullet"):
+				bullet.queue_free()
 		# Visibility and collision
 		player.show()
 		player.get_node("Collision").disabled = false
