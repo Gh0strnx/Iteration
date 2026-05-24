@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-
-
 var gun:
 	get:
 		return GameManager.localPlayer.get_node("Gun/Sprite2D/gun")
@@ -9,6 +7,7 @@ var gun:
 var player: CharacterBody2D:
 	get:
 		return GameManager.localPlayer
+
 
 var rng = RandomNumberGenerator.new()
 var CardsShown = 4
@@ -59,9 +58,9 @@ func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		print("ui_accept pressed, is_loser: ", is_loser, " shown_cards empty: ", shown_cards.is_empty())
 	if not is_loser:
+		return
+	if shown_cards.is_empty():
 		return
 
 	if Input.is_action_just_pressed("left"):
@@ -115,15 +114,15 @@ func apply_selected_card():
 		return
 	var card_name = shown_cards[current_index].name
 	print("picked: ", card_name)
-	print("player: ", player)
-	print("gun: ", gun)
-	print("health before: ", player.health)
 	call(card_name)
-	print("health after: ", player.health)
 	is_loser = false
 	shown_cards.clear()
-	GameManager.HideCards.rpc()
-	GameManager.RequestMap.rpc_id(1)
+	hidden.rpc()
+
+@rpc("any_peer", "call_local", "reliable")
+func hidden():
+	self.hide()
+	
 
 func pick_cards() -> Array:
 	var picked = []

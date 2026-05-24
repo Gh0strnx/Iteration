@@ -358,6 +358,7 @@ func sync_countdown_display(number: int):
 
 @rpc("authority", "reliable")
 func trigger_done():
+	print("trigger_done fired on: ", multiplayer.get_unique_id())
 	$"Control2/CountdownLabel".hide()
 	Done()
 	GameManager.maps = [$"/root/Node2D/Map/Map1", $"/root/Node2D/Map/Map2", $"/root/Node2D/Map/Map3"]

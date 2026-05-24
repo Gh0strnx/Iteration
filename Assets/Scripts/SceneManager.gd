@@ -64,7 +64,6 @@ func applyMap(map_index: int):
 	print("ApplyMap is actually happening")
 
 func resetPlayers():
-	GameManager.ran = false
 	for player in GameManager.playerNodes.values():
 		var player_index = GameManager.Players[player.id].index
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
@@ -100,6 +99,11 @@ func resetPlayers():
 		player.get_node("Collision").disabled = false
 		if not player.is_in_group("alivePlayers"):
 			player.add_to_group("alivePlayers")
+	if get_tree().get_nodes_in_group("alivePlayers").size() == 1:
+		await get_tree().process_frame
+		resetPlayers()
+	else:
+		GameManager.ran = false
 
 func mapSelector():
 	print("mapselector actually happened")
