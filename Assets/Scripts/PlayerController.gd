@@ -98,12 +98,13 @@ func _physics_process(delta: float) -> void:
 
 	if !alive && !death_processed:
 		death_processed = true
-		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
-			if !GameManager.localPlayer.is_in_group("alivePlayers"):
+	
+		if multiplayer.get_unique_id() == id:
+			for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 				node.hide()
 		hide()
 		$Collision.disabled = true
-		request_remove_from_alive.rpc_id(1)  # always send to server, even if we ARE the server
+		request_remove_from_alive.rpc_id(1)
 		
 @rpc("any_peer", "call_remote")
 func request_remove_from_alive():

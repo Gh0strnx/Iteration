@@ -52,18 +52,27 @@ var weights = PackedFloat32Array([
 var current_index = -1
 var shown_cards = []
 var is_loser = false
+var loser_queue = []
+var current_picker_id = -1
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
 	if not is_loser:
+		$Select.show()
 		return
+	
+	$Select.hide()
+	
 	if shown_cards.is_empty():
 		return
 
 	if Input.is_action_just_pressed("left"):
-		current_index = (current_index - 1 + shown_cards.size()) % shown_cards.size()
+		if current_index == -1:
+			current_index = shown_cards.size() - 1
+		else:
+			current_index = (current_index - 1 + shown_cards.size()) % shown_cards.size()
 		update_selection()
 		sync_selection.rpc(current_index)
 
@@ -73,6 +82,8 @@ func _process(_delta: float) -> void:
 		sync_selection.rpc(current_index)
 
 	if Input.is_action_just_pressed("ui_accept"):
+		if current_index == -1:
+			return
 		apply_selected_card()
 
 func callCard():
@@ -94,7 +105,7 @@ func show_cards(picked: Array):
 
 	shown_cards.sort_custom(func(a, b): return a.get_index() < b.get_index())
 	current_index = -1
-	is_loser = multiplayer.get_unique_id() != GameManager.winningplayerid
+	is_loser = multiplayer.get_unique_id() == current_picker_id
 
 func update_selection():
 	for i in shown_cards.size():
@@ -111,17 +122,54 @@ func sync_selection(index: int):
 func apply_selected_card():
 	if shown_cards.is_empty():
 		return
+	if current_index == -1:
+		return
 	var card_name = shown_cards[current_index].name
 	print("picked: ", card_name)
 	call(card_name)
 	is_loser = false
 	shown_cards.clear()
-	hidden.rpc()
+	if multiplayer.is_server():
+		next_picker()
+	else:
+		picker_done.rpc_id(1)
 
-@rpc("any_peer", "call_local", "reliable")
-func hidden():
+@rpc("any_peer", "reliable")
+func picker_done():
+	if not multiplayer.is_server():
+		return
+	next_picker()
+
+func next_picker():
+	if loser_queue.is_empty():
+		all_done.rpc()
+		return
+	current_picker_id = loser_queue.pop_front()
+	var picked = pick_cards()
+	set_picker_and_show.rpc(current_picker_id, picked)
+
+@rpc("authority", "call_local", "reliable")
+func set_picker_and_show(picker_id: int, picked: Array):
+	get_tree().paused = true
+	current_picker_id = picker_id
+	self.show()
+	show_cards(picked)
+
+@rpc("authority", "call_local", "reliable")
+func all_done():
 	get_tree().paused = false
 	self.hide()
+
+func start_picking():
+	var losers = []
+	for pid in GameManager.Players:
+		if pid != GameManager.winningplayerid:
+			losers.append(pid)
+	losers.sort_custom(func(a, b):
+		return GameManager.Players[a].index < GameManager.Players[b].index
+	)
+	loser_queue = losers
+	next_picker()
 
 func pick_cards() -> Array:
 	var picked = []

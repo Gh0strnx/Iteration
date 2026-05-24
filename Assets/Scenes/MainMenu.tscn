@@ -355,7 +355,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("5_h45bj")
 theme_override_font_sizes/font_size = 30
-text = "V4.4.5
+text = "V5.0.4
 CIRE INTERACTIVE"
 horizontal_alignment = 2
 

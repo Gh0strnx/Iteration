@@ -131,8 +131,7 @@ func FullPointWin():
 	Map()
 	RemoveScores.rpc()
 	print("this is a full point win")
-	var picked = get_tree().get_first_node_in_group("CardManager").pick_cards()
-	ShowCards.rpc(picked)
+	get_tree().get_first_node_in_group("CardManager").start_picking()
 
 @rpc("authority", "call_local")
 func RemoveScores():

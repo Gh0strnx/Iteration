@@ -75,15 +75,9 @@ func resetPlayers():
 		player.alive = true
 		player.death_processed = false
 		GameManager.Players[player.id].alive = true
+		player.health = player.max_health
+		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
 		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
-		# Reset block state
-		player.canBlock = true
-		player.blocking = false
-		player.block_cooldown_active = false
-		player.block_cooldown_timer = 0.0
-		player.get_node("Control/Anchor/Block").hide()
-		player.get_node("Control/Anchor/Block").value = player.blockCooldown
-		player.regen_timer = 0.0
 		# Reset gun
 		var gun = player.get_node("Gun/Sprite2D/gun")
 		gun.currentBulletAmount = gun.bulletAmount
@@ -92,7 +86,21 @@ func resetPlayers():
 		gun.reload_timer.stop()
 		gun.cooldown.stop()
 		gun.require_shoot_release = false
+		player.get_node("Gun/Control/Reload").max_value = gun.reloadTime  # add this
 		player.get_node("Gun/Control/Reload").hide()
+		player.get_node("Gun/Control/Reload").value = 0
+
+		# Reset block state
+		player.canBlock = true
+		player.blocking = false
+		player.block_cooldown_active = false
+		player.block_cooldown_timer = 0.0
+		player.get_node("Control/Anchor/Block").max_value = player.blockCooldown  # add this
+		player.get_node("Control/Anchor/Block").value = player.blockCooldown
+		player.get_node("Control/Anchor/Block").hide()
+		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
+			if GameManager.localPlayer.is_in_group("alivePlayers"):
+				node.show()
 		player.get_node("Gun/Control/Reload").value = 0
 		#Remove bulletds
 		for bullet in get_tree().get_nodes_in_group("bullet"):

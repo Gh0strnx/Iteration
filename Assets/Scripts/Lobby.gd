@@ -38,8 +38,9 @@ func _ready() -> void:
 	id = multiplayer.get_unique_id()
 	index = GameManager.Players[id].index
 	var name = GameManager.Players[id].name
+	var nameindex = GameManager.Players[id].index + 1
 	if name == null or name == "":
-		name = "Player " + str(id)
+		name = "Player " + str(nameindex)
 	
 	match index:
 		0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://4dlhlr0hus0i"]
+[gd_scene load_steps=17 format=3 uid="uid://4dlhlr0hus0i"]
 
 [ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="1_btohr"]
 [ext_resource type="Texture2D" uid="uid://cs1ii6nnd5s5n" path="res://Assets/Textures/Cards/CARD_01_-_BOUNCE.png" id="2_wtl7s"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://l23a6dl6gyu6" path="res://Assets/Textures/Cards/CARD_11_-_MEDICINE.png" id="12_ba6n1"]
 [ext_resource type="Texture2D" uid="uid://dnrxq5g8hassi" path="res://Assets/Textures/Cards/CARD_12_-_SNIPER.png" id="13_jrppp"]
 [ext_resource type="Texture2D" uid="uid://dj0r5ky4p5u1j" path="res://Assets/Textures/Background.png" id="14_d2oyv"]
+[ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="15_1e0u6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wqc3s"]
 light_mode = 1
@@ -224,3 +225,17 @@ texture = ExtResource("13_jrppp")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="Select" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -427.0
+offset_top = 42.0
+offset_right = 428.0
+offset_bottom = 115.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("15_1e0u6")
+theme_override_font_sizes/font_size = 70
+text = "YOU ARE NOT CURRENTLY PICKING"
+horizontal_alignment = 1
