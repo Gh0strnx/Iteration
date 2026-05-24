@@ -34,6 +34,7 @@ scale = Vector2(0.6, 0.6)
 z_index = -2
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_wqc3s")
+layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 scale = Vector2(1.2, 1.2)
@@ -60,11 +61,13 @@ alignment = 1
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bounce"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_wtl7s")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Bounce"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -72,11 +75,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Refract"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_d8jgj")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Refract"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -84,11 +89,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/BubbleWrap"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("4_vq3uw")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -96,11 +103,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bandaid"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("5_h8k3h")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Bandaid"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -108,11 +117,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medkit"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("6_2w48f")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Medkit"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -120,11 +131,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Cannon"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("7_qq7ya")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Cannon"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -132,11 +145,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/QuickReload"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("8_vcf6f")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/QuickReload"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -144,11 +159,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Decay"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("9_5r3n5")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Decay"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -156,11 +173,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/GlassCannon"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("10_4o1wt")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/GlassCannon"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -168,11 +187,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Shrapnel"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("11_lpjmr")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Shrapnel"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -180,11 +201,13 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medicine"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("12_ba6n1")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Medicine"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
@@ -192,10 +215,12 @@ offset_bottom = 23.0
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Sniper"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("13_jrppp")
 
 [node name="DESC" type="Label" parent="Control/HBoxContainer/Sniper"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

@@ -1,5 +1,4 @@
 extends CharacterBody2D
-
 var selfDamage = true
 var damage = 1.0
 var speed: float = 10.5
@@ -9,20 +8,17 @@ var poison = 0
 var bulletSize = 1
 var dir: float = 0.0
 var shooter = null
-
 func start(_position: Vector2, _direction: float) -> void:
 	position = _position
 	dir = _direction
 	velocity = Vector2.RIGHT.rotated(dir) * (speed * 100)
 	self.scale.y = bulletSize
 	self.scale.x = bulletSize
-
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var collider = collision.get_collider()
 		if collider.has_method("hurt_player") && collider.blocking == false:
-			# Only the peer who owns the hit player applies damage
 			var hit_player_id = int(str(collider.name))
 			if multiplayer.get_unique_id() == hit_player_id:
 				if collider.name == GameManager.localPlayer.name:
@@ -47,27 +43,11 @@ func _physics_process(delta):
 				await get_tree().create_timer(0.15).timeout
 				collider.colorSetting = "WHITE"
 				collider.enable_outline(false)
-		if bulletBounces != -1:
-			velocity = velocity.bounce(collision.get_normal())
-			bulletBounces = bulletBounces - 1
-		if bulletBounces == -1:
+		if bulletBounces <= 0:
 			queue_free()
-
 		else:
-			if collision.get_collider().has_method("enable_outline") && collision.get_collider().blocking == true:
-				collision.get_collider().colorSetting = "CYAN"
-				collision.get_collider().enable_outline(true)
-				await get_tree().create_timer(0.15).timeout
-				collision.get_collider().colorSetting = "WHITE"
-				collision.get_collider().enable_outline(false)
-
-		if bulletBounces != -1:
+			bulletBounces -= 1
 			velocity = velocity.bounce(collision.get_normal())
-			bulletBounces = bulletBounces - 1
-
-		if bulletBounces == -1:
-			queue_free()
-
 func DropOff():
 	if bulletRange < 3.5:
 		await get_tree().create_timer(bulletRange).timeout

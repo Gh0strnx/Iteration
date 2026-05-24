@@ -24,7 +24,7 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=["SceneManager"]]
 script = ExtResource("1_ctwyd")
 PlayerScene = ExtResource("4_wx5bt")
 

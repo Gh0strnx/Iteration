@@ -103,7 +103,11 @@ func _physics_process(delta: float) -> void:
 				node.hide()
 		hide()
 		$Collision.disabled = true
-		remove_from_group("alivePlayers")
+		request_remove_from_alive.rpc_id(1)  # always send to server, even if we ARE the server
+		
+@rpc("any_peer", "call_remote")
+func request_remove_from_alive():
+	remove_from_group("alivePlayers")
 
 func hurt_player(damage):
 	health -= damage

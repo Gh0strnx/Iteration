@@ -30,19 +30,23 @@ func _process(_delta: float) -> void:
 	if not multiplayer.is_server():
 		return
 	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
-		ran = true
-		winningplayerid = get_tree().get_nodes_in_group("alivePlayers")[0].id
-		Players[winningplayerid].roundPoints += 0.5
-		Players[winningplayerid].score += 0.5
-		UpdatePlayerScore.rpc(Players)
-		updateScores(winningplayerid)
-		RpcUpdateScores.rpc(winningplayerid)
-		for pid in Players:
-			UpdateColours(pid)
-			RpcUpdateColours.rpc(pid)
-		handleRoundEnd()
+		await get_tree().process_frame
+		if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
+			ran = true
+			winningplayerid = get_tree().get_nodes_in_group("alivePlayers")[0].id
+			Players[winningplayerid].roundPoints += 0.5
+			Players[winningplayerid].score += 0.5
+			UpdatePlayerScore.rpc(Players)
+			updateScores(winningplayerid)
+			RpcUpdateScores.rpc(winningplayerid)
+			for pid in Players:
+				UpdateColours(pid)
+				RpcUpdateColours.rpc(pid)
+			handleRoundEnd()
+			ran = true
 
 func handleRoundEnd():
+	ran = true
 	ShowBigWin.rpc()
 	await get_tree().create_timer(3.0).timeout
 	HideBigWin.rpc()
@@ -60,10 +64,12 @@ func handleRoundEnd():
 @rpc("authority", "call_local")
 func ShowBigWin():
 	bigWin.show()
+	ran = true
 
 @rpc("authority", "call_local")
 func HideBigWin():
 	bigWin.hide()
+	ran = true
 
 @rpc("authority", "call_remote")
 func UpdatePlayerScore(dict):
@@ -113,11 +119,13 @@ func RpcUpdateColours(id):
 	UpdateColours(id)
 
 func HalfPointWin():
+	ran = true
 	print("this is a half point win")
 	Map()
 	print(get_tree().get_nodes_in_group("alivePlayers").size())
 
 func FullPointWin():
+	ran = true
 	Map()
 	RemoveScores.rpc()
 	print("this is a full point win")
@@ -154,6 +162,7 @@ func ShowCards(picked: Array):
 @rpc("authority", "call_local", "reliable")
 func HideCards():
 	get_tree().get_first_node_in_group("CardManager").hide()
+	
 
 func Map():
 	if not multiplayer.is_server():
