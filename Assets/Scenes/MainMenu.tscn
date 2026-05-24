@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=13 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="2_n7cds"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="6_vtbyp"]
 [ext_resource type="Texture2D" uid="uid://bd6gqc3tui3j7" path="res://Assets/Textures/buttonClicked.png" id="7_5fs4q"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ja12v"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p8mxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j0gmp"]
@@ -18,6 +20,8 @@ shader_parameter/second_color = Color(1, 1, 1, 0)
 shader_parameter/position = 0.0
 shader_parameter/size = 1.007
 shader_parameter/angle = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jv6w7"]
 
 [node name="Control" type="CanvasLayer"]
 layer = 2
@@ -110,6 +114,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ja12v")
 text = "HOST GAME "
 flat = true
 alignment = 0
@@ -130,6 +135,18 @@ theme_override_font_sizes/font_size = 75
 text = "BACK "
 flat = true
 alignment = 0
+
+[node name="AlreadyHosting" type="Label" parent="TitleScreen"]
+visible = false
+layout_mode = 2
+offset_left = 8.0
+offset_top = 280.0
+offset_right = 426.0
+offset_bottom = 312.0
+theme_override_colors/font_color = Color(1, 0.24, 0.290667, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 25
+text = "CANNOT HOST: ALREADY HOSTING"
 
 [node name="HostScreen" type="Control" parent="."]
 visible = false
@@ -221,6 +238,7 @@ offset_bottom = 202.0
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("5_h45bj")
 theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jv6w7")
 placeholder_text = "CODE..."
 flat = true
 
@@ -261,6 +279,17 @@ offset_top = 175.0
 offset_right = 208.0
 offset_bottom = 183.0
 color = Color(0, 0, 0, 1)
+
+[node name="ERROR" type="Label" parent="JoinScreen"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 393.0
+offset_right = 426.0
+offset_bottom = 425.0
+theme_override_colors/font_color = Color(1, 0.24, 0.290667, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 25
+text = "ERROR: CANNOT FIND GAME"
 
 [node name="SettingsScreen" type="Control" parent="."]
 visible = false
@@ -307,13 +336,17 @@ offset_right = 309.0
 offset_bottom = 80.0
 color = Color(0, 0, 0, 1)
 
-[node name="ENABLE" type="Label" parent="SettingsScreen/Vbox"]
+[node name="Margin" type="MarginContainer" parent="SettingsScreen/Vbox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="ENABLE" type="Label" parent="SettingsScreen/Vbox/Margin"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 75
 text = "IP CODES "
 
-[node name="DESC" type="Label" parent="SettingsScreen/Vbox/ENABLE"]
+[node name="DESC" type="Label" parent="SettingsScreen/Vbox/Margin/ENABLE"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 60.0
@@ -323,7 +356,7 @@ theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 20
 text = "CHANGES LOBBY CODES TO IP ADRESSES"
 
-[node name="Button" type="TextureButton" parent="SettingsScreen/Vbox/ENABLE"]
+[node name="Button" type="TextureButton" parent="SettingsScreen/Vbox/Margin/ENABLE"]
 layout_mode = 0
 offset_left = 261.0
 offset_top = 19.0
@@ -342,6 +375,23 @@ theme_override_font_sizes/font_size = 75
 text = "BACK "
 flat = true
 alignment = 0
+
+[node name="KEYBINDS" type="Label" parent="SettingsScreen"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 531.0
+offset_right = 132.0
+offset_bottom = 603.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.580392)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 20
+text = "W A S D TO MOVE
+LMB TO SHOOT
+RMB TO BLOCK"
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 3
@@ -373,5 +423,5 @@ horizontal_alignment = 2
 [connection signal="button_down" from="JoinScreen/VBoxContainer/START" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="JoinScreen/VBoxContainer/START" to="TitleScreen" method="_on_join_button_down"]
 [connection signal="button_down" from="JoinScreen/VBoxContainer/BACK" to="." method="_on_back_button_down"]
-[connection signal="toggled" from="SettingsScreen/Vbox/ENABLE/Button" to="TitleScreen" method="_on_button_toggled"]
+[connection signal="toggled" from="SettingsScreen/Vbox/Margin/ENABLE/Button" to="TitleScreen" method="_on_button_toggled"]
 [connection signal="button_down" from="SettingsScreen/Vbox/BACK" to="." method="_on_back_button_down"]

@@ -80,8 +80,6 @@ func _on_host_button_down() -> void:
 		
 		lobbyCode()
 		$"/root/Control/HostScreen/CODE".text = str(GameManager.lobbyCode)
-		$"/root/Control/HostScreen".show()
-		$"/root/Control/TitleScreen".hide()
 		
 		
 

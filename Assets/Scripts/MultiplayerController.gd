@@ -70,6 +70,14 @@ func _on_host_button_down() -> void:
 		var error = peer.create_server(port, 4)
 		if error != OK:
 			print("cannot host: " + str(error))
+			
+			if str(error) == "20":
+				$TitleScreen/AlreadyHosting.text = "CANNOT HOST: ALREADY HOSTING"
+				$TitleScreen/AlreadyHosting.show()
+			else:
+				$TitleScreen/AlreadyHosting.text = "CANNOT HOST: ERROR" + str(error)
+				$TitleScreen/AlreadyHosting.show()
+				
 			return
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		hosting = true
@@ -136,6 +144,7 @@ func _on_back_button_down() -> void:
 	$HostScreen.hide()
 	$JoinScreen.hide()
 	$SettingsScreen.hide()
+	$TitleScreen/AlreadyHosting.hide()
 	
 	if hosting:
 		multiplayer.multiplayer_peer.close()
