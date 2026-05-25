@@ -51,12 +51,12 @@ z_as_relative = false
 script = ExtResource("1_vj7b3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(108, 0)
+position = Vector2(45, 0)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_om7vp")
 
 [node name="gun" type="Node2D" parent="Sprite2D"]
-position = Vector2(74.2857, 0)
+position = Vector2(67.1429, 0)
 script = ExtResource("3_4kqa5")
 
 [node name="coolDown" type="Timer" parent="Sprite2D/gun"]
@@ -70,9 +70,9 @@ replication_config = SubResource("SceneReplicationConfig_qxs42")
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 152.0
+offset_left = 96.0
 offset_top = -21.0
-offset_right = 192.0
+offset_right = 136.0
 offset_bottom = 19.0
 
 [node name="Reload" type="TextureProgressBar" parent="Control"]

@@ -98,14 +98,13 @@ func _physics_process(delta: float) -> void:
 
 	if !alive && !death_processed:
 		death_processed = true
-	
 		if multiplayer.get_unique_id() == id:
 			for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 				node.hide()
 		hide()
 		$Collision.disabled = true
 		request_remove_from_alive.rpc_id(1)
-		
+
 @rpc("any_peer", "call_remote")
 func request_remove_from_alive():
 	remove_from_group("alivePlayers")
@@ -149,3 +148,18 @@ func enable_outline(enabled: bool, color: Color = Color.WHITE):
 	var mat = $Sprite.material as ShaderMaterial
 	mat.set_shader_parameter("outline_enabled", enabled)
 	mat.set_shader_parameter("outline_color", actual_color)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("bullet") and body.get("shooter") == self and body.left == false:
+		body.collision_mask = 0
+		body.set_collision_mask_value(4, true)
+		
+	if body.get("shooter") != self:
+		body.set_collision_mask_value(1, true)
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body.is_in_group("bullet") and body.get("shooter") == self:
+		body.left = true
+		body.collision_mask = 0
+		body.set_collision_mask_value(1, true)
+		body.set_collision_mask_value(4, true)

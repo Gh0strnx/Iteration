@@ -1,5 +1,4 @@
 extends Node2D
-
 @export_range (1, 99999) var bulletAmount: int = 4
 @export_range (0.01, 99999) var reloadTime: float = 3.0
 @export_range (0.005, 99999) var attackSpeed: float = 0.4
@@ -7,52 +6,52 @@ extends Node2D
 @export_range (1, 99999) var bulletsShot: int = 1
 @export_range (0.001, 99999) var timerSpeed := 0.2
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
-
 @export var selfDamage = true
+@export var autoFire = false
 @export_range (0.25, 99999) var damage: float = 34
 @export_range (0.05, 99999) var speed: float = 10.5
 @export_range (0, 99999) var bulletBounces: int = 0
 @export_range (0.2, 3.5) var bulletRange: float = 3.5
 @export_range (0, 100) var poison: float = 0
 @export_range (0.25, 99999) var bulletSize: float = 1
-
 var currentBulletAmount := 0
 var can_shoot := true
 var reloading := false
 var _owner_peer_id: int = 1
 var require_shoot_release := true
-
 @onready var cooldown: Timer = $coolDown
 @onready var reload_timer: Timer = $Reload
 
 func _ready() -> void:
 	_owner_peer_id = _find_owner_peer_id()
 	currentBulletAmount = bulletAmount
-
 	require_shoot_release = Input.is_action_pressed("Shoot")
 	await get_tree().process_frame
-	
 	cooldown.wait_time = attackSpeed
 	cooldown.one_shot = true
 	cooldown.timeout.connect(_on_cooldown_timeout)
-
 	reload_timer.wait_time = reloadTime
 	reload_timer.one_shot = true
 	reload_timer.timeout.connect(_on_reload_timeout)
-	
 	$".."/".."/Control/Reload.max_value = reloadTime
 	$".."/".."/Control/Reload.value = 0
 
 func _physics_process(_delta: float) -> void:
 	if multiplayer.get_unique_id() != _owner_peer_id:
 		return
-		
+
 	if require_shoot_release:
 		if Input.is_action_pressed("Shoot"):
 			return
 		require_shoot_release = false
 
-	if Input.is_action_just_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0:
+	var should_shoot = false
+	if autoFire:
+		should_shoot = Input.is_action_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0
+	else:
+		should_shoot = Input.is_action_just_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0
+
+	if should_shoot:
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT
@@ -65,7 +64,7 @@ func _physics_process(_delta: float) -> void:
 		reload_timer.start()
 		$".."/".."/Control/Reload.show()
 		$".."/".."/Control/Reload.max_value = reloadTime
-		
+
 	if reloading:
 		$".."/".."/Control/Reload.value = reloadTime - reload_timer.time_left
 
@@ -121,10 +120,8 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	b.bulletRange = bulletRange
 	b.bulletSize = bulletSize
 	b.poison = poison
-
 	var shooter_node = get_parent().get_parent().get_parent()
 	b.shooter = shooter_node
-
 	var angle := aim_dir.angle()
 	b.start(global_position, angle)
 	get_tree().root.add_child(b)

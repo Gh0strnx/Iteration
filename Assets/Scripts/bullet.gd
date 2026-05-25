@@ -6,19 +6,33 @@ var bulletBounces: int = 0
 var bulletRange = 3.5
 var poison = 0
 var bulletSize = 1
+var left = false
 var dir: float = 0.0
 var shooter = null
+
 func start(_position: Vector2, _direction: float) -> void:
+	collision_layer = 0
+	set_collision_layer_value(4, true)
+	collision_mask = 0
+	set_collision_mask_value(4, true)
 	position = _position
 	dir = _direction
 	velocity = Vector2.RIGHT.rotated(dir) * (speed * 100)
 	self.scale.y = bulletSize
 	self.scale.x = bulletSize
+
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var collider = collision.get_collider()
 		if collider.has_method("hurt_player") && collider.blocking == false:
+			if not collider.alive:
+				if bulletBounces <= 0:
+					queue_free()
+				else:
+					bulletBounces -= 1
+					velocity = velocity.bounce(collision.get_normal())
+				return
 			var hit_player_id = int(str(collider.name))
 			if multiplayer.get_unique_id() == hit_player_id:
 				if collider.name == GameManager.localPlayer.name:
@@ -48,6 +62,7 @@ func _physics_process(delta):
 		else:
 			bulletBounces -= 1
 			velocity = velocity.bounce(collision.get_normal())
+
 func DropOff():
 	if bulletRange < 3.5:
 		await get_tree().create_timer(bulletRange).timeout
