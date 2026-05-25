@@ -201,10 +201,12 @@ func FastBall():
 	gun.attackSpeed += gun.attackSpeed * 0.1
 
 func Bandaid():
-	player.health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.25
+	player.health = player.max_health
 
 func Medicine():
-	player.health += player.max_health * 0.1
+	player.max_health += player.max_health * 0.1
+	player.health = player.max_health
 	player.Regeneration += player.max_health * 0.1
 	gun.attackSpeed += gun.attackSpeed * 0.1
 
@@ -229,7 +231,8 @@ func Buckler():
 	player.blockCooldown -= player.blockCooldown * 0.1
 
 func Heavy():
-	player.health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.25
+	player.health = player.max_health
 	player.scale += Vector2(0.1, 0.1)
 
 func Decay():
@@ -262,10 +265,12 @@ func Assassin():
 	player.speed += player.speed * 0.4
 	player.scale -= Vector2(0.1, 0.1)
 	gun.damage -= gun.damage * 0.1
-	player.health -= player.max_health * 0.1
+	player.max_health -= player.max_health * 0.1
+	player.health = player.max_health
 
 func Medkit():
-	player.health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.25
+	player.health = player.max_health
 	player.Regeneration += player.max_health * 0.1
 
 # RARE
@@ -281,7 +286,8 @@ func Bound():
 	gun.attackSpeed -= gun.attackSpeed * 0.8
 
 func GlassCannon():
-	player.health -= player.max_health * 0.7
+	player.max_health -= player.max_health * 0.7
+	player.health = player.max_health
 	gun.damage += gun.damage * 1.25
 	gun.reloadTime += gun.reloadTime * 0.25
 
@@ -294,7 +300,8 @@ func Shrapnel():
 # EPIC
 func BubbleWrap():
 	gun.selfDamage = false
-	player.health += player.max_health * 0.1
+	player.max_health += player.max_health * 0.1
+	player.health = player.max_health
 	gun.bulletBounces += 3
 	player.speed -= player.speed * 0.1
 

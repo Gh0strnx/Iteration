@@ -72,39 +72,40 @@ func resetPlayers():
 				player.syncedPosition = spawn.global_position
 		# Reset player stats
 		player.health = player.max_health
+		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
+		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
 		player.alive = true
 		player.death_processed = false
 		GameManager.Players[player.id].alive = true
-		player.health = player.max_health
-		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
-		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
+		player.regen_timer = 0.0
 		# Reset gun
 		var gun = player.get_node("Gun/Sprite2D/gun")
 		gun.currentBulletAmount = gun.bulletAmount
 		gun.can_shoot = true
 		gun.reloading = false
 		gun.reload_timer.stop()
+		gun.reload_timer.wait_time = gun.reloadTime
 		gun.cooldown.stop()
+		gun.cooldown.wait_time = gun.attackSpeed
 		gun.require_shoot_release = false
-		player.get_node("Gun/Control/Reload").max_value = gun.reloadTime  # add this
+		player.get_node("Gun/Control/Reload").max_value = gun.reloadTime
 		player.get_node("Gun/Control/Reload").hide()
 		player.get_node("Gun/Control/Reload").value = 0
-
 		# Reset block state
 		player.canBlock = true
 		player.blocking = false
 		player.block_cooldown_active = false
 		player.block_cooldown_timer = 0.0
-		player.get_node("Control/Anchor/Block").max_value = player.blockCooldown  # add this
+		player.get_node("Control/Anchor/Block").max_value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").hide()
+		# Restore canvas modulate for alive players
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			if GameManager.localPlayer.is_in_group("alivePlayers"):
 				node.show()
-		player.get_node("Gun/Control/Reload").value = 0
-		#Remove bulletds
+		# Remove bullets
 		for bullet in get_tree().get_nodes_in_group("bullet"):
-				bullet.queue_free()
+			bullet.queue_free()
 		# Visibility and collision
 		player.show()
 		player.get_node("Collision").disabled = false

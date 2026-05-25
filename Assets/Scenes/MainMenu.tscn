@@ -280,17 +280,6 @@ offset_right = 208.0
 offset_bottom = 183.0
 color = Color(0, 0, 0, 1)
 
-[node name="ERROR" type="Label" parent="JoinScreen"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 393.0
-offset_right = 426.0
-offset_bottom = 425.0
-theme_override_colors/font_color = Color(1, 0.24, 0.290667, 1)
-theme_override_fonts/font = ExtResource("2_n7cds")
-theme_override_font_sizes/font_size = 25
-text = "ERROR: CANNOT FIND GAME"
-
 [node name="SettingsScreen" type="Control" parent="."]
 visible = false
 layout_mode = 3

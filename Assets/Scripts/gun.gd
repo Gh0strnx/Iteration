@@ -57,6 +57,7 @@ func _physics_process(_delta: float) -> void:
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT
 		_fire_burst.rpc(aim_dir)
+		print("this is the guns damage" + str(damage))
 
 	if currentBulletAmount < 1 and not reloading:
 		reloading = true
@@ -114,6 +115,7 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	var b = Bullet.instantiate()
 	b.selfDamage = selfDamage
 	b.damage = damage
+	print("this is the damage the gun sends to the bullet" + str(b.damage))
 	b.speed = speed
 	b.bulletBounces = bulletBounces
 	b.bulletRange = bulletRange
