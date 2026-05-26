@@ -4,7 +4,7 @@
 [ext_resource type="Shader" path="res://Assets/Textures/player.gdshader" id="2_oocgc"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="3_0ro6u"]
 [ext_resource type="Script" path="res://Assets/Scripts/light_moving.gd" id="4_b0jy7"]
-[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
+[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/gun.tscn" id="4_g71tx"]
 [ext_resource type="Texture2D" uid="uid://b6yyhv6m3u4w8" path="res://Assets/Textures/dog.png" id="4_w402k"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
 [ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
