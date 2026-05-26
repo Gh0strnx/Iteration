@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://4dlhlr0hus0i"]
+[gd_scene load_steps=18 format=3 uid="uid://4dlhlr0hus0i"]
 
 [ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="1_btohr"]
 [ext_resource type="Texture2D" uid="uid://cs1ii6nnd5s5n" path="res://Assets/Textures/Cards/CARD_01_-_BOUNCE.png" id="2_wtl7s"]
 [ext_resource type="Texture2D" uid="uid://1a63u5j5dqni" path="res://Assets/Textures/Cards/CARD_02_-_REFRACT.png" id="3_d8jgj"]
+[ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="4_3h4pv"]
 [ext_resource type="Texture2D" uid="uid://xmqic4f62c5j" path="res://Assets/Textures/Cards/CARD_03_-_BUBBLEWRAP.png" id="4_vq3uw"]
 [ext_resource type="Texture2D" uid="uid://cfnofq23x51g2" path="res://Assets/Textures/Cards/CARD_04_-_BANDAID.png" id="5_h8k3h"]
 [ext_resource type="Texture2D" uid="uid://dbpaudv4bdv34" path="res://Assets/Textures/Cards/CARD_05_-_MEDKIT.png" id="6_2w48f"]
@@ -48,17 +49,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1724.33
-offset_top = 27.6667
-offset_right = 24675.7
-offset_bottom = 27.6667
+offset_left = -2874.33
+offset_top = 132.667
+offset_right = 40577.6
+offset_bottom = 2524.67
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.15, 0.15)
-theme_override_constants/separation = 2100
+theme_override_constants/separation = 500
 alignment = 1
 
 [node name="Bounce" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bounce"]
@@ -67,12 +69,36 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_wtl7s")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Bounce"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Bounce"]
+layout_mode = 1
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "+1
+More
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Bounce"]
+layout_mode = 1
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Bullet Bounces
+Bullet Speed
+"
+vertical_alignment = 1
 
 [node name="Refract" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Refract"]
@@ -81,12 +107,34 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_d8jgj")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Refract"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Refract"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "+2
+Slightly More
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Refract"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Bullet Bounces
+Bullet Speed
+"
+vertical_alignment = 1
 
 [node name="BubbleWrap" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/BubbleWrap"]
@@ -95,12 +143,61 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("4_vq3uw")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "+3
+Slightly More
+
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/BubbleWrap/DESC AMOUNT"]
+offset_left = 309.0
+offset_top = 281.0
+offset_right = 699.0
+offset_bottom = 359.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Slightly Less
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT2" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 1541.58
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 100
+text = "Your bullets dont harm you
+
+"
+horizontal_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/BubbleWrap"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Bullet Bounces
+Health
+Movement Speed
+"
+vertical_alignment = 1
 
 [node name="Bandaid" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Bandaid"]
@@ -109,12 +206,31 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("5_h8k3h")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Bandaid"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Bandaid"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Bandaid"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Health"
+vertical_alignment = 1
 
 [node name="Medkit" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medkit"]
@@ -123,12 +239,34 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("6_2w48f")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Medkit"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Medkit"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More
+More
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Medkit"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Health
+Regeneration
+"
+vertical_alignment = 1
 
 [node name="Cannon" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Cannon"]
@@ -137,12 +275,51 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("7_qq7ya")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Cannon"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Cannon"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More
+Slightly More
+
+
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Cannon/DESC AMOUNT"]
+offset_left = 309.0
+offset_top = 241.0
+offset_right = 700.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Less
+Slightly Less
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Cannon"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Damage
+Bullet Size
+Bullet Speed
+Movement Speed"
+vertical_alignment = 1
 
 [node name="QuickReload" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/QuickReload"]
@@ -151,12 +328,30 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("8_vcf6f")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/QuickReload"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/QuickReload"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Less"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/QuickReload"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Reload Time"
+vertical_alignment = 1
 
 [node name="Decay" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Decay"]
@@ -165,12 +360,42 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("9_5r3n5")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Decay"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Decay"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Decay"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Damage Over Time"
+vertical_alignment = 1
+
+[node name="DESC AMOUNT2" type="Label" parent="Control/HBoxContainer/Decay"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 1541.58
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 100
+text = "Your bullets Poison Enemies
+
+"
+horizontal_alignment = 1
 
 [node name="GlassCannon" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/GlassCannon"]
@@ -179,12 +404,51 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("10_4o1wt")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/GlassCannon"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/GlassCannon"]
+offset_left = 131.577
+offset_top = 1644.44
+offset_right = 831.577
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Significantly More
+Slightly More
+
+
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/GlassCannon/DESC AMOUNT"]
+offset_left = 160.0
+offset_top = 241.0
+offset_right = 701.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More
+Significantly Less
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/GlassCannon"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Damage
+Bullet Size
+Reload Time
+Health"
+vertical_alignment = 1
 
 [node name="Shrapnel" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Shrapnel"]
@@ -193,12 +457,52 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("11_lpjmr")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Shrapnel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Shrapnel"]
+offset_left = 128.687
+offset_top = 1644.44
+offset_right = 828.687
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "+3
++1
+More
+
+
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Shrapnel/DESC AMOUNT"]
+offset_left = 159.0
+offset_top = 281.0
+offset_right = 700.0
+offset_bottom = 440.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Significantly Less
+Slightly More"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Shrapnel"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Bullets
+Bullets Shot
+Bullet Speed
+Damage
+Bullet Spread"
+vertical_alignment = 1
 
 [node name="Medicine" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Medicine"]
@@ -207,12 +511,47 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("12_ba6n1")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Medicine"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Medicine"]
+offset_left = 128.687
+offset_top = 1644.44
+offset_right = 828.687
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Slightly More
+Slightly More
+Slightly Less
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Medicine/DESC AMOUNT"]
+offset_left = 159.0
+offset_top = 241.0
+offset_right = 700.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Slightly Less"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Medicine"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Health
+Regeneration
+Attack Speed"
+vertical_alignment = 1
 
 [node name="Sniper" type="Control" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
 [node name="Image" type="TextureRect" parent="Control/HBoxContainer/Sniper"]
@@ -221,10 +560,49 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("13_jrppp")
 
-[node name="DESC" type="Label" parent="Control/HBoxContainer/Sniper"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Sniper"]
+offset_left = 128.687
+offset_top = 1644.44
+offset_right = 828.687
+offset_bottom = 2124.44
+theme_override_colors/font_color = Color(0.45, 1, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Double
+More
+Half
+
+
+"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Sniper/DESC AMOUNT"]
+offset_left = 160.0
+offset_top = 281.0
+offset_right = 701.0
+offset_bottom = 441.0
+theme_override_colors/font_color = Color(1, 0.34, 0.34, 1)
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "More
+1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Sniper"]
+offset_left = 842.688
+offset_top = 1644.44
+offset_right = 1542.69
+offset_bottom = 2124.44
+theme_override_fonts/font = ExtResource("4_3h4pv")
+theme_override_font_sizes/font_size = 80
+text = "Bullet Speed
+Damage
+Bullet Spread
+Reload Time
+Set Ammo"
+vertical_alignment = 1
 
 [node name="Select" type="Label" parent="."]
 anchors_preset = 5

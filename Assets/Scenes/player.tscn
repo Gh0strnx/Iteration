@@ -4,7 +4,7 @@
 [ext_resource type="Shader" path="res://Assets/Textures/player.gdshader" id="2_oocgc"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="3_0ro6u"]
 [ext_resource type="Script" path="res://Assets/Scripts/light_moving.gd" id="4_b0jy7"]
-[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/gun.tscn" id="4_g71tx"]
+[ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
 [ext_resource type="Texture2D" uid="uid://b6yyhv6m3u4w8" path="res://Assets/Textures/dog.png" id="4_w402k"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
 [ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
@@ -19,9 +19,11 @@ height = 215.652
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1r6tf"]
 shader = ExtResource("2_oocgc")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/outline_width = 3.0
+shader_parameter/outline_width = 1.0
 shader_parameter/outline_enabled = true
 shader_parameter/player_color = Color(1, 1, 1, 1)
+shader_parameter/frame_size = Vector2(64, 64)
+shader_parameter/sheet_size = Vector2(1088, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3643t"]
 atlas = ExtResource("4_w402k")
@@ -258,6 +260,12 @@ properties/18/replication_mode = 1
 properties/19/path = NodePath(".:scale")
 properties/19/spawn = true
 properties/19/replication_mode = 1
+properties/20/path = NodePath(".:block_cooldown_active")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath(".:block_cooldown_timer")
+properties/21/spawn = true
+properties/21/replication_mode = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fx3s1"]
 bg_color = Color(0, 0, 0, 1)

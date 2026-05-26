@@ -117,6 +117,7 @@ scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_0bg36")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 energy = 0.1
 texture = ExtResource("3_5vhso")
 texture_scale = 0.24
@@ -136,4 +137,4 @@ shape = SubResource("CircleShape2D_pp2gl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ExplodingBullets"]
 scale = Vector2(5.5, 5.5)
 sprite_frames = SubResource("SpriteFrames_rktor")
-frame_progress = 0.454164
+frame_progress = 0.27495

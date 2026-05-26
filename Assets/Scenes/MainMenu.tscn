@@ -23,7 +23,7 @@ shader_parameter/angle = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jv6w7"]
 
-[node name="Control" type="CanvasLayer"]
+[node name="Control" type="CanvasLayer" groups=["MultiplayerController"]]
 layer = 2
 script = ExtResource("1_sli30")
 
@@ -42,7 +42,7 @@ offset_bottom = 1080.0
 scale = Vector2(0.68, 0.68)
 texture = ExtResource("4_q6na8")
 
-[node name="TitleScreen" type="Control" parent="."]
+[node name="TitleScreen" type="Control" parent="." groups=["LobbyCodeManager"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -167,7 +167,7 @@ text = "HOSTING "
 [node name="CODE" type="LineEdit" parent="HostScreen"]
 layout_mode = 0
 offset_top = 78.0
-offset_right = 489.0
+offset_right = 1293.0
 offset_bottom = 202.0
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("5_h45bj")
@@ -233,7 +233,7 @@ text = "ENTER CODE "
 [node name="CODE" type="LineEdit" parent="JoinScreen"]
 layout_mode = 0
 offset_top = 78.0
-offset_right = 489.0
+offset_right = 1293.0
 offset_bottom = 202.0
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("5_h45bj")
@@ -256,6 +256,8 @@ theme_override_constants/separation = 20
 [node name="START" type="Button" parent="JoinScreen/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.380392, 0.815686, 1, 1)
+theme_override_colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 75
 text = "JOIN GAME "
@@ -279,6 +281,16 @@ offset_top = 175.0
 offset_right = 208.0
 offset_bottom = 183.0
 color = Color(0, 0, 0, 1)
+
+[node name="ERRORS" type="Label" parent="JoinScreen"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 396.0
+offset_right = 121.0
+offset_bottom = 423.0
+theme_override_colors/font_color = Color(1, 0.239216, 0.290196, 1)
+theme_override_fonts/font = ExtResource("2_n7cds")
+theme_override_font_sizes/font_size = 25
 
 [node name="SettingsScreen" type="Control" parent="."]
 visible = false

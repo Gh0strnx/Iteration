@@ -16,8 +16,8 @@ var canBlock = true
 var id: int = 0
 var regen_timer: float = 0.0
 var death_processed: bool = false
-var block_cooldown_timer: float = 0.0
-var block_cooldown_active: bool = false
+@export var block_cooldown_timer: float = 0.0
+@export var block_cooldown_active: bool = false
 var max_health: float = 0.0
 
 func _ready() -> void:
@@ -80,11 +80,9 @@ func _physics_process(delta: float) -> void:
 
 		if block_cooldown_active:
 			block_cooldown_timer += delta
-			$"Control/Anchor/Block".value = block_cooldown_timer
 			if block_cooldown_timer >= blockCooldown:
 				block_cooldown_active = false
 				block_cooldown_timer = 0.0
-				$"Control/Anchor/Block".hide()
 
 		if Input.is_action_just_pressed("Block") && canBlock:
 			block()
@@ -92,6 +90,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
 		update_health_bar()
+
+	if block_cooldown_active:
+		$"Control/Anchor/Block".show()
+		$"Control/Anchor/Block".max_value = blockCooldown
+		$"Control/Anchor/Block".value = block_cooldown_timer
+	else:
+		$"Control/Anchor/Block".hide()
 
 	$AudioStreamPlayer2D.volume_db = volumeIncreaser
 	$AudioStreamPlayer2D.max_distance = soundRadius
@@ -126,7 +131,7 @@ func apply_poison(damage_per_second: float) -> void:
 func block():
 	canBlock = false
 	blocking = true
-	enable_outline(true)
+	set_outline_rpc.rpc(true)
 	$"Control/Anchor/Block".max_value = blockCooldown
 	$"Control/Anchor/Block".value = 0.0
 	$"Control/Anchor/Block".show()
@@ -134,7 +139,7 @@ func block():
 	block_cooldown_active = true
 	await get_tree().create_timer(0.3).timeout
 	blocking = false
-	enable_outline(false)
+	set_outline_rpc.rpc(false)
 	await get_tree().create_timer(blockCooldown).timeout
 	canBlock = true
 
@@ -149,11 +154,15 @@ func enable_outline(enabled: bool, color: Color = Color.WHITE):
 	mat.set_shader_parameter("outline_enabled", enabled)
 	mat.set_shader_parameter("outline_color", actual_color)
 
+@rpc("any_peer", "call_local")
+func set_outline_rpc(enabled: bool):
+	enable_outline(enabled)
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bullet") and body.get("shooter") == self and body.left == false:
 		body.collision_mask = 0
 		body.set_collision_mask_value(4, true)
-		
+
 	if body.get("shooter") != self:
 		body.set_collision_mask_value(1, true)
 

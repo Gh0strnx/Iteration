@@ -9,6 +9,8 @@ var hostScreen = false
 var titleScreen = true
 var joinScreen = false
 
+var mainscene = preload("res://Assets/Scenes/main.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GameManager.port = port
@@ -21,7 +23,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("Back"):
+		_on_back_button_down()
 
 # called by server and client
 func peer_connected(id):
@@ -35,13 +38,19 @@ func peer_disconnected(id):
 	
 #called by client
 func connected_to_server():
+	$"JoinScreen/VBoxContainer/START".text = "JOINED LOBBY"
+	$"JoinScreen/VBoxContainer/START".disabled = true
 	print("Connected")
+	
 	#name input (1, name, multiplayer...)
 	SendPlayerInformation.rpc_id(1, $"SettingsScreen/Vbox/NAME".text.strip_edges(), multiplayer.get_unique_id())
 	
 #called by client
 func connection_failed():
 	print("Connection Failed")
+	print("No Host Found")
+	$JoinScreen/ERRORS.show()
+	$JoinScreen/ERRORS.text = "NO HOST FOUND"
 	
 @rpc("any_peer")
 func SendPlayerInformation(name, id):
@@ -92,21 +101,24 @@ func _on_host_button_down() -> void:
 @rpc("any_peer", "call_local")
 func StartGame():
 	if allowStart:
-		var scene = load("res://Assets/Scenes/main.tscn").instantiate()
+		var scene = mainscene.instantiate()
 		get_tree().root.add_child(scene)
 		
 		
 			
 
 
-func _on_join_button_down() -> void:
-	if $"JoinScreen/CODE".text == "":
-		GameManager.ip = '127.0.0.1' ##THIS ISNT LEGIT ONLY FOR DEBUGGING
-		print(GameManager.ip)
-	await get_tree().process_frame	
+# In MultiplayerController (CanvasLayer script)
+func join_with_ip(ip: String, join_port: int) -> void:
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
-		peer.create_client(GameManager.ip, port)
+		var error = peer.create_client(ip, join_port)
+		if error != OK:
+			print("Failed to create client: ", error)
+			print("Invalid Code")
+			$JoinScreen/ERRORS.show()
+			$JoinScreen/ERRORS.text = "INVALID CODE"
+			return
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		multiplayer.set_multiplayer_peer(peer)
 
@@ -117,6 +129,8 @@ func _on_start_button_down() -> void:
 
 func _on_address_input_text_changed(_new_text: String) -> void:
 	GameManager.lobbyCode = $JoinScreen/CODE.text
+	print("woah the text is being changed")
+	print(GameManager.lobbyCode)
 	
 
 func _on_play_button_down() -> void:
@@ -138,6 +152,7 @@ func _on_settings_button_down() -> void:
 
 
 func _on_back_button_down() -> void:
+	$JoinScreen/ERRORS.hide()
 	$TitleScreen.show()
 	$TitleScreen/Selection.hide()
 	$TitleScreen/StartUp.show()
@@ -152,5 +167,6 @@ func _on_back_button_down() -> void:
 	
 
 func _on_firstjoin_button_down() -> void:
+	$JoinScreen/ERRORS.hide()
 	$JoinScreen.show()
 	$TitleScreen.hide()

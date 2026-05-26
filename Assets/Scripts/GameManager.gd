@@ -27,6 +27,8 @@ func _ready() -> void:
 		bigWin.visible = false
 
 func _process(_delta: float) -> void:
+	#if multiplayer.multiplayer_peer == null:
+		##return
 	if not multiplayer.is_server():
 		return
 	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:

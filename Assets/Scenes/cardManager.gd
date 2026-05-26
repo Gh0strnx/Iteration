@@ -110,7 +110,7 @@ func show_cards(picked: Array):
 func update_selection():
 	for i in shown_cards.size():
 		if i == current_index:
-			shown_cards[i].scale = Vector2(1.2, 1.2)
+			shown_cards[i].scale = Vector2(1.6, 1.6)
 		else:
 			shown_cards[i].scale = Vector2(1.0, 1.0)
 
