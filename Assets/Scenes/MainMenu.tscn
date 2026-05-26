@@ -355,7 +355,8 @@ offset_right = 292.0
 offset_bottom = 82.0
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 20
-text = "CHANGES LOBBY CODES TO IP ADRESSES"
+text = "CHANGES LOBBY CODES TO IP ADRESSES
+"
 
 [node name="Button" type="TextureButton" parent="SettingsScreen/Vbox/Margin/ENABLE"]
 layout_mode = 0
@@ -367,6 +368,17 @@ scale = Vector2(0.35, 0.35)
 toggle_mode = true
 texture_normal = ExtResource("6_vtbyp")
 texture_pressed = ExtResource("7_5fs4q")
+
+[node name="DESC2" type="Label" parent="SettingsScreen/Vbox/Margin/ENABLE"]
+offset_left = 3.0
+offset_top = 76.0
+offset_right = 292.0
+offset_bottom = 98.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.690196)
+theme_override_fonts/font = ExtResource("5_h45bj")
+theme_override_font_sizes/font_size = 20
+text = "[Port: 8910]
+"
 
 [node name="BACK" type="Button" parent="SettingsScreen/Vbox"]
 layout_mode = 2
@@ -400,13 +412,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -218.0
+offset_left = -226.0
 offset_top = -63.0
+offset_right = -8.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("5_h45bj")
 theme_override_font_sizes/font_size = 30
-text = "V5.0.4
+text = "V5.1.0
 CIRE INTERACTIVE"
 horizontal_alignment = 2
 
