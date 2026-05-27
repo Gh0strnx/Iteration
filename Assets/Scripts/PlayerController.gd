@@ -19,6 +19,8 @@ var death_processed: bool = false
 @export var block_cooldown_timer: float = 0.0
 @export var block_cooldown_active: bool = false
 var max_health: float = 0.0
+var currentlyleft = false
+var currentlyright = true
 
 func _ready() -> void:
 	max_health = health
@@ -69,6 +71,17 @@ func _physics_process(delta: float) -> void:
 
 		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
+		
+		
+		if facing_left && currentlyleft == false:
+			$Gun.global_position.x += 43.35
+			currentlyright = false
+			currentlyleft = true
+		elif !facing_left && currentlyright == false:
+			$Gun.global_position.x -= 43.35
+			currentlyleft = false
+			currentlyright = true
+		
 
 		move_and_slide()
 		syncedPosition = global_position

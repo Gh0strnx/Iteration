@@ -14,6 +14,7 @@ var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 @export_range (0.2, 3.5) var bulletRange: float = 3.5
 @export_range (0, 100) var poison: float = 0
 @export_range (0.25, 99999) var bulletSize: float = 1
+@export var explodingBullets = false
 var currentBulletAmount := 0
 var can_shoot := true
 var reloading := false
@@ -33,8 +34,13 @@ func _ready() -> void:
 	reload_timer.wait_time = reloadTime
 	reload_timer.one_shot = true
 	reload_timer.timeout.connect(_on_reload_timeout)
-	$".."/".."/Control/Reload.max_value = reloadTime
-	$".."/".."/Control/Reload.value = 0
+	$".."/Control/Reload.max_value = reloadTime
+	$".."/Control/Reload.value = 0
+	$".."/Control/Reload.hide()
+	_update_bullet_text(bulletAmount)
+
+func _update_bullet_text(amount: int) -> void:
+	$"../../BulletAmount".text = str(amount)
 
 func _physics_process(_delta: float) -> void:
 	if multiplayer.get_unique_id() != _owner_peer_id:
@@ -56,17 +62,16 @@ func _physics_process(_delta: float) -> void:
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT
 		_fire_burst.rpc(aim_dir)
-		print("this is the guns damage" + str(damage))
 
 	if currentBulletAmount < 1 and not reloading:
 		reloading = true
 		can_shoot = false
 		reload_timer.start()
-		$".."/".."/Control/Reload.show()
-		$".."/".."/Control/Reload.max_value = reloadTime
+		_sync_reload_ui.rpc(true, reloadTime)
 
 	if reloading:
-		$".."/".."/Control/Reload.value = reloadTime - reload_timer.time_left
+		var progress = reloadTime - reload_timer.time_left
+		_sync_reload_progress.rpc(progress)
 
 func _find_owner_peer_id() -> int:
 	var n: Node = self
@@ -82,7 +87,22 @@ func _fire_burst(aim_dir: Vector2) -> void:
 	currentBulletAmount -= bulletsShot
 	if currentBulletAmount < 0:
 		currentBulletAmount = 0
+	_update_bullet_text(currentBulletAmount)
 	_burst_shoot(aim_dir)
+
+@rpc("any_peer", "call_local")
+func _sync_reload_ui(show_bar: bool, max_val: float) -> void:
+	var reload_bar = $".."/Control/Reload
+	reload_bar.max_value = max_val
+	reload_bar.value = 0
+	if show_bar:
+		reload_bar.show()
+	else:
+		reload_bar.hide()
+
+@rpc("any_peer", "call_local")
+func _sync_reload_progress(progress: float) -> void:
+	$".."/Control/Reload.value = progress
 
 func _on_cooldown_timeout() -> void:
 	if not reloading:
@@ -91,8 +111,9 @@ func _on_cooldown_timeout() -> void:
 func _on_reload_timeout() -> void:
 	currentBulletAmount = bulletAmount
 	reloading = false
-	$".."/".."/Control/Reload.hide()
 	can_shoot = true
+	_update_bullet_text(currentBulletAmount)
+	_sync_reload_ui.rpc(false, reloadTime)
 
 func _burst_shoot(aim_dir: Vector2) -> void:
 	if bulletsShot > 1:
@@ -114,8 +135,8 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	var b = Bullet.instantiate()
 	b.selfDamage = selfDamage
 	b.damage = damage
-	print("this is the damage the gun sends to the bullet" + str(b.damage))
 	b.speed = speed
+	b.explodingBullets = explodingBullets
 	b.bulletBounces = bulletBounces
 	b.bulletRange = bulletRange
 	b.bulletSize = bulletSize

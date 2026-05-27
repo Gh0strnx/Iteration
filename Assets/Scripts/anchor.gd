@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 	if aim_dir == Vector2.ZERO:
 		aim_dir = Vector2.RIGHT
 
-	rotation = aim_dir.angle()
+	sprite.rotation = aim_dir.angle()
 
 	var deg := wrapf(rad_to_deg(rotation), -180.0, 180.0)
 	sprite.flip_v = not (deg > -90.0 and deg < 90.0)

@@ -88,9 +88,10 @@ func resetPlayers():
 		gun.cooldown.stop()
 		gun.cooldown.wait_time = gun.attackSpeed
 		gun.require_shoot_release = false
-		player.get_node("Gun/Control/Reload").max_value = gun.reloadTime
-		player.get_node("Gun/Control/Reload").hide()
-		player.get_node("Gun/Control/Reload").value = 0
+		player.get_node("Gun/Sprite2D/Control/Reload").max_value = gun.reloadTime
+		player.get_node("Gun/BulletAmount").text = str(gun.bulletAmount)
+		player.get_node("Gun/Sprite2D/Control/Reload").hide()
+		player.get_node("Gun/Sprite2D/Control/Reload").value = 0
 		# Reset block state
 		player.canBlock = true
 		player.blocking = false

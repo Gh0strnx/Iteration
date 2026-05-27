@@ -286,8 +286,8 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6n1v4"]
-radius = 78.2609
-height = 276.522
+radius = 104.066
+height = 307.441
 
 [node name="Player" type="CharacterBody2D" groups=["Player", "alivePlayers"]]
 scale = Vector2(1.15, 1.15)
@@ -296,7 +296,7 @@ script = ExtResource("1_rwqxq")
 soundRadius = 200.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0.869565, -11.3043)
+position = Vector2(0, -11.304)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_kkybe")
 
@@ -314,17 +314,16 @@ animation = &"idle"
 [node name="LightMoving" type="PointLight2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(0, -77)
+position = Vector2(0, -10.7652)
 shadow_enabled = true
 texture = ExtResource("3_0ro6u")
 texture_scale = 50.0
 script = ExtResource("4_b0jy7")
 
 [node name="Gun" parent="." instance=ExtResource("4_g71tx")]
-z_index = 3
-position = Vector2(6.66134e-16, -13.913)
-rotation = -1.57952
-scale = Vector2(0.55, 0.55)
+z_index = 5
+position = Vector2(-18.8826, -29.4255)
+scale = Vector2(0.7, 0.7)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kqjyn")
@@ -348,19 +347,17 @@ parameters/looping = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = -75.0
-offset_top = -300.0
+offset_top = -162.91
 offset_right = 75.0
-offset_bottom = -200.0
+offset_bottom = -62.9095
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.217391
-offset_top = 110.435
-offset_right = 10.2174
-offset_bottom = 69.435
+offset_right = 10.0
+offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 12
@@ -396,8 +393,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = 79.5652
-offset_bottom = 79.5652
+offset_left = -0.179466
+offset_top = -29.2433
+offset_right = -0.179466
+offset_bottom = -29.2433
 grow_horizontal = 2
 grow_vertical = 2
 

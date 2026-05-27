@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://6dksx0gbkhay"]
+[gd_scene load_steps=7 format=3 uid="uid://6dksx0gbkhay"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/anchor.gd" id="1_vj7b3"]
-[ext_resource type="Texture2D" uid="uid://l0sbruunslyu" path="res://Assets/Textures/Gun.png" id="2_om7vp"]
 [ext_resource type="Script" path="res://Assets/Scripts/gun.gd" id="3_4kqa5"]
 [ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="4_5hbdj"]
+[ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="5_b8ieh"]
+[ext_resource type="Texture2D" uid="uid://dg50kp852lbj4" path="res://Assets/Textures/gunstuff.png" id="6_fske0"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qxs42"]
 properties/0/path = NodePath(".:rotation")
@@ -51,12 +52,15 @@ z_as_relative = false
 script = ExtResource("1_vj7b3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(45, 0)
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_om7vp")
+texture_filter = 1
+position = Vector2(0, -24)
+scale = Vector2(6, 6)
+texture = ExtResource("6_fske0")
+region_enabled = true
+region_rect = Rect2(5, 0, 16, 2)
 
 [node name="gun" type="Node2D" parent="Sprite2D"]
-position = Vector2(67.1429, 0)
+position = Vector2(9.83333, 0)
 script = ExtResource("3_4kqa5")
 
 [node name="coolDown" type="Timer" parent="Sprite2D/gun"]
@@ -64,18 +68,15 @@ script = ExtResource("3_4kqa5")
 [node name="Reload" type="Timer" parent="Sprite2D/gun"]
 wait_time = 5.0
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_qxs42")
-
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="Sprite2D"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 96.0
-offset_top = -21.0
-offset_right = 136.0
-offset_bottom = 19.0
+offset_left = 7.66667
+offset_top = -3.5
+offset_right = 47.6667
+offset_bottom = 36.5
 
-[node name="Reload" type="TextureProgressBar" parent="Control"]
+[node name="Reload" type="TextureProgressBar" parent="Sprite2D/Control"]
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -83,14 +84,14 @@ anchor_left = 0.52
 anchor_top = 0.5
 anchor_right = 0.52
 anchor_bottom = 0.5
-offset_left = 18.2
-offset_top = -15.0
-offset_right = 146.2
-offset_bottom = 113.0
+offset_left = -15.3
+offset_top = -19.5
+offset_right = 112.7
+offset_bottom = 108.5
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 1.58127
-scale = Vector2(0.24, 0.24)
+scale = Vector2(0.04, 0.04)
 step = 0.01
 value = 50.0
 fill_mode = 4
@@ -98,6 +99,46 @@ texture_progress = ExtResource("4_5hbdj")
 tint_under = Color(0, 0, 0, 0.490196)
 tint_over = Color(0, 0, 0, 1)
 tint_progress = Color(0.821126, 0.533265, 0, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qxs42")
+
+[node name="BulletAmount" type="Label" parent="."]
+offset_left = -17.0
+offset_top = -87.0
+offset_right = 30.0
+offset_bottom = -28.0
+theme_override_fonts/font = ExtResource("5_b8ieh")
+theme_override_font_sizes/font_size = 60
+text = "4"
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(0, -6)
+scale = Vector2(6, 6)
+texture = ExtResource("6_fske0")
+region_enabled = true
+region_rect = Rect2(3, 8, 5, 8)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = 5
+texture_filter = 1
+position = Vector2(0, -33)
+scale = Vector2(6, 6)
+texture = ExtResource("6_fske0")
+region_enabled = true
+region_rect = Rect2(3, 7, 5, 1)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+z_index = 2
+z_as_relative = false
+texture_filter = 1
+position = Vector2(0, 30)
+scale = Vector2(6, 6)
+texture = ExtResource("6_fske0")
+region_enabled = true
+region_rect = Rect2(19, 10, 5, 6)
 
 [connection signal="timeout" from="Sprite2D/gun/coolDown" to="Sprite2D/gun" method="_on_timer_timeout"]
 [connection signal="timeout" from="Sprite2D/gun/Reload" to="Sprite2D/gun" method="_on_reload_timeout"]
