@@ -27,7 +27,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcw0m"]
-radius = 324.0
+radius = 167.607
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pp2gl"]
 radius = 143.838
@@ -123,13 +123,12 @@ texture = ExtResource("3_5vhso")
 texture_scale = 0.24
 script = ExtResource("4_i676a")
 
-[node name="Area2D" type="Area2D" parent="." groups=["bullet"]]
+[node name="Area2D" type="Area2D" parent="." groups=["bulletArea"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_lcw0m")
 
 [node name="ExplodingBullets" type="Area2D" parent="."]
-visible = false
 
 [node name="ExplodeRadius" type="CollisionShape2D" parent="ExplodingBullets"]
 shape = SubResource("CircleShape2D_pp2gl")

@@ -37,7 +37,7 @@ func _physics_process(_delta: float) -> void:
 		energy = 0.0
 	else:
 		var col: Node = result["collider"] as Node
-		if col == bullet_body or col.is_in_group("bullet"):
+		if col == bullet_body or col.is_in_group("bulletArea"):
 			visible = false
 			light_intensity = 0.0
 			energy = 0.0

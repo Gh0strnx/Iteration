@@ -11,10 +11,10 @@ var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 @export_range (0.25, 99999) var damage: float = 34
 @export_range (0.05, 99999) var speed: float = 10.5
 @export_range (0, 99999) var bulletBounces: int = 0
-@export_range (0.2, 3.5) var bulletRange: float = 3.5
+@export_range (0.2, 3.5) var bulletRange: float = 3
 @export_range (0, 100) var poison: float = 0
 @export_range (0.25, 99999) var bulletSize: float = 1
-@export var explodingBullets = false
+@export var explodingBullets = true
 var currentBulletAmount := 0
 var can_shoot := true
 var reloading := false
@@ -61,7 +61,15 @@ func _physics_process(_delta: float) -> void:
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT
-		_fire_burst.rpc(aim_dir)
+		# Pre-calculate all spread angles on the shooter's peer only
+		var angles: Array = []
+		for i in range(bulletsShot):
+			var dir := aim_dir.normalized()
+			if bulletSpread > 0.0:
+				var half := bulletSpread * 0.5
+				dir = dir.rotated(randf_range(-half, half)).normalized()
+			angles.append(dir.angle())
+		_fire_burst.rpc(angles)
 
 	if currentBulletAmount < 1 and not reloading:
 		reloading = true
@@ -82,13 +90,13 @@ func _find_owner_peer_id() -> int:
 	return 1
 
 @rpc("any_peer", "call_local")
-func _fire_burst(aim_dir: Vector2) -> void:
+func _fire_burst(angles: Array) -> void:
 	can_shoot = false
 	currentBulletAmount -= bulletsShot
 	if currentBulletAmount < 0:
 		currentBulletAmount = 0
 	_update_bullet_text(currentBulletAmount)
-	_burst_shoot(aim_dir)
+	_burst_shoot(angles)
 
 @rpc("any_peer", "call_local")
 func _sync_reload_ui(show_bar: bool, max_val: float) -> void:
@@ -115,23 +123,16 @@ func _on_reload_timeout() -> void:
 	_update_bullet_text(currentBulletAmount)
 	_sync_reload_ui.rpc(false, reloadTime)
 
-func _burst_shoot(aim_dir: Vector2) -> void:
-	if bulletsShot > 1:
-		for i in range(bulletsShot):
-			_spawn_bullet_with_spread(aim_dir)
+func _burst_shoot(angles: Array) -> void:
+	if angles.size() > 1:
+		for angle in angles:
+			spawn_bullet_at_angle(angle)
 			await get_tree().create_timer(timerSpeed / max(1.0, (bulletsShot / 2.0))).timeout
 	else:
-		_spawn_bullet_with_spread(aim_dir)
+		spawn_bullet_at_angle(angles[0])
 	cooldown.start()
 
-func _spawn_bullet_with_spread(base_dir: Vector2) -> void:
-	var dir := base_dir.normalized()
-	if bulletSpread > 0.0:
-		var half := bulletSpread * 0.5
-		dir = dir.rotated(randf_range(-half, half)).normalized()
-	spawn_bullet(dir)
-
-func spawn_bullet(aim_dir: Vector2) -> void:
+func spawn_bullet_at_angle(angle: float) -> void:
 	var b = Bullet.instantiate()
 	b.selfDamage = selfDamage
 	b.damage = damage
@@ -143,6 +144,5 @@ func spawn_bullet(aim_dir: Vector2) -> void:
 	b.poison = poison
 	var shooter_node = get_parent().get_parent().get_parent()
 	b.shooter = shooter_node
-	var angle := aim_dir.angle()
-	b.start(global_position, angle)
 	get_tree().root.add_child(b)
+	b.start(global_position, angle)
