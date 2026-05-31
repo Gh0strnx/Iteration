@@ -6,6 +6,7 @@ var localPlayer : CharacterBody2D
 var port
 var ip
 var lobbyCode
+var MaxScore = 1
 var choice = null
 @onready var scoreBar1 = null
 @onready var scoreBar2 = null
@@ -27,8 +28,8 @@ func _ready() -> void:
 		bigWin.visible = false
 
 func _process(_delta: float) -> void:
-	#if multiplayer.multiplayer_peer == null:
-		##return
+	if not multiplayer.has_multiplayer_peer():
+		return
 	if not multiplayer.is_server():
 		return
 	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
@@ -131,6 +132,10 @@ func HalfPointWin():
 func FullPointWin():
 	ran = true
 	Map()
+	for pid in Players:
+		if Players[pid].score >= MaxScore:
+			GameOver()
+			return
 	RemoveScores.rpc()
 	print("this is a full point win")
 	get_tree().get_first_node_in_group("CardManager").start_picking()
@@ -181,3 +186,12 @@ func Map():
 	print(mapSelected)
 	$/root/Node2D.rpc("applyMap", index)
 	$/root/Node2D.applyMap(index)
+
+func GameOver():
+	get_tree().paused = true
+	ShowGameOver.rpc()
+
+@rpc("authority", "call_local")
+func ShowGameOver():
+	get_tree().paused = true
+	get_tree().get_first_node_in_group("GameOver").show()

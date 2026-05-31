@@ -170,3 +170,58 @@ func _on_firstjoin_button_down() -> void:
 	$JoinScreen/ERRORS.hide()
 	$JoinScreen.show()
 	$TitleScreen.hide()
+
+
+func _on_title_screen_or_quit(should_quit: bool):
+	if multiplayer.is_server():
+		# Send to all clients first, then handle locally
+		for id in GameManager.Players:
+			if id != multiplayer.get_unique_id():
+				return_to_title.rpc_id(id)
+		await get_tree().create_timer(0.3).timeout
+	return_to_title_local()
+	if should_quit:
+		get_tree().quit()
+
+@rpc("any_peer", "call_remote", "reliable")
+func return_to_title():
+	return_to_title_local()
+
+func return_to_title_local():
+	get_tree().paused = false
+	var scene = get_tree().get_first_node_in_group("SceneManager")
+	if scene:
+		scene.queue_free()
+	GameManager.Players = {}
+	GameManager.playerNodes = {}
+	GameManager.ran = false
+	GameManager.localPlayer = null
+	GameManager.winningplayerid = null
+	GameManager.maps = null
+	GameManager.mapSelected = null
+	GameManager.prevchoice = null
+	GameManager.choice = null
+	GameManager.scoreBar1 = null
+	GameManager.scoreBar2 = null
+	GameManager.scoreBar3 = null
+	GameManager.scoreBar4 = null
+	GameManager.scoreBig1 = null
+	GameManager.scoreBig2 = null
+	GameManager.scoreBig3 = null
+	GameManager.scoreBig4 = null
+	GameManager.bigWin = null
+	if multiplayer.multiplayer_peer:
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = null
+		hosting = false
+		allowStart = false
+	var gameover = get_tree().get_first_node_in_group("GameOver")
+	if gameover:
+		gameover.hide()
+	self.show()
+	$TitleScreen.show()
+	$TitleScreen/StartUp.show()
+	$TitleScreen/Selection.hide()
+	$HostScreen.hide()
+	$JoinScreen.hide()
+	$SettingsScreen.hide()

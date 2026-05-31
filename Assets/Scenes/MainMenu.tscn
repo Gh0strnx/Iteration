@@ -370,6 +370,7 @@ texture_normal = ExtResource("6_vtbyp")
 texture_pressed = ExtResource("7_5fs4q")
 
 [node name="DESC2" type="Label" parent="SettingsScreen/Vbox/Margin/ENABLE"]
+layout_mode = 0
 offset_left = 3.0
 offset_top = 76.0
 offset_right = 292.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://cpiybb75qq6ww"]
+[gd_scene load_steps=17 format=4 uid="uid://cpiybb75qq6ww"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_ctwyd"]
 [ext_resource type="PackedScene" uid="uid://4dlhlr0hus0i" path="res://Assets/Scenes/card_manager.tscn" id="3_g3bwo"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="6_8ftyi"]
 [ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="7_ojvro"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="9_5h156"]
+[ext_resource type="PackedScene" uid="uid://bw3hai72yyitw" path="res://Assets/Scenes/GameOver.tscn" id="13_n5kx3"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_06ihn"]
 light_mode = 1
@@ -290,3 +291,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_5h156")
+
+[node name="GameOver" parent="." instance=ExtResource("13_n5kx3")]
+visible = false

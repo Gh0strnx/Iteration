@@ -35,6 +35,7 @@ SceneManager=""
 LobbyCodeManager=""
 MultiplayerController=""
 bulletArea=""
+GameOver=""
 
 [input]
 

@@ -11,10 +11,10 @@ var player: CharacterBody2D:
 var rng = RandomNumberGenerator.new()
 var CardsShown = 4
 
-var common_count = 5
-var uncommon_count = 2
-var rare_count = 3
-var epic_count = 1
+var common_count = 12
+var uncommon_count = 7
+var rare_count = 5
+var epic_count = 4
 
 var common_weight = 0.60 / common_count
 var uncommon_weight = 0.25 / uncommon_count
@@ -33,6 +33,23 @@ var cards = [
 	"GlassCannon",
 	"Shrapnel",
 	"BubbleWrap",
+	"Cache",
+	"Mosquito",
+	"Charge",
+	"Tether",
+	"Buckshot",
+	"Overclocked",
+	"Buckler",
+	"Grenade",
+	"FastBall",
+	"Heavy",
+	"Assassin",
+	"Scatter",
+	"Rage",
+	"MiniGun",
+	"Vampire",
+	"Berserker",
+	"Medkit",
 ]
 
 var weights = PackedFloat32Array([
@@ -47,6 +64,23 @@ var weights = PackedFloat32Array([
 	rare_weight,     # GlassCannon
 	rare_weight,     # Shrapnel
 	epic_weight,     # BubbleWrap
+	common_weight,   # Cache
+	uncommon_weight, # Mosquito
+	common_weight,   # Charge
+	rare_weight,     # Tether
+	uncommon_weight, # Buckshot
+	uncommon_weight, # Overclocked
+	common_weight,   # Buckler
+	rare_weight,     # Grenade
+	common_weight,   # FastBall
+	common_weight,   # Heavy
+	uncommon_weight, # Assassin
+	common_weight,   # Scatter
+	common_weight,   # Rage
+	epic_weight,     # MiniGun
+	epic_weight,     # Vampire
+	epic_weight,     # Berserker
+	uncommon_weight, # Medkit
 ])
 
 var current_index = -1
@@ -193,12 +227,13 @@ func Bounce():
 func QuickReload():
 	gun.reloadTime -= gun.reloadTime * 0.25
 
-func PocketMagazine():
+func Cache():
 	gun.bulletAmount += 3
 
 func FastBall():
 	gun.speed += gun.speed * 0.25
 	gun.attackSpeed += gun.attackSpeed * 0.1
+	gun.autoFire = true
 
 func Bandaid():
 	player.max_health += player.max_health * 0.25
@@ -210,30 +245,26 @@ func Medicine():
 	player.Regeneration += player.max_health * 0.1
 	gun.attackSpeed += gun.attackSpeed * 0.1
 
-func Electrolyte():
+func Charge():
+	player.speed += player.speed * 0.25
 	gun.speed += gun.speed * 0.1
-	player.speed += player.speed * 0.1
+
+func Scatter():
+	gun.bulletSpread += gun.bulletSpread * 0.25
+	gun.bulletsShot += 2
 
 func Rage():
 	gun.damage += gun.damage * 0.4
 	player.speed += player.speed * 0.25
 	player.blockCooldown += player.blockCooldown * 1.0
 
-func Scatter():
-	gun.bulletSpread += 0.08
-	gun.bulletAmount += 1
-
-func BatteryPack():
-	player.speed += player.speed * 0.25
-	gun.speed += gun.speed * 0.1
-
-func Buckler():
-	player.blockCooldown -= player.blockCooldown * 0.1
-
 func Heavy():
 	player.max_health += player.max_health * 0.25
 	player.health = player.max_health
 	player.scale += Vector2(0.1, 0.1)
+
+func Buckler():
+	player.blockCooldown -= player.blockCooldown * 0.1
 
 func Decay():
 	gun.poison += 10
@@ -243,7 +274,7 @@ func Refract():
 	gun.bulletBounces += 2
 	gun.speed += gun.speed * 0.1
 
-func LifeSteal():
+func Mosquito():
 	player.LifeSteal += 10
 
 func Buckshot():
@@ -255,9 +286,11 @@ func Buckshot():
 func Sniper():
 	gun.bulletAmount = 1
 	gun.damage += gun.damage * 1.0
+	gun.speed += gun.speed * 1.0
 	gun.bulletSpread -= gun.bulletSpread * 0.5
+	gun.reloadTime += gun.reloadTime * 0.25
 
-func Experience():
+func Overclocked():
 	gun.reloadTime -= gun.reloadTime * 0.25
 	gun.attackSpeed -= gun.attackSpeed * 0.25
 
@@ -279,8 +312,9 @@ func Cannon():
 	gun.damage += gun.damage * 0.25
 	gun.speed -= gun.speed * 0.25
 	player.speed -= player.speed * 0.1
+	gun.autoFire = false
 
-func Bound():
+func Tether():
 	gun.bulletRange -= gun.bulletRange * 0.5
 	gun.reloadTime -= gun.reloadTime * 0.8
 	gun.attackSpeed -= gun.attackSpeed * 0.8
@@ -290,12 +324,21 @@ func GlassCannon():
 	player.health = player.max_health
 	gun.damage += gun.damage * 1.25
 	gun.reloadTime += gun.reloadTime * 0.25
+	gun.autoFire = false
+
+func Grenade():
+	gun.explodingBullets = true
+	gun.damage += gun.damage * 0.25
+	gun.attackSpeed += gun.attackSpeed * 0.25
+	player.max_health -= player.max_health * 0.1
+	player.health = min(player.health, player.max_health)
 
 func Shrapnel():
 	gun.bulletAmount += 3
 	gun.bulletsShot += 1
 	gun.speed += gun.speed * 0.25
 	gun.damage -= gun.damage * 0.4
+	gun.bulletSpread += gun.bulletSpread * 0.1
 
 # EPIC
 func BubbleWrap():
@@ -310,11 +353,13 @@ func MiniGun():
 	gun.bulletsShot += 1
 	gun.attackSpeed -= gun.attackSpeed * 0.25
 	player.speed -= player.speed * 0.25
+	gun.autoFire = true
 
 func Vampire():
 	player.LifeSteal += 10
 	gun.poison += 10
 	gun.damage += gun.damage * 0.25
+	player.Regeneration += player.Regeneration * 0.1
 
 func Berserker():
 	player.blockCooldown += 99999
