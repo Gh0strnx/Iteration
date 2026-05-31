@@ -11,6 +11,8 @@ var dir: float = 0.0
 var shooter = null
 var explodingBullets = false
 var _exploded = false
+var explosion_scene = preload("res://Assets/Scenes/explosion.tscn")
+
 
 func start(_position: Vector2, _direction: float) -> void:
 	collision_layer = 0
@@ -40,6 +42,8 @@ func _physics_process(delta):
 				else:
 					bulletBounces -= 1
 					velocity = velocity.bounce(collision.get_normal())
+					if explodingBullets:
+						_spawn_bounce_explosion(collision.get_position())
 				return
 			var hit_player_id = int(str(collider.name))
 			if multiplayer.get_unique_id() == hit_player_id:
@@ -70,6 +74,8 @@ func _physics_process(delta):
 		else:
 			bulletBounces -= 1
 			velocity = velocity.bounce(collision.get_normal())
+			if explodingBullets:
+				_spawn_bounce_explosion(collision.get_position())
 
 func DropOff():
 	if bulletRange < 3.5:
@@ -84,14 +90,12 @@ func _try_explode_then_free():
 	velocity = Vector2.ZERO
 	if explodingBullets:
 		_do_explosion()
-	await get_tree().create_timer(0.43).timeout
+		await get_tree().create_timer(0.43).timeout
 	if is_instance_valid(self):
-		# Detach light so it outlives the bullet
 		var light = $PointLight2D
 		var light_pos = light.global_position
 		get_tree().root.add_child(light)
 		light.global_position = light_pos
-		# Fade and free the light after explosion
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "energy", 0.0, 0.3)
 		tween.tween_callback(light.queue_free)
@@ -119,6 +123,43 @@ func _do_explosion() -> void:
 			continue
 		var hit_player_id = int(str(body.name))
 		_apply_explosion_damage.rpc_id(hit_player_id, explode_damage)
+
+func _spawn_bounce_explosion(pos: Vector2) -> void:
+	var area = $ExplodingBullets.duplicate()
+	get_tree().root.add_child(area)
+	area.global_position = pos
+
+	var anim = area.get_node("AnimatedSprite2D")
+	anim.show()
+	anim.play("default")
+
+	if shooter == null:
+		await get_tree().create_timer(0.5).timeout
+		area.queue_free()
+		return
+
+	var shooter_peer_id = int(str(shooter.name))
+	if multiplayer.get_unique_id() != shooter_peer_id:
+		await get_tree().create_timer(0.5).timeout
+		area.queue_free()
+		return
+
+	var explode_damage = damage * 0.5
+	area.force_update_transform()
+	await get_tree().process_frame
+
+	for body in area.get_overlapping_bodies():
+		if not body.has_method("hurt_player"):
+			continue
+		if not body.alive:
+			continue
+		if body.name == GameManager.localPlayer.name and not selfDamage:
+			continue
+		var hit_player_id = int(str(body.name))
+		_apply_explosion_damage.rpc_id(hit_player_id, explode_damage)
+
+	await get_tree().create_timer(0.5).timeout
+	area.queue_free()
 
 @rpc("any_peer", "call_local")
 func _apply_explosion_damage(explode_damage: float) -> void:

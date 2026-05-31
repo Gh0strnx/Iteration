@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://dgsfsn12da6cm"]
+
+[ext_resource type="Texture2D" uid="uid://b4xnsif3e2mgn" path="res://Assets/Textures/explode.png" id="1_bxlrl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_07awk"]
+radius = 143.838
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u28fh"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjegn"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgr6l"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oi5ng"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkll0"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxl4a"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eupmr"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3r6mi"]
+atlas = ExtResource("1_bxlrl")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ct0mk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u28fh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjegn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgr6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oi5ng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkll0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxl4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eupmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3r6mi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ExplodingBullets" type="Area2D"]
+
+[node name="ExplodeRadius" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_07awk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(5.5, 5.5)
+sprite_frames = SubResource("SpriteFrames_ct0mk")
