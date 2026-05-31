@@ -1,26 +1,38 @@
 extends CharacterBody2D
-
-@export_range (0.01, 99999) var speed: float = 7.6
+#Health
 @export_range (0.25, 99999) var health: float = 100
-@export_range (0.1, 99999) var soundRadius: float = 480
-@export_range (0.1, 99999) var volumeIncreaser: float = 0
-@export_range (0.05, 99999) var blockCooldown: float = 6
 @export_range (0, 100) var LifeSteal: float = 0
-@export_range (0,99999) var regenTime: float = 4.0
 @export_range (0, 99999) var Regeneration: float = 0
-@export var colorSetting: String = "WHITE"
-@export var syncedPosition: Vector2 = Vector2.ZERO
-@export var alive = true
-var canBlock = true
+@export_range (0,99999) var regenTime: float = 4.0
+
+#Movement
+@export_range (0.01, 99999) var speed: float = 7.6
+
+#Block
+@export_range (0.05, 99999) var blockCooldown: float = 6
 @export var blocking = false
-var id: int = 0
-var regen_timer: float = 0.0
-var death_processed: bool = false
 @export var block_cooldown_timer: float = 0.0
 @export var block_cooldown_active: bool = false
+var canBlockPerm = true
+
+#Audio
+@export_range (0.1, 99999) var soundRadius: float = 480
+@export_range (0.1, 99999) var volumeIncreaser: float = 0
+
+#Sync
+@export var syncedPosition: Vector2 = Vector2.ZERO
+@export var colorSetting: String = "WHITE"
+var id: int = 0
+
+#State
+@export var alive = true
 var max_health: float = 0.0
+var regen_timer: float = 0.0
+var death_processed: bool = false
 var currentlyleft = false
+var canBlock = true
 var currentlyright = true
+
 
 func _ready() -> void:
 	max_health = health
@@ -97,7 +109,7 @@ func _physics_process(delta: float) -> void:
 				block_cooldown_active = false
 				block_cooldown_timer = 0.0
 
-		if Input.is_action_just_pressed("Block") && canBlock:
+		if Input.is_action_just_pressed("Block") && canBlock && canBlockPerm:
 			block()
 
 	else:

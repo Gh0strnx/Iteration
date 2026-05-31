@@ -363,6 +363,7 @@ func Vampire():
 
 func Berserker():
 	player.blockCooldown += 99999
+	player.canBlockPerm = false
 	player.speed += player.speed * 0.25
 	player.Regeneration -= player.Regeneration * 0.25
 	gun.damage += gun.damage * 0.25

@@ -160,10 +160,14 @@ func update_round_texture() -> void:
 	var texture = load("res://Assets/Textures/MatchesWon/Matches" + str(GameManager.MaxScore) + ".png")
 	$"Score tracker/VBoxContainer/Player1Score".texture_under = texture
 	$"Score tracker/VBoxContainer/Player1Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player1Score".max_value = GameManager.MaxScore
 	$"Score tracker/VBoxContainer/Player2Score".texture_under = texture
 	$"Score tracker/VBoxContainer/Player2Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player2Score".max_value = GameManager.MaxScore
 	$"Score tracker/VBoxContainer/Player3Score".texture_under = texture
 	$"Score tracker/VBoxContainer/Player3Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player3Score".max_value = GameManager.MaxScore
 	$"Score tracker/VBoxContainer/Player4Score".texture_under = texture
 	$"Score tracker/VBoxContainer/Player4Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player4Score".max_value = GameManager.MaxScore
 	

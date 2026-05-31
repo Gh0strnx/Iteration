@@ -1,25 +1,34 @@
 extends Node2D
-@export_range (1, 99999) var bulletAmount: int = 4
-@export_range (0.01, 99999) var reloadTime: float = 3.0
-@export_range (0.005, 99999) var attackSpeed: float = 0.4
-@export_range (0, 99999) var bulletSpread: float = 0.1
-@export_range (1, 99999) var bulletsShot: int = 1
-@export_range (0.001, 99999) var timerSpeed := 0.2
-var Bullet = preload("res://Assets/Scenes/bullet.tscn")
-@export var selfDamage = true
-@export var autoFire = false
+#Bullet Stats
 @export_range (0.25, 99999) var damage: float = 34
 @export_range (0.05, 99999) var speed: float = 10.5
-@export_range (0, 99999) var bulletBounces: int = 3
+@export_range (0.25, 99999) var bulletSize: float = 1
+@export_range (0, 99999) var bulletBounces: int = 0
 @export_range (0.2, 3) var bulletRange: float = 3
 @export_range (0, 100) var poison: float = 0
-@export_range (0.25, 99999) var bulletSize: float = 1
-@export var explodingBullets = true
+@export var explodingBullets = false
+@export var selfDamage = true
+
+#Fire Stats
+@export_range (1, 99999) var bulletAmount: int = 4
+@export_range (1, 99999) var bulletsShot: int = 1
+@export_range (0, 99999) var bulletSpread: float = 0.1
+@export_range (0.005, 99999) var attackSpeed: float = 0.4
+@export_range (0.001, 99999) var timerSpeed := 0.2
+@export var autoFire = false
+
+#Reload
+@export_range (0.01, 99999) var reloadTime: float = 3.0
+
+#State
 var currentBulletAmount := 0
 var can_shoot := true
 var reloading := false
-var _owner_peer_id: int = 1
 var require_shoot_release := true
+var _owner_peer_id: int = 1
+
+#References
+var Bullet = preload("res://Assets/Scenes/bullet.tscn")
 @onready var cooldown: Timer = $coolDown
 @onready var reload_timer: Timer = $Reload
 

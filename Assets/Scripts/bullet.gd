@@ -1,16 +1,21 @@
 extends CharacterBody2D
-var selfDamage = true
+#Bullet Stats
 var damage = 1.0
 var speed: float = 10.5
+var bulletSize = 1
 var bulletBounces: int = 0
 var bulletRange = 3.5
 var poison = 0
-var bulletSize = 1
+var explodingBullets = false
+var selfDamage = true
+
+#State
 var left = false
 var dir: float = 0.0
-var shooter = null
-var explodingBullets = false
 var _exploded = false
+
+#References
+var shooter = null
 var explosion_scene = preload("res://Assets/Scenes/explosion.tscn")
 
 
