@@ -9,7 +9,7 @@ var player: CharacterBody2D:
 		return GameManager.localPlayer
 
 var rng = RandomNumberGenerator.new()
-var CardsShown = 4
+
 
 var common_count = 12
 var uncommon_count = 7
@@ -210,7 +210,7 @@ func pick_cards() -> Array:
 	var temp_cards = cards.duplicate()
 	var temp_weights = weights.duplicate()
 
-	for i in CardsShown:
+	for i in GameManager.CardsShown:
 		var index = rng.rand_weighted(temp_weights)
 		picked.append(temp_cards[index])
 		temp_cards.remove_at(index)

@@ -135,11 +135,17 @@ func hurt_player(damage):
 		alive = false
 		GameManager.Players[id].alive = false
 
-func apply_poison(damage_per_second: float) -> void:
+func apply_poison(damage_per_second: float, poison_source = null) -> void:
 	for i in range(3):
 		await get_tree().create_timer(1.0).timeout
 		if alive:
 			hurt_player(damage_per_second)
+			if poison_source && poison_source.LifeSteal > 0:
+				poison_source.health = snappedf(
+					min(poison_source.health + (damage_per_second * (poison_source.LifeSteal / 100.0)), poison_source.max_health),
+					0.1
+				)
+				poison_source.get_node("Control/VBoxContainer/ProgressBar").value = poison_source.health
 
 func block():
 	canBlock = false

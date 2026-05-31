@@ -11,41 +11,45 @@ var joinScreen = false
 
 var mainscene = preload("res://Assets/Scenes/main.tscn")
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	GameManager.port = port
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Back"):
 		_on_back_button_down()
 
-# called by server and client
 func peer_connected(id):
 	allowStart = true
 	print("Player Connected " + str(id))
 	
-# called by server and client
 func peer_disconnected(id):
 	print("Player Disconnected " + str(id))
-	
-	
-#called by client
+	if multiplayer.is_server():
+		GameManager.Players.erase(id)
+		notify_player_removed.rpc(id)
+		reassign_indexes()
+		sync_players.rpc(GameManager.Players)
+
+func reassign_indexes():
+	var i = 0
+	for pid in GameManager.Players:
+		GameManager.Players[pid].index = i
+		i += 1
+
+@rpc("authority", "reliable")
+func sync_players(players: Dictionary) -> void:
+	GameManager.Players = players
+
 func connected_to_server():
 	$"JoinScreen/VBoxContainer/START".text = "JOINED LOBBY"
 	$"JoinScreen/VBoxContainer/START".disabled = true
 	print("Connected")
-	
-	#name input (1, name, multiplayer...)
 	SendPlayerInformation.rpc_id(1, $"SettingsScreen/Vbox/NAME".text.strip_edges(), multiplayer.get_unique_id())
 	
-#called by client
 func connection_failed():
 	print("Connection Failed")
 	print("No Host Found")
@@ -62,16 +66,13 @@ func SendPlayerInformation(name, id):
 			"roundPoints": 0,
 			"colour": "RED",
 			"hex": "ff103e",
-			"index": ""
+			"index": GameManager.Players.size()
 		}
 		
 	if multiplayer.is_server():
 		for i in GameManager.Players:
-			SendPlayerInformation.rpc(GameManager.Players[i].name, i )
-		
-	
-
-
+			SendPlayerInformation.rpc(GameManager.Players[i].name, i)
+		sync_players.rpc(GameManager.Players)
 
 func _on_host_button_down() -> void:
 	if !hosting:
@@ -79,36 +80,27 @@ func _on_host_button_down() -> void:
 		var error = peer.create_server(port, 4)
 		if error != OK:
 			print("cannot host: " + str(error))
-			
 			if str(error) == "20":
 				$TitleScreen/AlreadyHosting.text = "CANNOT HOST: ALREADY HOSTING"
 				$TitleScreen/AlreadyHosting.show()
 			else:
 				$TitleScreen/AlreadyHosting.text = "CANNOT HOST: ERROR" + str(error)
 				$TitleScreen/AlreadyHosting.show()
-				
 			return
 		peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 		hosting = true
-		
 		multiplayer.set_multiplayer_peer(peer)
 		print("Waiting for Players!")
 		SendPlayerInformation($"SettingsScreen/Vbox/NAME".text.strip_edges(), multiplayer.get_unique_id())
 		$HostScreen.show()
 		$TitleScreen.hide()
-		
-	
+
 @rpc("any_peer", "call_local")
 func StartGame():
 	if allowStart:
 		var scene = mainscene.instantiate()
 		get_tree().root.add_child(scene)
-		
-		
-			
 
-
-# In MultiplayerController (CanvasLayer script)
 func join_with_ip(ip: String, join_port: int) -> void:
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
@@ -124,32 +116,24 @@ func join_with_ip(ip: String, join_port: int) -> void:
 
 func _on_start_button_down() -> void:
 	StartGame.rpc()
-	
-
+	print(GameManager.Players)
 
 func _on_address_input_text_changed(_new_text: String) -> void:
 	GameManager.lobbyCode = $JoinScreen/CODE.text
 	print("woah the text is being changed")
 	print(GameManager.lobbyCode)
-	
 
 func _on_play_button_down() -> void:
 	$TitleScreen/StartUp.hide()
 	$TitleScreen/Selection.show()
-	
-
 
 func _on_quit_button_down() -> void:
 	if titleScreen == true:
 		get_tree().quit()
-		
-	
-
 
 func _on_settings_button_down() -> void:
 	$SettingsScreen.show()
 	$TitleScreen.hide()
-
 
 func _on_back_button_down() -> void:
 	$JoinScreen/ERRORS.hide()
@@ -161,20 +145,48 @@ func _on_back_button_down() -> void:
 	$SettingsScreen.hide()
 	$TitleScreen/AlreadyHosting.hide()
 	
+	if multiplayer.multiplayer_peer:
+		var my_id = multiplayer.get_unique_id()
+		if multiplayer.is_server():
+			GameManager.Players.clear()
+			notify_all_players_cleared.rpc()
+		else:
+			remove_player.rpc_id(1, my_id)
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = null
+		hosting = false
+		allowStart = false
+
 	if hosting:
 		multiplayer.multiplayer_peer.close()
 		hosting = false
-	
+		
+	$"JoinScreen/VBoxContainer/START".text = "JOIN GAME"
+	$"JoinScreen/VBoxContainer/START".disabled = false
+
+@rpc("authority", "reliable")
+func notify_all_players_cleared() -> void:
+	GameManager.Players.clear()
+
+@rpc("any_peer", "reliable")
+func remove_player(id: int) -> void:
+	if multiplayer.is_server():
+		GameManager.Players.erase(id)
+		notify_player_removed.rpc(id)
+		reassign_indexes()
+		sync_players.rpc(GameManager.Players)
+
+@rpc("authority", "reliable")
+func notify_player_removed(id: int) -> void:
+	GameManager.Players.erase(id)
 
 func _on_firstjoin_button_down() -> void:
 	$JoinScreen/ERRORS.hide()
 	$JoinScreen.show()
 	$TitleScreen.hide()
 
-
 func _on_title_screen_or_quit(should_quit: bool):
 	if multiplayer.is_server():
-		# Send to all clients first, then handle locally
 		for id in GameManager.Players:
 			if id != multiplayer.get_unique_id():
 				return_to_title.rpc_id(id)
@@ -225,3 +237,5 @@ func return_to_title_local():
 	$HostScreen.hide()
 	$JoinScreen.hide()
 	$SettingsScreen.hide()
+	$"JoinScreen/VBoxContainer/START".text = "JOIN GAME"
+	$"JoinScreen/VBoxContainer/START".disabled = false

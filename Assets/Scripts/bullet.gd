@@ -51,14 +51,14 @@ func _physics_process(delta):
 					if selfDamage == true:
 						collider.hurt_player(damage)
 						if poison > 0:
-							collider.apply_poison(damage * (poison / 100.0))
+							collider.apply_poison(damage * (poison / 100.0), shooter)
 						if shooter && shooter.LifeSteal > 0:
 							shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 							shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
 				else:
 					collider.hurt_player(damage)
 					if poison > 0:
-						collider.apply_poison(damage * (poison / 100.0))
+						collider.apply_poison(damage * (poison / 100.0), shooter)
 					if shooter && shooter.LifeSteal > 0:
 						shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 						shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health

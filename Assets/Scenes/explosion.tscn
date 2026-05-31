@@ -69,7 +69,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="ExplodingBullets" type="Area2D"]
+[node name="ExplodingBullets" type="Area2D" groups=["explosions"]]
 
 [node name="ExplodeRadius" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_07awk")

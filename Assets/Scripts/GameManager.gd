@@ -6,7 +6,8 @@ var localPlayer : CharacterBody2D
 var port
 var ip
 var lobbyCode
-var MaxScore = 2
+var CardsShown = 4
+var MaxScore = 5
 var choice = null
 @onready var scoreBar1 = null
 @onready var scoreBar2 = null

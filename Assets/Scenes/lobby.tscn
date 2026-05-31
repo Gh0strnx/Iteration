@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://5hjp882cwyi0"]
+[gd_scene load_steps=11 format=3 uid="uid://5hjp882cwyi0"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="1_1vnxw"]
 [ext_resource type="Texture2D" uid="uid://d0av8gaq6si3m" path="res://Assets/Textures/base.png" id="2_2r7m5"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c8kxr0dnj7a0q" path="res://Assets/Textures/dogoverlay.png" id="4_xpqf2"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="6_sqx2p"]
 [ext_resource type="FontFile" uid="uid://b6pujfnc3bs7e" path="res://Assets/Fonts/Geo/Geo-Italic.ttf" id="7_fw8yi"]
+[ext_resource type="Texture2D" uid="uid://dej3unicn0vkr" path="res://Assets/Textures/Arrow.png" id="8_nqofh"]
+[ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="9_u0ovf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n6ime"]
 
@@ -447,4 +449,131 @@ text = "A & D TO CHANGE COLOUR
 "
 horizontal_alignment = 1
 
+[node name="GameOptions" type="Button" parent="Control2"]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 454.0
+offset_right = 277.0
+offset_bottom = 489.0
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 25
+text = "GAME OPTIONS    "
+flat = true
+
+[node name="Label" type="Label" parent="Control2/GameOptions"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 13.0
+offset_right = 200.0
+offset_bottom = 36.0
+rotation = 1.5708
+scale = Vector2(1, 1.2)
+theme_override_fonts/font = ExtResource("6_sqx2p")
+text = ">"
+
+[node name="Options" type="Control" parent="Control2"]
+anchors_preset = 0
+offset_left = 118.0
+offset_top = 487.0
+offset_right = 158.0
+offset_bottom = 527.0
+
+[node name="RoundAmount" type="Control" parent="Control2/Options"]
+anchors_preset = 0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = 49.0
+
+[node name="Right" type="TextureButton" parent="Control2/Options/RoundAmount"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 35.0
+offset_right = 217.0
+offset_bottom = 163.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("8_nqofh")
+
+[node name="Left" type="TextureButton" parent="Control2/Options/RoundAmount"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 35.0
+offset_right = 110.0
+offset_bottom = 163.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("8_nqofh")
+flip_h = true
+
+[node name="DESC" type="Label" parent="Control2/Options/RoundAmount"]
+layout_mode = 0
+offset_left = 12.0
+offset_right = 129.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 20
+text = "MATCH AMOUNT"
+horizontal_alignment = 1
+
+[node name="Number" type="Label" parent="Control2/Options/RoundAmount"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 19.0
+offset_right = 106.0
+offset_bottom = 88.0
+theme_override_fonts/font = ExtResource("9_u0ovf")
+theme_override_font_sizes/font_size = 70
+text = "5"
+horizontal_alignment = 1
+
+[node name="CardsShown" type="Control" parent="Control2/Options"]
+anchors_preset = 0
+offset_left = 165.0
+offset_top = 9.0
+offset_right = 205.0
+offset_bottom = 49.0
+
+[node name="Right" type="TextureButton" parent="Control2/Options/CardsShown"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 35.0
+offset_right = 217.0
+offset_bottom = 163.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("8_nqofh")
+
+[node name="Left" type="TextureButton" parent="Control2/Options/CardsShown"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 35.0
+offset_right = 110.0
+offset_bottom = 163.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("8_nqofh")
+flip_h = true
+
+[node name="DESC" type="Label" parent="Control2/Options/CardsShown"]
+layout_mode = 1
+offset_left = 10.0
+offset_right = 127.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("6_sqx2p")
+theme_override_font_sizes/font_size = 20
+text = "CARDS SHOWN"
+horizontal_alignment = 1
+
+[node name="Number" type="Label" parent="Control2/Options/CardsShown"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 19.0
+offset_right = 106.0
+offset_bottom = 88.0
+theme_override_fonts/font = ExtResource("9_u0ovf")
+theme_override_font_sizes/font_size = 70
+text = "4"
+horizontal_alignment = 1
+
 [connection signal="pressed" from="Control2/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="button_down" from="Control2/GameOptions" to="." method="_on_game_options_button_down"]
+[connection signal="button_down" from="Control2/Options/RoundAmount/Right" to="." method="_on_roundAmount_right_button_down"]
+[connection signal="button_down" from="Control2/Options/RoundAmount/Left" to="." method="_on_roundAmount_left_button_down"]
+[connection signal="button_down" from="Control2/Options/CardsShown/Right" to="." method="_on_CardsShown_right_button_down"]
+[connection signal="button_down" from="Control2/Options/CardsShown/Left" to="." method="_on_CardsShown_left_button_down"]

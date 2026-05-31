@@ -107,6 +107,9 @@ func resetPlayers():
 		# Remove bullets
 		for bullet in get_tree().get_nodes_in_group("bullet"):
 			bullet.queue_free()
+		# Remove explosions
+		for explosions in get_tree().get_nodes_in_group("explosions"):
+			explosions.queue_free()
 		# Visibility and collision
 		player.show()
 		player.get_node("Collision").disabled = false
@@ -151,3 +154,16 @@ func mapSelector():
 		$Map/Map3/Roof.collision_enabled = false
 		$Map/Map3.hide()
 		print("map3 not chosen")
+
+
+func update_round_texture() -> void:
+	var texture = load("res://Assets/Textures/MatchesWon/Matches" + str(GameManager.MaxScore) + ".png")
+	$"Score tracker/VBoxContainer/Player1Score".texture_under = texture
+	$"Score tracker/VBoxContainer/Player1Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player2Score".texture_under = texture
+	$"Score tracker/VBoxContainer/Player2Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player3Score".texture_under = texture
+	$"Score tracker/VBoxContainer/Player3Score".texture_progress = texture
+	$"Score tracker/VBoxContainer/Player4Score".texture_under = texture
+	$"Score tracker/VBoxContainer/Player4Score".texture_progress = texture
+	

@@ -9,8 +9,13 @@ var countdown_timer = 0.0
 var counting_down = false
 var colorWarning = false
 var alreadyClicked = false
+var optionsShown = false
 
 func _ready() -> void:
+	$"Control2/GameOptions".disabled = !multiplayer.is_server()
+	
+	
+	$Control2/Options.hide()
 	colour_keys = colours.keys()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -153,6 +158,7 @@ func Done():
 	for player in get_tree().get_nodes_in_group("alivePlayers"):
 		player.show()
 		player.apply_player_colour()
+	get_tree().get_first_node_in_group("SceneManager").update_round_texture()
 	get_tree().paused = false
 
 func ColourChanger():
@@ -366,3 +372,45 @@ func trigger_done():
 	await get_tree().process_frame
 	if multiplayer.is_server():
 		GameManager.Map()
+
+
+func _on_game_options_button_down() -> void:
+	if optionsShown == false:
+		optionsShown = true
+		$Control2/Options.show()
+		print("optionsShown")
+	elif optionsShown == true:
+		optionsShown = false
+		$Control2/Options.hide()
+		print("optionsHidden")
+		
+
+
+func _on_roundAmount_right_button_down() -> void:
+	if GameManager.MaxScore < 10 && counting_down == false:
+		GameManager.MaxScore += 1
+		$Control2/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
+		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
+
+func _on_roundAmount_left_button_down() -> void:
+	if GameManager.MaxScore > 4 && counting_down == false:
+		GameManager.MaxScore -= 1
+		$Control2/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
+		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
+
+func _on_CardsShown_right_button_down() -> void:
+	if GameManager.CardsShown < 6 && counting_down == false:
+		GameManager.CardsShown += 1
+		$Control2/Options/CardsShown/Number.text = str(GameManager.CardsShown)
+		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
+
+func _on_CardsShown_left_button_down() -> void:
+	if GameManager.CardsShown > 1 && counting_down == false:
+		GameManager.CardsShown -= 1
+		$Control2/Options/CardsShown/Number.text = str(GameManager.CardsShown)
+		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
+
+@rpc("authority", "reliable")
+func sync_options(max_score: int, card_amount: int) -> void:
+	GameManager.MaxScore = max_score
+	GameManager.CardsShown = card_amount
