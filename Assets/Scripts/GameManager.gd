@@ -185,8 +185,7 @@ func Map():
 	mapSelected = choice
 	prevchoice = choice
 	print(mapSelected)
-	$/root/Node2D.rpc("applyMap", index)
-	$/root/Node2D.applyMap(index)
+	$/root/Node2D.applyMap.rpc(index)  
 
 func GameOver():
 	get_tree().paused = true

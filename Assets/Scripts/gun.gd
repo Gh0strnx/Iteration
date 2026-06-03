@@ -1,7 +1,7 @@
 extends Node2D
 #Bullet Stats
 @export_range (0.25, 99999) var damage: float = 34
-@export_range (0.05, 99999) var speed: float = 10.5
+@export_range (0.05, 99999) var speed: float = 14
 @export_range (0.25, 99999) var bulletSize: float = 1
 @export_range (0, 99999) var bulletBounces: int = 0
 @export_range (0.2, 3) var bulletRange: float = 3
@@ -70,7 +70,6 @@ func _physics_process(_delta: float) -> void:
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT
-		# Pre-calculate all spread angles on the shooter's peer only
 		var angles: Array = []
 		for i in range(bulletsShot):
 			var dir := aim_dir.normalized()
@@ -78,7 +77,18 @@ func _physics_process(_delta: float) -> void:
 				var half := bulletSpread * 0.5
 				dir = dir.rotated(randf_range(-half, half)).normalized()
 			angles.append(dir.angle())
-		_fire_burst.rpc(angles)
+
+		var stats = {
+			"damage": damage,
+			"speed": speed,
+			"bulletSize": bulletSize,
+			"bulletBounces": bulletBounces,
+			"bulletRange": bulletRange,
+			"poison": poison,
+			"explodingBullets": explodingBullets,
+			"selfDamage": selfDamage,
+		}
+		_fire_burst.rpc(angles, stats)
 
 	if currentBulletAmount < 1 and not reloading:
 		reloading = true
@@ -99,13 +109,13 @@ func _find_owner_peer_id() -> int:
 	return 1
 
 @rpc("any_peer", "call_local")
-func _fire_burst(angles: Array) -> void:
+func _fire_burst(angles: Array, stats: Dictionary) -> void:
 	can_shoot = false
 	currentBulletAmount -= bulletsShot
 	if currentBulletAmount < 0:
 		currentBulletAmount = 0
 	_update_bullet_text(currentBulletAmount)
-	_burst_shoot(angles)
+	_burst_shoot(angles, stats)
 
 @rpc("any_peer", "call_local")
 func _sync_reload_ui(show_bar: bool, max_val: float) -> void:
@@ -132,25 +142,25 @@ func _on_reload_timeout() -> void:
 	_update_bullet_text(currentBulletAmount)
 	_sync_reload_ui.rpc(false, reloadTime)
 
-func _burst_shoot(angles: Array) -> void:
+func _burst_shoot(angles: Array, stats: Dictionary) -> void:
 	if angles.size() > 1:
 		for angle in angles:
-			spawn_bullet_at_angle(angle)
+			spawn_bullet_at_angle(angle, stats)
 			await get_tree().create_timer(timerSpeed / max(1.0, (bulletsShot / 2.0))).timeout
 	else:
-		spawn_bullet_at_angle(angles[0])
+		spawn_bullet_at_angle(angles[0], stats)
 	cooldown.start()
 
-func spawn_bullet_at_angle(angle: float) -> void:
+func spawn_bullet_at_angle(angle: float, stats: Dictionary) -> void:
 	var b = Bullet.instantiate()
-	b.selfDamage = selfDamage
-	b.damage = damage
-	b.speed = speed
-	b.explodingBullets = explodingBullets
-	b.bulletBounces = bulletBounces
-	b.bulletRange = bulletRange
-	b.bulletSize = bulletSize
-	b.poison = poison
+	b.selfDamage = stats["selfDamage"]
+	b.damage = stats["damage"]
+	b.speed = stats["speed"]
+	b.explodingBullets = stats["explodingBullets"]
+	b.bulletBounces = stats["bulletBounces"]
+	b.bulletRange = stats["bulletRange"]
+	b.bulletSize = stats["bulletSize"]
+	b.poison = stats["poison"]
 	var shooter_node = get_parent().get_parent().get_parent()
 	b.shooter = shooter_node
 	get_tree().root.add_child(b)

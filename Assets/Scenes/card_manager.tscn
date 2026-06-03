@@ -1,6 +1,6 @@
 [gd_scene load_steps=34 format=3 uid="uid://4dlhlr0hus0i"]
 
-[ext_resource type="Script" path="res://Assets/Scenes/cardManager.gd" id="1_btohr"]
+[ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="1_btohr"]
 [ext_resource type="Texture2D" uid="uid://cs1ii6nnd5s5n" path="res://Assets/Textures/Cards/CARD_01_-_BOUNCE.png" id="2_wtl7s"]
 [ext_resource type="Texture2D" uid="uid://1a63u5j5dqni" path="res://Assets/Textures/Cards/CARD_02_-_REFRACT.png" id="3_d8jgj"]
 [ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="4_3h4pv"]
@@ -30,7 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://blwed5r5gr7se" path="res://Assets/Textures/Cards/CARD_24_-_SCATTER.png" id="27_cuni7"]
 [ext_resource type="Texture2D" uid="uid://csfdro7a1hgdo" path="res://Assets/Textures/Cards/CARD_25_-_VAMPIRE.png" id="28_ybbi2"]
 [ext_resource type="Texture2D" uid="uid://crcfrt071xr27" path="res://Assets/Textures/Cards/CARD_26_-_RAGE.png" id="29_ia7yn"]
-[ext_resource type="Texture2D" uid="uid://b2pmbsw7lde7t" path="res://Assets/Textures/Cards/CARD_27_-_BESERKER.png" id="30_yorx6"]
+[ext_resource type="Texture2D" uid="uid://b2pmbsw7lde7t" path="res://Assets/Textures/Cards/CARD_27_-_BERSERKER.png" id="30_yorx6"]
 [ext_resource type="Texture2D" uid="uid://b3xyqeo8wogm2" path="res://Assets/Textures/Cards/CARD_28_-_ASSASSIN.png" id="31_0vtnt"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wqc3s"]
@@ -46,17 +46,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.6, 0.6)
 
 [node name="Backdrop" type="TextureRect" parent="Control"]
 z_index = -2
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_wqc3s")
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-scale = Vector2(1.2, 1.2)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("14_d2oyv")
+expand_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 1
@@ -65,13 +67,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -3729.33
-offset_top = 117.667
-offset_right = 57258.7
-offset_bottom = 2509.67
+offset_left = -2467.8
+offset_top = -42.5474
+offset_right = 58520.2
+offset_bottom = 2349.46
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.135, 0.135)
+scale = Vector2(0.081, 0.081)
 theme_override_constants/separation = 500
 alignment = 1
 
@@ -562,7 +564,7 @@ theme_override_fonts/font = ExtResource("4_3h4pv")
 theme_override_font_sizes/font_size = 80
 text = "Slightly More
 Slightly More
-Slightly Less
+
 "
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -1042,6 +1044,7 @@ Health"
 vertical_alignment = 1
 
 [node name="DESC AMOUNT2" type="Label" parent="Control/HBoxContainer/Grenade"]
+layout_mode = 0
 offset_left = 131.577
 offset_top = 1644.44
 offset_right = 1541.58
@@ -1281,17 +1284,17 @@ Movement Speed
 Block Cooldown"
 vertical_alignment = 1
 
-[node name="Beserker" type="Control" parent="Control/HBoxContainer"]
+[node name="Berserker" type="Control" parent="Control/HBoxContainer"]
 custom_minimum_size = Vector2(1696, 2392)
 layout_mode = 2
 
-[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Beserker"]
+[node name="Image" type="TextureRect" parent="Control/HBoxContainer/Berserker"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("30_yorx6")
 
-[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Beserker"]
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Berserker"]
 layout_mode = 0
 offset_left = 128.687
 offset_top = 1644.44
@@ -1308,7 +1311,7 @@ Significantly More
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Beserker/DESC AMOUNT"]
+[node name="DESC AMOUNT" type="Label" parent="Control/HBoxContainer/Berserker/DESC AMOUNT"]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 240.777
@@ -1322,7 +1325,7 @@ Disabled"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Beserker"]
+[node name="DESC VARIABLE" type="Label" parent="Control/HBoxContainer/Berserker"]
 layout_mode = 0
 offset_left = 842.688
 offset_top = 1644.44

@@ -12,10 +12,10 @@ var alreadyClicked = false
 var optionsShown = false
 
 func _ready() -> void:
-	$"Control2/GameOptions".disabled = !multiplayer.is_server()
+	$"Control2/Control/GameOptions".disabled = !multiplayer.is_server()
 	
 	
-	$Control2/Options.hide()
+	$Control2/Control/Options.hide()
 	colour_keys = colours.keys()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -377,11 +377,11 @@ func trigger_done():
 func _on_game_options_button_down() -> void:
 	if optionsShown == false:
 		optionsShown = true
-		$Control2/Options.show()
+		$Control2/Control/Options.show()
 		print("optionsShown")
 	elif optionsShown == true:
 		optionsShown = false
-		$Control2/Options.hide()
+		$Control2/Control/Options.hide()
 		print("optionsHidden")
 		
 
@@ -389,25 +389,25 @@ func _on_game_options_button_down() -> void:
 func _on_roundAmount_right_button_down() -> void:
 	if GameManager.MaxScore < 10 && counting_down == false:
 		GameManager.MaxScore += 1
-		$Control2/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
+		$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_roundAmount_left_button_down() -> void:
 	if GameManager.MaxScore > 4 && counting_down == false:
 		GameManager.MaxScore -= 1
-		$Control2/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
+		$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_CardsShown_right_button_down() -> void:
 	if GameManager.CardsShown < 6 && counting_down == false:
 		GameManager.CardsShown += 1
-		$Control2/Options/CardsShown/Number.text = str(GameManager.CardsShown)
+		$Control2/Control/Options/CardsShown/Number.text = str(GameManager.CardsShown)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_CardsShown_left_button_down() -> void:
 	if GameManager.CardsShown > 1 && counting_down == false:
 		GameManager.CardsShown -= 1
-		$Control2/Options/CardsShown/Number.text = str(GameManager.CardsShown)
+		$Control2/Control/Options/CardsShown/Number.text = str(GameManager.CardsShown)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 @rpc("authority", "reliable")

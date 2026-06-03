@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
 [ext_resource type="Texture2D" uid="uid://b6yyhv6m3u4w8" path="res://Assets/Textures/dog.png" id="4_w402k"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
-[ext_resource type="Script" path="res://Assets/Scripts/cardManager.gd" id="7_87tgf"]
 [ext_resource type="AudioStream" uid="uid://0nbo4ddmmfdp" path="res://Assets/Audio/footstep.mp3" id="8_2oga3"]
 [ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="10_iv638"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="10_q0yy0"]
@@ -267,6 +266,80 @@ properties/21/path = NodePath(".:block_cooldown_timer")
 properties/21/spawn = true
 properties/21/replication_mode = 1
 
+[sub_resource type="GDScript" id="GDScript_nvk8l"]
+script/source = "extends Node2D
+@onready var gun = $\"../Gun\"
+var player = GameManager.localPlayer
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+
+##COMMON CARDS
+func Bounce():
+	gun.bulletBounces += 1
+	gun.speed -= 1.05
+	
+func QuickReload():
+	gun.reloadTime -= 0.75
+	
+func PocketMagazine():
+	gun.bulletAmount += 3
+	
+func FastBall():
+	gun.speed += 1.05
+	gun.attackSpeed -= 0.1
+	
+func Bandaid():
+	player.health += 1
+	
+func Medicine():
+	player.health += 2.5
+	player.Regeneration += 0.1
+	gun.attackSpeed += 0.25
+	
+func Electrolyte():
+	gun.speed += 1.05
+	player.speed += 0.7
+	
+
+	
+func Rage():
+	gun.damage += 0.25
+	player.speed += 0.7
+	player.blockCooldown += 1.2
+
+
+##UNCOMMON CARDS
+func Refract():
+	gun.bulletBounces += 2
+	gun.speed += 1.05
+	
+func Medkit():
+	player.health += 2.5
+	player.Regeneration += 0.15
+	pass
+	
+	
+##RARE CARDS
+func Cannon():
+	gun.bulletSize += 0.25
+	gun.damage += 0.25
+	gun.speed -= 2.625
+	player.speed -= 0.7
+
+
+##EPIC CARDS
+func BubbleWrap():
+	gun.selfDamage = false
+	player.health += 1
+	gun.bulletBounces += 3
+	player.speed -= 0.7
+	
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fx3s1"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 10
@@ -332,7 +405,7 @@ replication_config = SubResource("SceneReplicationConfig_kqjyn")
 script = ExtResource("6_qdtce")
 
 [node name="CardManager" type="Node2D" parent="."]
-script = ExtResource("7_87tgf")
+script = SubResource("GDScript_nvk8l")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_2oga3")

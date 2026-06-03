@@ -29,10 +29,33 @@ func peer_connected(id):
 func peer_disconnected(id):
 	print("Player Disconnected " + str(id))
 	if multiplayer.is_server():
+		
+		if GameManager.playerNodes.has(id):
+			var player_node = GameManager.playerNodes[id]
+			if is_instance_valid(player_node):
+				player_node.remove_from_group("alivePlayers")
+				player_node.queue_free()
+			GameManager.playerNodes.erase(id)
+			GameManager.ran = false
+	
+			remove_player_node.rpc(id)
+		
 		GameManager.Players.erase(id)
 		notify_player_removed.rpc(id)
 		reassign_indexes()
 		sync_players.rpc(GameManager.Players)
+	else:
+		if id == 1:
+			return_to_title_local()
+
+@rpc("authority", "call_remote", "reliable")
+func remove_player_node(id):
+	if GameManager.playerNodes.has(id):
+		var player_node = GameManager.playerNodes[id]
+		if is_instance_valid(player_node):
+			player_node.remove_from_group("alivePlayers")
+			player_node.queue_free()
+		GameManager.playerNodes.erase(id)
 
 func reassign_indexes():
 	var i = 0

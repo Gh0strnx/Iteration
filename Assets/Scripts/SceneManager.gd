@@ -65,12 +65,16 @@ func applyMap(map_index: int):
 
 func resetPlayers():
 	for player in GameManager.playerNodes.values():
+		if not is_instance_valid(player):
+			continue
+		if not GameManager.Players.has(player.id):
+			continue
 		var player_index = GameManager.Players[player.id].index
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
 			if spawn.name == str(player_index):
 				player.global_position = spawn.global_position
 				player.syncedPosition = spawn.global_position
-		# Reset player stats
+		# Reset player 
 		player.health = player.max_health
 		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
 		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
@@ -92,7 +96,7 @@ func resetPlayers():
 		player.get_node("Gun/BulletAmount").text = str(gun.bulletAmount)
 		player.get_node("Gun/Sprite2D/Control/Reload").hide()
 		player.get_node("Gun/Sprite2D/Control/Reload").value = 0
-		# Reset block state
+		# Reset block 
 		player.canBlock = true
 		player.blocking = false
 		player.block_cooldown_active = false
@@ -100,7 +104,7 @@ func resetPlayers():
 		player.get_node("Control/Anchor/Block").max_value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").hide()
-		# Restore canvas modulate for alive players
+		# Bring back shadows for alive players
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			if GameManager.localPlayer.is_in_group("alivePlayers"):
 				node.show()

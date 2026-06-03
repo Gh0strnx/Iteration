@@ -1,7 +1,8 @@
 extends CharacterBody2D
-#Bullet Stats
+
+# Bullet Stats
 var damage = 1.0
-var speed: float = 10.5
+var speed: float = 14
 var bulletSize = 1
 var bulletBounces: int = 0
 var bulletRange = 3.5
@@ -9,12 +10,12 @@ var poison = 0
 var explodingBullets = false
 var selfDamage = true
 
-#State
+# State
 var left = false
 var dir: float = 0.0
 var _exploded = false
 
-#References
+# References
 var shooter = null
 var explosion_scene = preload("res://Assets/Scenes/explosion.tscn")
 
@@ -51,22 +52,21 @@ func _physics_process(delta):
 						_spawn_bounce_explosion(collision.get_position())
 				return
 			var hit_player_id = int(str(collider.name))
-			if multiplayer.get_unique_id() == hit_player_id:
-				if collider.name == GameManager.localPlayer.name:
-					if selfDamage == true:
-						collider.hurt_player(damage)
-						if poison > 0:
-							collider.apply_poison(damage * (poison / 100.0), shooter)
-						if shooter && shooter.LifeSteal > 0:
-							shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
-							shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
-				else:
-					collider.hurt_player(damage)
+			if collider.name == GameManager.localPlayer.name:
+				if selfDamage == true:
+					collider.hurt_player.rpc_id(hit_player_id, damage)
 					if poison > 0:
 						collider.apply_poison(damage * (poison / 100.0), shooter)
 					if shooter && shooter.LifeSteal > 0:
 						shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
 						shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
+			else:
+				collider.hurt_player.rpc_id(hit_player_id, damage)
+				if poison > 0:
+					collider.apply_poison(damage * (poison / 100.0), shooter)
+				if shooter && shooter.LifeSteal > 0:
+					shooter.health = snappedf(min(shooter.health + (damage * (shooter.LifeSteal / 100.0)), shooter.max_health), 0.1)
+					shooter.get_node("Control/VBoxContainer/ProgressBar").value = shooter.health
 		else:
 			if collider.has_method("enable_outline") && collider.blocking == true:
 				collider.colorSetting = "CYAN"
@@ -93,9 +93,7 @@ func _try_explode_then_free():
 	_exploded = true
 	set_physics_process(false)
 	velocity = Vector2.ZERO
-	if explodingBullets:
-		_do_explosion()
-		await get_tree().create_timer(0.43).timeout
+
 	if is_instance_valid(self):
 		var light = $PointLight2D
 		var light_pos = light.global_position
@@ -104,49 +102,34 @@ func _try_explode_then_free():
 		var tween = get_tree().create_tween()
 		tween.tween_property(light, "energy", 0.0, 0.3)
 		tween.tween_callback(light.queue_free)
-		queue_free()
 
-func _do_explosion() -> void:
-	var anim = $ExplodingBullets/AnimatedSprite2D
-	anim.show()
-	anim.play("default")
-	if shooter == null:
-		return
-	var shooter_peer_id = int(str(shooter.name))
-	if multiplayer.get_unique_id() != shooter_peer_id:
-		return
-	var explode_area = $ExplodingBullets
-	explode_area.force_update_transform()
-	await get_tree().process_frame
-	var explode_damage = damage * 0.5
-	for body in explode_area.get_overlapping_bodies():
-		if not body.has_method("hurt_player"):
-			continue
-		if not body.alive:
-			continue
-		if body.name == GameManager.localPlayer.name and not selfDamage:
-			continue
-		var hit_player_id = int(str(body.name))
-		_apply_explosion_damage.rpc_id(hit_player_id, explode_damage)
+	if explodingBullets:
+		_spawn_explosion_at(global_position)
 
-func _spawn_bounce_explosion(pos: Vector2) -> void:
+	queue_free()
+
+
+func _spawn_explosion_at(pos: Vector2) -> void:
 	var area = $ExplodingBullets.duplicate()
 	get_tree().root.add_child(area)
 	area.global_position = pos
 
 	var anim = area.get_node("AnimatedSprite2D")
+	anim.sprite_frames = anim.sprite_frames.duplicate()
+	anim.sprite_frames.set_animation_loop("default", false)
 	anim.show()
 	anim.play("default")
 
-	if shooter == null:
-		await get_tree().create_timer(0.5).timeout
-		area.queue_free()
-		return
+	anim.animation_finished.connect(func(): area.queue_free(), CONNECT_ONE_SHOT)
+	get_tree().create_timer(1.0).timeout.connect(func():
+		if is_instance_valid(area):
+			area.queue_free()
+	, CONNECT_ONE_SHOT)
 
+	if shooter == null:
+		return
 	var shooter_peer_id = int(str(shooter.name))
 	if multiplayer.get_unique_id() != shooter_peer_id:
-		await get_tree().create_timer(0.5).timeout
-		area.queue_free()
 		return
 
 	var explode_damage = damage * 0.5
@@ -158,13 +141,45 @@ func _spawn_bounce_explosion(pos: Vector2) -> void:
 			continue
 		if not body.alive:
 			continue
-		if body.name == GameManager.localPlayer.name and not selfDamage:
+		var hit_player_id = int(str(body.name))
+		body.hurt_player.rpc_id(hit_player_id, explode_damage)
+
+
+func _spawn_bounce_explosion(pos: Vector2) -> void:
+	var area = $ExplodingBullets.duplicate()
+	get_tree().root.add_child(area)
+	area.global_position = pos
+
+	var anim = area.get_node("AnimatedSprite2D")
+	anim.sprite_frames = anim.sprite_frames.duplicate()
+	anim.sprite_frames.set_animation_loop("default", false)
+	anim.show()
+	anim.play("default")
+
+	anim.animation_finished.connect(func(): area.queue_free(), CONNECT_ONE_SHOT)
+	get_tree().create_timer(1.0).timeout.connect(func():
+		if is_instance_valid(area):
+			area.queue_free()
+	, CONNECT_ONE_SHOT)
+
+	if shooter == null:
+		return
+	var shooter_peer_id = int(str(shooter.name))
+	if multiplayer.get_unique_id() != shooter_peer_id:
+		return
+
+	var explode_damage = damage * 0.5
+	area.force_update_transform()
+	await get_tree().process_frame
+
+	for body in area.get_overlapping_bodies():
+		if not body.has_method("hurt_player"):
+			continue
+		if not body.alive:
 			continue
 		var hit_player_id = int(str(body.name))
-		_apply_explosion_damage.rpc_id(hit_player_id, explode_damage)
+		body.hurt_player.rpc_id(hit_player_id, explode_damage)
 
-	await get_tree().create_timer(0.5).timeout
-	area.queue_free()
 
 @rpc("any_peer", "call_local")
 func _apply_explosion_damage(explode_damage: float) -> void:

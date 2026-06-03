@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bw3hai72yyitw"]
 
-[ext_resource type="Script" path="res://Assets/Scenes/gameOver.gd" id="1_47lev"]
+[ext_resource type="Script" path="res://Assets/gameOver.gd" id="1_47lev"]
 [ext_resource type="Texture2D" uid="uid://dj0r5ky4p5u1j" path="res://Assets/Textures/Background.png" id="1_hbg3i"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="3_h5qi4"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="4_t0ygv"]
@@ -19,17 +19,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.6, 0.6)
 
 [node name="Backdrop" type="TextureRect" parent="Control"]
 z_index = -2
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_vnpfh")
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-scale = Vector2(1.2, 1.2)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_hbg3i")
+expand_mode = 2
 
 [node name="TitleScreen" type="Control" parent="." groups=["LobbyCodeManager"]]
 layout_mode = 3

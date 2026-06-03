@@ -12,7 +12,7 @@ func _ready() -> void:
 	light_intensity = 0.0
 	energy = 0.0
 	await get_tree().process_frame
-	await get_tree().process_frame  # two frames to be safe
+	await get_tree().process_frame
 	ready_to_check = true
 
 func _physics_process(_delta: float) -> void:

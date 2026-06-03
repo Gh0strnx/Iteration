@@ -48,7 +48,7 @@ func _ready() -> void:
 
 	var player_name = GameManager.Players[id].name
 	if player_name == null or player_name == "":
-		player_name = "Player " + str(id)
+		player_name = "Player " + str((GameManager.Players[id].index)+1)
 	$"Control/VBoxContainer/Label".text = player_name
 	$"Control/VBoxContainer/ProgressBar".max_value = max_health
 	$"Control/VBoxContainer/ProgressBar".value = max_health
@@ -62,8 +62,10 @@ func apply_player_colour():
 	var mat = $Sprite.material as ShaderMaterial
 	mat.set_shader_parameter("player_color", colour)
 
-func update_health_bar():
-	$"Control/VBoxContainer/ProgressBar".value = health
+func update_health_bar() -> void:
+	var bar = $"Control/VBoxContainer/ProgressBar"
+	bar.max_value = max_health
+	bar.value = health
 
 func _physics_process(delta: float) -> void:
 	var is_authority := $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id()
@@ -83,8 +85,7 @@ func _physics_process(delta: float) -> void:
 
 		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
-		
-		
+
 		if facing_left && currentlyleft == false:
 			$Gun.global_position.x += 43.35
 			currentlyright = false
@@ -93,7 +94,6 @@ func _physics_process(delta: float) -> void:
 			$Gun.global_position.x -= 43.35
 			currentlyleft = false
 			currentlyright = true
-		
 
 		move_and_slide()
 		syncedPosition = global_position
@@ -114,7 +114,8 @@ func _physics_process(delta: float) -> void:
 
 	else:
 		global_position = global_position.lerp(syncedPosition, delta * 10.0)
-		update_health_bar()
+
+	update_health_bar()
 
 	if block_cooldown_active:
 		$"Control/Anchor/Block".show()
@@ -139,6 +140,7 @@ func _physics_process(delta: float) -> void:
 func request_remove_from_alive():
 	remove_from_group("alivePlayers")
 
+@rpc("any_peer", "call_remote")
 func hurt_player(damage):
 	health -= damage
 	update_health_bar()
@@ -148,16 +150,28 @@ func hurt_player(damage):
 		GameManager.Players[id].alive = false
 
 func apply_poison(damage_per_second: float, poison_source = null) -> void:
+	var shooter_id: int = -1
+	var lifesteal_amount: float = 0.0
+	if poison_source != null:
+		shooter_id = int(str(poison_source.name))
+		lifesteal_amount = poison_source.LifeSteal
+	_run_poison_ticks.rpc_id(id, damage_per_second, shooter_id, lifesteal_amount)
+
+@rpc("any_peer", "call_remote")
+func _run_poison_ticks(damage_per_second: float, shooter_id: int, lifesteal: float) -> void:
 	for i in range(3):
 		await get_tree().create_timer(1.0).timeout
-		if alive:
-			hurt_player(damage_per_second)
-			if poison_source && poison_source.LifeSteal > 0:
-				poison_source.health = snappedf(
-					min(poison_source.health + (damage_per_second * (poison_source.LifeSteal / 100.0)), poison_source.max_health),
-					0.1
-				)
-				poison_source.get_node("Control/VBoxContainer/ProgressBar").value = poison_source.health
+		if not alive:
+			break
+		hurt_player(damage_per_second)
+		if shooter_id != -1 and lifesteal > 0.0:
+			var heal_amount = damage_per_second * (lifesteal / 100.0)
+			_apply_lifesteal.rpc_id(shooter_id, heal_amount)
+
+@rpc("any_peer", "call_local")
+func _apply_lifesteal(amount: float) -> void:
+	health = snappedf(min(health + amount, max_health), 0.1)
+	update_health_bar()
 
 func block():
 	canBlock = false
