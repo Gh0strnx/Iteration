@@ -10,6 +10,7 @@ var counting_down = false
 var colorWarning = false
 var alreadyClicked = false
 var optionsShown = false
+var matchStart = false
 
 func _ready() -> void:
 	$"Control2/Control/GameOptions".disabled = !multiplayer.is_server()
@@ -90,21 +91,21 @@ func get_taken_colours() -> Array:
 	return taken
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("left") && canChange:
+	if Input.is_action_just_pressed("left") && canChange && !matchStart:
 		$"Control2/WarningLabel".hide()
 		$"Control2/GUIDE".show()
 		current_index = (current_index - 1 + 9) % 9
 		ColourChanger()
 		sync_colour.rpc(id, current_index)
 		
-	if Input.is_action_just_pressed("right") && canChange:
+	if Input.is_action_just_pressed("right") && canChange && !matchStart:
 		$"Control2/WarningLabel".hide()
 		$"Control2/GUIDE".show()
 		current_index = (current_index + 1) % 9
 		ColourChanger()
 		sync_colour.rpc(id, current_index)
 		
-	if Input.is_action_just_pressed("Ready") && canChange:
+	if Input.is_action_just_pressed("Ready") && canChange && !matchStart:
 		var taken = get_taken_colours()
 		if colour_keys[current_index] in taken:
 			colorWarning = true
@@ -117,7 +118,7 @@ func _process(delta: float) -> void:
 			readyUp()
 			sync_ready.rpc(id, true)
 		
-	if Input.is_action_just_pressed("Unready") && !canChange:
+	if Input.is_action_just_pressed("Unready") && !canChange && !matchStart:
 		$"Control2/ESCinstructions".hide()
 		$"Control2/SPACEinstructions".show()
 		unready()
@@ -130,7 +131,7 @@ func _process(delta: float) -> void:
 		else:
 			request_cancel_countdown.rpc_id(1)
 
-	if Input.is_action_just_pressed("ui_cancel") && !canChange:
+	if Input.is_action_just_pressed("ui_cancel") && !canChange && !matchStart:
 		unready()
 		sync_ready.rpc(id, false)
 		if multiplayer.is_server():
@@ -152,6 +153,7 @@ func _process(delta: float) -> void:
 			trigger_done.rpc()
 
 func Done():
+	matchStart = true
 	$"../Lobby".hide()
 	$"../Score tracker".show()
 	$"../Map".show()
@@ -368,7 +370,7 @@ func trigger_done():
 	print("trigger_done fired on: ", multiplayer.get_unique_id())
 	$"Control2/CountdownLabel".hide()
 	Done()
-	GameManager.maps = [$"/root/Node2D/Map/Map1", $"/root/Node2D/Map/Map2", $"/root/Node2D/Map/Map3"]
+	GameManager.maps = [$"/root/Node2D/Map/Map1", $"/root/Node2D/Map/Map2", $"/root/Node2D/Map/Map3", $"/root/Node2D/Map/Map4", $"/root/Node2D/Map/Map5", $"/root/Node2D/Map/Map6"]
 	await get_tree().process_frame
 	if multiplayer.is_server():
 		GameManager.Map()

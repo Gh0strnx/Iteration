@@ -19,7 +19,7 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(connection_failed)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("Back"):
+	if Input.is_action_just_pressed("Back") && GameManager.ip == null:
 		_on_back_button_down()
 
 func peer_connected(id):
@@ -224,6 +224,7 @@ func return_to_title():
 
 func return_to_title_local():
 	get_tree().paused = false
+	get_tree().get_first_node_in_group("Lobby").matchStart = false
 	var scene = get_tree().get_first_node_in_group("SceneManager")
 	if scene:
 		scene.queue_free()

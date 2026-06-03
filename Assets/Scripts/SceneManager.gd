@@ -1,5 +1,6 @@
 extends Node2D
 @export var PlayerScene : PackedScene
+var DebugOn = false
 
 func _ready() -> void:
 	GameManager.scoreBar1 = $"/root/Node2D/Score tracker/VBoxContainer/Player1Score"
@@ -53,7 +54,13 @@ func _ready() -> void:
 		GameManager.scoreBig4.show()
 
 func _process(_delta: float) -> void:
-	pass
+	$"Score tracker/VBoxContainer/FPS".text = "FPS: " + str(Engine.get_frames_per_second())
+	if Input.is_action_just_pressed("Debug"):
+		if DebugOn == false:
+			$"Score tracker/VBoxContainer/FPS".show()
+		if DebugOn == true:
+			$"Score tracker/VBoxContainer/FPS".hide()
+		
 
 @rpc("authority", "call_local", "reliable")
 func applyMap(map_index: int):
@@ -140,6 +147,18 @@ func mapSelector():
 	$Map/Map3/Ground.collision_enabled = true
 	$Map/Map3/Walls.collision_enabled = true
 	$Map/Map3/Roof.collision_enabled = true
+	$Map/Map4.show()
+	$Map/Map5.show()
+	$Map/Map6.show()
+	$Map/Map4/Ground.collision_enabled = true
+	$Map/Map4/Walls.collision_enabled = true
+	$Map/Map4/Roof.collision_enabled = true
+	$Map/Map5/Ground.collision_enabled = true
+	$Map/Map5/Walls.collision_enabled = true
+	$Map/Map5/Roof.collision_enabled = true
+	$Map/Map6/Ground.collision_enabled = true
+	$Map/Map6/Walls.collision_enabled = true
+	$Map/Map6/Roof.collision_enabled = true
 	if GameManager.mapSelected != GameManager.maps[0]:
 		$Map/Map1/Ground.collision_enabled = false
 		$Map/Map1/Walls.collision_enabled = false
@@ -158,6 +177,24 @@ func mapSelector():
 		$Map/Map3/Roof.collision_enabled = false
 		$Map/Map3.hide()
 		print("map3 not chosen")
+	if GameManager.mapSelected != GameManager.maps[3]:
+		$Map/Map4/Ground.collision_enabled = false
+		$Map/Map4/Walls.collision_enabled = false
+		$Map/Map4/Roof.collision_enabled = false
+		$Map/Map4.hide()
+		print("map4 not chosen")
+	if GameManager.mapSelected != GameManager.maps[4]:
+		$Map/Map5/Ground.collision_enabled = false
+		$Map/Map5/Walls.collision_enabled = false
+		$Map/Map5/Roof.collision_enabled = false
+		$Map/Map5.hide()
+		print("map5 not chosen")
+	if GameManager.mapSelected != GameManager.maps[5]:
+		$Map/Map6/Ground.collision_enabled = false
+		$Map/Map6/Walls.collision_enabled = false
+		$Map/Map6/Roof.collision_enabled = false
+		$Map/Map6.hide()
+		print("map6 not chosen")
 
 
 func update_round_texture() -> void:
