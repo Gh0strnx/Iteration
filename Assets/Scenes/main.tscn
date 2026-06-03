@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cpiybb75qq6ww"]
+[gd_scene load_steps=18 format=4 uid="uid://cpiybb75qq6ww"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_ctwyd"]
 [ext_resource type="PackedScene" uid="uid://4dlhlr0hus0i" path="res://Assets/Scenes/card_manager.tscn" id="3_g3bwo"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://7en50qkgx7rg" path="res://Assets/Textures/CircleOutline.png" id="5_rpc1y"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="6_8ftyi"]
 [ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="7_ojvro"]
+[ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="8_eqtx7"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="9_5h156"]
 [ext_resource type="PackedScene" uid="uid://bw3hai72yyitw" path="res://Assets/Scenes/GameOver.tscn" id="13_n5kx3"]
 
@@ -194,6 +195,8 @@ z_index = 10
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_wyiho")
 layout_mode = 2
+theme_override_fonts/font = ExtResource("8_eqtx7")
+theme_override_font_sizes/font_size = 300
 
 [node name="Lobby" parent="." instance=ExtResource("4_h4vnu")]
 visible = false
