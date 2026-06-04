@@ -89,7 +89,7 @@ func _on_host_button_down() -> void:
 		
 
 
-# In your Control script (Lobby.gd)
+
 func _on_join_button_down() -> void:
 	$"/root/Control/JoinScreen/ERRORS".hide()
 	deLobbyCode($"/root/Control/JoinScreen/CODE".text.to_upper())

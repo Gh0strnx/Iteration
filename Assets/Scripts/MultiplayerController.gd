@@ -9,6 +9,7 @@ var hostScreen = false
 var titleScreen = true
 var joinScreen = false
 
+
 var mainscene = preload("res://Assets/Scenes/main.tscn")
 
 func _ready() -> void:
@@ -19,7 +20,7 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(connection_failed)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("Back") && GameManager.ip == null:
+	if Input.is_action_just_pressed("Back") && !multiplayer.has_multiplayer_peer() && !multiplayer.is_server():
 		_on_back_button_down()
 
 func peer_connected(id):
@@ -167,7 +168,7 @@ func _on_back_button_down() -> void:
 	$JoinScreen.hide()
 	$SettingsScreen.hide()
 	$TitleScreen/AlreadyHosting.hide()
-	
+		
 	if multiplayer.multiplayer_peer:
 		var my_id = multiplayer.get_unique_id()
 		if multiplayer.is_server():
@@ -180,12 +181,12 @@ func _on_back_button_down() -> void:
 		hosting = false
 		allowStart = false
 
-	if hosting:
-		multiplayer.multiplayer_peer.close()
-		hosting = false
-		
-	$"JoinScreen/VBoxContainer/START".text = "JOIN GAME"
-	$"JoinScreen/VBoxContainer/START".disabled = false
+		if hosting:
+			multiplayer.multiplayer_peer.close()
+			hosting = false
+			
+		$"JoinScreen/VBoxContainer/START".text = "JOIN GAME"
+		$"JoinScreen/VBoxContainer/START".disabled = false
 
 @rpc("authority", "reliable")
 func notify_all_players_cleared() -> void:
@@ -224,7 +225,6 @@ func return_to_title():
 
 func return_to_title_local():
 	get_tree().paused = false
-	get_tree().get_first_node_in_group("Lobby").matchStart = false
 	var scene = get_tree().get_first_node_in_group("SceneManager")
 	if scene:
 		scene.queue_free()

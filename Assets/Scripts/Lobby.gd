@@ -14,7 +14,7 @@ var matchStart = false
 
 func _ready() -> void:
 	$"Control2/Control/GameOptions".disabled = !multiplayer.is_server()
-	
+	matchStart = false
 	
 	$Control2/Control/Options.hide()
 	colour_keys = colours.keys()

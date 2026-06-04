@@ -9,6 +9,7 @@ var lobbyCode
 var CardsShown = 4
 var MaxScore = 5
 var choice = null
+var GameStarted = false
 @onready var scoreBar1 = null
 @onready var scoreBar2 = null
 @onready var scoreBar3 = null
