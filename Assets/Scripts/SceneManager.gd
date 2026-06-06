@@ -58,10 +58,10 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Debug"):
 		if DebugOn == false:
 			$"Score tracker/VBoxContainer/FPS".show()
-			DebugOn == true
-		if DebugOn == true:
+			DebugOn = true
+		elif DebugOn == true:
 			$"Score tracker/VBoxContainer/FPS".hide()
-			DebugOn == false
+			DebugOn = false
 		
 
 @rpc("authority", "call_local", "reliable")
@@ -214,3 +214,21 @@ func update_round_texture() -> void:
 	$"Score tracker/VBoxContainer/Player4Score".texture_progress = texture
 	$"Score tracker/VBoxContainer/Player4Score".max_value = GameManager.MaxScore
 	
+func showDrawText():
+	$DrawText.show()
+	await get_tree().create_timer(2.5).timeout
+	$DrawText.hide()
+	
+func changeAudio():
+	print("changed audio for card select")
+	var tween = create_tween()
+	tween.tween_property($AudioStreamPlayer2D, "volume_db", -30, 0.5)
+	tween.parallel().tween_property($AudioStreamPlayer2D, "pitch_scale", 0.9, 0.5)
+
+func changeAudioback():
+	print("changed audio back after card select")
+	if $AudioStreamPlayer2D.playing == false:
+		$AudioStreamPlayer2D.playing = true
+	var tween = create_tween()
+	tween.tween_property($AudioStreamPlayer2D, "volume_db", -22, 0.5)
+	tween.parallel().tween_property($AudioStreamPlayer2D, "pitch_scale", 1.0, 0.5)

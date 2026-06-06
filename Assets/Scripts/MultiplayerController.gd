@@ -99,9 +99,10 @@ func SendPlayerInformation(name, id):
 		sync_players.rpc(GameManager.Players)
 
 func _on_host_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if !hosting:
 		peer = ENetMultiplayerPeer.new()
-		var error = peer.create_server(port, 4)
+		var error = peer.create_server(port, 3)
 		if error != OK:
 			print("cannot host: " + str(error))
 			if str(error) == "20":
@@ -139,15 +140,20 @@ func join_with_ip(ip: String, join_port: int) -> void:
 		multiplayer.set_multiplayer_peer(peer)
 
 func _on_start_button_down() -> void:
+	$AudioStreamPlayer.play()
 	StartGame.rpc()
 	print(GameManager.Players)
 
 func _on_address_input_text_changed(_new_text: String) -> void:
+	$AudioStreamPlayerClick.pitch_scale = randf_range(1.2, 1.4)
+	$AudioStreamPlayerClick.play()
 	GameManager.lobbyCode = $JoinScreen/CODE.text
 	print("woah the text is being changed")
+	$Audio
 	print(GameManager.lobbyCode)
 
 func _on_play_button_down() -> void:
+	$AudioStreamPlayer.play()
 	$TitleScreen/StartUp.hide()
 	$TitleScreen/Selection.show()
 
@@ -156,10 +162,12 @@ func _on_quit_button_down() -> void:
 		get_tree().quit()
 
 func _on_settings_button_down() -> void:
+	$AudioStreamPlayer.play()
 	$SettingsScreen.show()
 	$TitleScreen.hide()
 
 func _on_back_button_down() -> void:
+	$AudioStreamPlayer.play()
 	$JoinScreen/ERRORS.hide()
 	$TitleScreen.show()
 	$TitleScreen/Selection.hide()
@@ -205,6 +213,7 @@ func notify_player_removed(id: int) -> void:
 	GameManager.Players.erase(id)
 
 func _on_firstjoin_button_down() -> void:
+	$AudioStreamPlayer.play()
 	$JoinScreen/ERRORS.hide()
 	$JoinScreen.show()
 	$TitleScreen.hide()
@@ -263,3 +272,6 @@ func return_to_title_local():
 	$SettingsScreen.hide()
 	$"JoinScreen/VBoxContainer/START".text = "JOIN GAME"
 	$"JoinScreen/VBoxContainer/START".disabled = false
+	
+func playAudio():
+	$AudioStreamPlayer.play()

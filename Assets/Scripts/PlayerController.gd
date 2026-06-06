@@ -76,12 +76,12 @@ func _physics_process(delta: float) -> void:
 
 		if velocity.length() > 0.0:
 			$Sprite.play("run")
-			if !$AudioStreamPlayer2D.playing:
-				$AudioStreamPlayer2D.play()
+			#if !$AudioStreamPlayer2D.playing:
+				#$AudioStreamPlayer2D.play()
 		else:
 			$Sprite.play("idle")
-			if $AudioStreamPlayer2D.playing:
-				$AudioStreamPlayer2D.stop()
+			#if $AudioStreamPlayer2D.playing:
+				#$AudioStreamPlayer2D.stop()
 
 		var facing_left := get_global_mouse_position().x > global_position.x
 		$Sprite.flip_h = facing_left
@@ -205,15 +205,14 @@ func set_outline_rpc(enabled: bool):
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("bullet") and body.get("shooter") == self and body.left == false:
-		body.collision_mask = 0
-		body.set_collision_mask_value(4, true)
-
-	if body.get("shooter") != self:
-		body.set_collision_mask_value(1, true)
+		body.collision_mask = 0  
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("bullet") and body.get("shooter") == self:
 		body.left = true
 		body.collision_mask = 0
-		body.set_collision_mask_value(1, true)
-		body.set_collision_mask_value(4, true)
+		body.set_collision_mask_value(1, true)  
+		
+@rpc("any_peer", "call_local", "reliable")
+func rpc_update_health_bar():
+	update_health_bar()

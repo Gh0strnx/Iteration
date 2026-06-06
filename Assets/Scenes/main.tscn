@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cpiybb75qq6ww"]
+[gd_scene load_steps=19 format=4 uid="uid://cpiybb75qq6ww"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_ctwyd"]
 [ext_resource type="PackedScene" uid="uid://4dlhlr0hus0i" path="res://Assets/Scenes/card_manager.tscn" id="3_g3bwo"]
@@ -14,6 +14,7 @@
 [ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="8_eqtx7"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="9_5h156"]
 [ext_resource type="PackedScene" uid="uid://bw3hai72yyitw" path="res://Assets/Scenes/GameOver.tscn" id="13_n5kx3"]
+[ext_resource type="AudioStream" uid="uid://cr85o66e2t7be" path="res://Assets/Audio/ThemeRounds.ogg" id="15_yrifx"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_06ihn"]
 light_mode = 1
@@ -191,6 +192,7 @@ texture_progress = ExtResource("7_ojvro")
 tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
 
 [node name="FPS" type="Label" parent="Score tracker/VBoxContainer"]
+visible = false
 z_index = 10
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_wyiho")
@@ -405,3 +407,31 @@ offset_top = -5244.0
 offset_right = 4977.0
 offset_bottom = 4756.0
 color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("15_yrifx")
+volume_db = -22.0
+pitch_scale = 0.9
+mix_target = 1
+parameters/looping = true
+
+[node name="DrawText" type="Label" parent="."]
+visible = false
+z_index = 10
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_06ihn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -609.0
+offset_top = -1675.0
+offset_right = 610.0
+offset_bottom = -1370.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.22, 0.22, 1)
+theme_override_font_sizes/font_size = 110
+text = "GAME ENDED IN DRAW
+RESTARTED ROUND"
+horizontal_alignment = 1

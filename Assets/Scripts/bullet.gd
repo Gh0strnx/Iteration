@@ -22,10 +22,9 @@ var explosion_scene = preload("res://Assets/Scenes/explosion.tscn")
 
 func start(_position: Vector2, _direction: float) -> void:
 	collision_layer = 0
-	set_collision_layer_value(3, true)
-	set_collision_layer_value(4, true)
+	set_collision_layer_value(4, true) 
 	collision_mask = 0
-	set_collision_mask_value(4, true)
+	set_collision_mask_value(4, true)  
 	position = _position
 	dir = _direction
 	velocity = Vector2.RIGHT.rotated(dir) * (speed * 100)
@@ -84,7 +83,7 @@ func _physics_process(delta):
 				_spawn_bounce_explosion(collision.get_position())
 
 func DropOff():
-	if bulletRange < 3.5:
+	if bulletRange < 3:
 		await get_tree().create_timer(bulletRange).timeout
 		_try_explode_then_free()
 

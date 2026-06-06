@@ -46,7 +46,7 @@ func _ready() -> void:
 	$".."/Control/Reload.max_value = reloadTime
 	$".."/Control/Reload.value = 0
 	$".."/Control/Reload.hide()
-	_update_bullet_text(bulletAmount)
+	$"../../BulletAmount".text = str(bulletAmount)
 
 func _update_bullet_text(amount: int) -> void:
 	$"../../BulletAmount".text = str(amount)
@@ -88,7 +88,11 @@ func _physics_process(_delta: float) -> void:
 			"explodingBullets": explodingBullets,
 			"selfDamage": selfDamage,
 		}
-		_fire_burst.rpc(angles, stats)
+		# Decrement locally first, then broadcast with the new amount
+		currentBulletAmount -= bulletsShot
+		if currentBulletAmount < 0:
+			currentBulletAmount = 0
+		_fire_burst.rpc(angles, stats, currentBulletAmount)
 
 	if currentBulletAmount < 1 and not reloading:
 		reloading = true
@@ -109,11 +113,9 @@ func _find_owner_peer_id() -> int:
 	return 1
 
 @rpc("any_peer", "call_local")
-func _fire_burst(angles: Array, stats: Dictionary) -> void:
+func _fire_burst(angles: Array, stats: Dictionary, ammo_remaining: int) -> void:
 	can_shoot = false
-	currentBulletAmount -= bulletsShot
-	if currentBulletAmount < 0:
-		currentBulletAmount = 0
+	currentBulletAmount = ammo_remaining
 	_update_bullet_text(currentBulletAmount)
 	_burst_shoot(angles, stats)
 
@@ -139,8 +141,13 @@ func _on_reload_timeout() -> void:
 	currentBulletAmount = bulletAmount
 	reloading = false
 	can_shoot = true
-	_update_bullet_text(currentBulletAmount)
+	_sync_reload_complete.rpc(bulletAmount)
 	_sync_reload_ui.rpc(false, reloadTime)
+
+@rpc("any_peer", "call_local")
+func _sync_reload_complete(amount: int) -> void:
+	currentBulletAmount = amount
+	_update_bullet_text(amount)
 
 func _burst_shoot(angles: Array, stats: Dictionary) -> void:
 	if angles.size() > 1:

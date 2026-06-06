@@ -153,6 +153,7 @@ func _process(delta: float) -> void:
 			trigger_done.rpc()
 
 func Done():
+	get_tree().get_first_node_in_group("SceneManager").changeAudioback()
 	matchStart = true
 	$"../Lobby".hide()
 	$"../Score tracker".show()
@@ -377,6 +378,7 @@ func trigger_done():
 
 
 func _on_game_options_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if optionsShown == false:
 		optionsShown = true
 		$Control2/Control/Options.show()
@@ -389,24 +391,28 @@ func _on_game_options_button_down() -> void:
 
 
 func _on_roundAmount_right_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if GameManager.MaxScore < 10 && counting_down == false:
 		GameManager.MaxScore += 1
 		$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_roundAmount_left_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if GameManager.MaxScore > 4 && counting_down == false:
 		GameManager.MaxScore -= 1
 		$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_CardsShown_right_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if GameManager.CardsShown < 6 && counting_down == false:
 		GameManager.CardsShown += 1
 		$Control2/Control/Options/CardsShown/Number.text = str(GameManager.CardsShown)
 		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_CardsShown_left_button_down() -> void:
+	$AudioStreamPlayer.play()
 	if GameManager.CardsShown > 1 && counting_down == false:
 		GameManager.CardsShown -= 1
 		$Control2/Control/Options/CardsShown/Number.text = str(GameManager.CardsShown)

@@ -72,7 +72,7 @@ var weights = PackedFloat32Array([
 	uncommon_weight, # Overclocked
 	common_weight,   # Buckler
 	rare_weight,     # Grenade
-	common_weight,   # FastBall
+	common_weight,   # Fastball
 	common_weight,   # Heavy
 	uncommon_weight, # Assassin
 	common_weight,   # Scatter
@@ -160,18 +160,29 @@ func apply_selected_card():
 		return
 	var card_name = shown_cards[current_index].name
 	print("picked: ", card_name)
-	call(card_name)
-	#Syncing the ui
-	player.update_health_bar()
-	player.get_node("Gun/BulletAmount").text = str(gun.bulletAmount)
-	player.get_node("Control/Anchor/Block").max_value = player.blockCooldown
-	player.get_node("Gun/Sprite2D/Control/Reload").max_value = gun.reloadTime
+	apply_card_for_player.rpc(current_picker_id, card_name)
 	is_loser = false
 	shown_cards.clear()
 	if multiplayer.is_server():
 		next_picker()
 	else:
 		picker_done.rpc_id(1)
+
+@rpc("any_peer", "call_local", "reliable")
+func apply_card_for_player(picker_id: int, card_name: String):
+	var target_player = GameManager.playerNodes.get(picker_id)
+	if target_player == null:
+		return
+	var prev_local = GameManager.localPlayer
+	GameManager.localPlayer = target_player
+	call(card_name)
+	# Sync UI
+	if target_player == prev_local:
+		target_player.update_health_bar()
+		target_player.get_node("Gun/BulletAmount").text = str(gun.bulletAmount)
+		target_player.get_node("Control/Anchor/Block").max_value = target_player.blockCooldown
+		target_player.get_node("Gun/Sprite2D/Control/Reload").max_value = gun.reloadTime
+	GameManager.localPlayer = prev_local
 
 @rpc("any_peer", "reliable")
 func picker_done():
@@ -189,15 +200,21 @@ func next_picker():
 
 @rpc("authority", "call_local", "reliable")
 func set_picker_and_show(picker_id: int, picked: Array):
-	get_tree().paused = true
 	current_picker_id = picker_id
 	self.show()
 	show_cards(picked)
+	var scene_manager = get_tree().get_first_node_in_group("SceneManager")
+	if scene_manager:
+		scene_manager.changeAudio()
+	get_tree().paused = true
 
 @rpc("authority", "call_local", "reliable")
 func all_done():
 	get_tree().paused = false
 	self.hide()
+	var scene_manager = get_tree().get_first_node_in_group("SceneManager")
+	if scene_manager:
+		scene_manager.changeAudioback()
 
 func start_picking():
 	var losers = []
@@ -235,7 +252,7 @@ func QuickReload():
 func Cache():
 	gun.bulletAmount += 3
 
-func FastBall():
+func Fastball():
 	gun.speed += gun.speed * 0.25
 	gun.attackSpeed += gun.attackSpeed * 0.1
 	gun.autoFire = true
@@ -320,7 +337,7 @@ func Cannon():
 	gun.autoFire = false
 
 func Tether():
-	gun.bulletRange -= gun.bulletRange * 0.2
+	gun.bulletRange -= gun.bulletRange * 0.3
 	gun.reloadTime -= gun.reloadTime * 0.8
 	gun.attackSpeed -= gun.attackSpeed * 0.8
 	gun.autoFire = true
@@ -354,7 +371,7 @@ func BubbleWrap():
 	gun.bulletBounces += 3
 	player.speed -= player.speed * 0.1
 
-func MiniGun():
+func Minigun():
 	gun.bulletAmount += 6
 	gun.bulletsShot += 1
 	gun.attackSpeed -= gun.attackSpeed * 0.25

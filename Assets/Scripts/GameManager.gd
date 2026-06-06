@@ -34,11 +34,13 @@ func _process(_delta: float) -> void:
 		return
 	if not multiplayer.is_server():
 		return
-	if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
+	var alive = get_tree().get_nodes_in_group("alivePlayers")
+	if alive.size() == 1 && ran == false:
 		await get_tree().process_frame
-		if get_tree().get_nodes_in_group("alivePlayers").size() == 1 && ran == false:
+		alive = get_tree().get_nodes_in_group("alivePlayers")
+		if alive.size() == 1 && ran == false:
 			ran = true
-			winningplayerid = get_tree().get_nodes_in_group("alivePlayers")[0].id
+			winningplayerid = alive[0].id
 			Players[winningplayerid].roundPoints += 0.5
 			Players[winningplayerid].score += 0.5
 			UpdatePlayerScore.rpc(Players)
@@ -48,23 +50,30 @@ func _process(_delta: float) -> void:
 				UpdateColours(pid)
 				RpcUpdateColours.rpc(pid)
 			handleRoundEnd()
-			ran = true
+	elif alive.size() == 0 && ran == false:
+		ran = true
+		winningplayerid = null
+		handleRoundEnd()
 
 func handleRoundEnd():
 	ran = true
-	ShowBigWin.rpc()
-	await get_tree().create_timer(3.0).timeout
-	HideBigWin.rpc()
-	if Players[winningplayerid].roundPoints == 1.0:
-		Players[winningplayerid].roundPoints = 0
-		for pid in Players:
-			Players[pid].roundPoints = 0
-		UpdatePlayerScore.rpc(Players)
-		FullPointWin()
-	elif Players[winningplayerid].roundPoints == 0.5:
-		HalfPointWin()
+	if winningplayerid != null:
+		ShowBigWin.rpc()
+		await get_tree().create_timer(3.0).timeout
+		HideBigWin.rpc()
+		if Players[winningplayerid].roundPoints == 1.0:
+			Players[winningplayerid].roundPoints = 0
+			for pid in Players:
+				Players[pid].roundPoints = 0
+			UpdatePlayerScore.rpc(Players)
+			FullPointWin()
+		elif Players[winningplayerid].roundPoints == 0.5:
+			HalfPointWin()
 	else:
-		pass
+		# Draw
+		HalfPointWin()
+		ShowDrawText.rpc()
+		
 
 @rpc("authority", "call_local")
 func ShowBigWin():
@@ -164,6 +173,8 @@ func RemoveScores():
 
 @rpc("authority", "call_local", "reliable")
 func ShowCards(picked: Array):
+	get_tree().get_first_node_in_group("SceneManager").changeAudio()
+	await get_tree().process_frame
 	get_tree().paused = true
 	var card_manager = get_tree().get_first_node_in_group("CardManager")
 	card_manager.show()
@@ -172,13 +183,16 @@ func ShowCards(picked: Array):
 @rpc("authority", "call_local", "reliable")
 func HideCards():
 	get_tree().paused = false
+	await get_tree().process_frame
+	get_tree().get_first_node_in_group("SceneManager").changeAudioback()
 	get_tree().get_first_node_in_group("CardManager").hide()
 
 func Map():
 	if not multiplayer.is_server():
 		return
-	print(maps)
-	print("this actually happened")
+	if maps == null or maps.size() == 0:
+		print("Map() called but maps is null, skipping")
+		return
 	var index = randi() % maps.size()
 	if maps[index] == prevchoice:
 		index = (index + 1) % maps.size()
@@ -186,7 +200,7 @@ func Map():
 	mapSelected = choice
 	prevchoice = choice
 	print(mapSelected)
-	$/root/Node2D.applyMap.rpc(index)  
+	$/root/Node2D.applyMap.rpc(index)
 
 func GameOver():
 	get_tree().paused = true
@@ -196,3 +210,9 @@ func GameOver():
 func ShowGameOver():
 	get_tree().paused = true
 	get_tree().get_first_node_in_group("GameOver").show()
+	
+@rpc("authority", "call_local")
+func ShowDrawText():
+	var scene_manager = get_tree().get_first_node_in_group("SceneManager")
+	if scene_manager:
+		scene_manager.showDrawText()

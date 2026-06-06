@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bwge4tqvfy0s"]
+[gd_scene load_steps=41 format=3 uid="uid://bwge4tqvfy0s"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_rwqxq"]
 [ext_resource type="Shader" path="res://Assets/Textures/player.gdshader" id="2_oocgc"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://6dksx0gbkhay" path="res://Assets/Scenes/Gun.tscn" id="4_g71tx"]
 [ext_resource type="Texture2D" uid="uid://b6yyhv6m3u4w8" path="res://Assets/Textures/dog.png" id="4_w402k"]
 [ext_resource type="Script" path="res://Assets/Scripts/PlayerChecker.gd" id="6_qdtce"]
-[ext_resource type="AudioStream" uid="uid://0nbo4ddmmfdp" path="res://Assets/Audio/footstep.mp3" id="8_2oga3"]
 [ext_resource type="Texture2D" uid="uid://c0hwf7f1k7j4k" path="res://Assets/Textures/progress-bar-circle.png" id="10_iv638"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="10_q0yy0"]
 
@@ -408,11 +407,9 @@ script = ExtResource("6_qdtce")
 script = SubResource("GDScript_nvk8l")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_2oga3")
 volume_db = 12.0
 pitch_scale = 1.22
 max_distance = 480.0
-parameters/looping = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 

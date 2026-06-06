@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=16 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="2_n7cds"]
@@ -8,6 +8,8 @@
 [ext_resource type="Shader" path="res://Assets/Textures/gradient.gdshader" id="5_xfywl"]
 [ext_resource type="Texture2D" uid="uid://dtjpdnfu16wwd" path="res://Assets/Textures/button.png" id="6_vtbyp"]
 [ext_resource type="Texture2D" uid="uid://bd6gqc3tui3j7" path="res://Assets/Textures/buttonClicked.png" id="7_5fs4q"]
+[ext_resource type="AudioStream" uid="uid://ci7sq6bjega7f" path="res://Assets/Audio/Tone1A.wav" id="9_fvbs2"]
+[ext_resource type="AudioStream" uid="uid://bgxw6i82k0lnn" path="res://Assets/Audio/typing.wav" id="10_qvr4b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ja12v"]
 
@@ -22,6 +24,8 @@ shader_parameter/size = 1.007
 shader_parameter/angle = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jv6w7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bcrm1"]
 
 [node name="Control" type="CanvasLayer" groups=["MultiplayerController"]]
 layer = 2
@@ -330,6 +334,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 75
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bcrm1")
 placeholder_text = "NAME..."
 max_length = 9
 flat = true
@@ -429,6 +434,13 @@ theme_override_font_sizes/font_size = 30
 text = "V5.2.0
 CIRE INTERACTIVE"
 horizontal_alignment = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_fvbs2")
+
+[node name="AudioStreamPlayerClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_qvr4b")
+volume_db = -26.233
 
 [connection signal="button_down" from="TitleScreen/StartUp/PLAY" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="TitleScreen/StartUp/SETTINGS" to="." method="_on_settings_button_down"]
