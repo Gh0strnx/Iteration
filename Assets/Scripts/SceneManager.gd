@@ -73,25 +73,32 @@ func applyMap(map_index: int):
 	print("ApplyMap is actually happening")
 
 func resetPlayers():
+	# Clear projectiles FIRST before any player state is touched
+	for bullet in get_tree().get_nodes_in_group("bullet"):
+		bullet.queue_free()
+	for explosion in get_tree().get_nodes_in_group("explosions"):
+		explosion.queue_free()
+
 	for player in GameManager.playerNodes.values():
 		if not is_instance_valid(player):
 			continue
 		if not GameManager.Players.has(player.id):
 			continue
+
+		
+		player.show()
+		player.get_node("Collision").disabled = false
+		if not player.is_in_group("alivePlayers"):
+			player.add_to_group("alivePlayers")
+
+		
 		var player_index = GameManager.Players[player.id].index
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
 			if spawn.name == str(player_index):
 				player.global_position = spawn.global_position
 				player.syncedPosition = spawn.global_position
-		# Reset player 
-		player.health = player.max_health
-		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
-		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
-		player.alive = true
-		player.death_processed = false
-		GameManager.Players[player.id].alive = true
-		player.regen_timer = 0.0
-		# Reset gun
+
+	
 		var gun = player.get_node("Gun/Sprite2D/gun")
 		gun.currentBulletAmount = gun.bulletAmount
 		gun.can_shoot = true
@@ -105,7 +112,8 @@ func resetPlayers():
 		player.get_node("Gun/BulletAmount").text = str(gun.bulletAmount)
 		player.get_node("Gun/Sprite2D/Control/Reload").hide()
 		player.get_node("Gun/Sprite2D/Control/Reload").value = 0
-		# Reset block 
+
+	
 		player.canBlock = true
 		player.blocking = false
 		player.block_cooldown_active = false
@@ -113,21 +121,21 @@ func resetPlayers():
 		player.get_node("Control/Anchor/Block").max_value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").value = player.blockCooldown
 		player.get_node("Control/Anchor/Block").hide()
-		# Bring back shadows for alive players
+
+	
+		player.health = player.max_health
+		player.get_node("Control/VBoxContainer/ProgressBar").max_value = player.max_health
+		player.get_node("Control/VBoxContainer/ProgressBar").value = player.max_health
+		player.alive = true
+		player.death_processed = false
+		GameManager.Players[player.id].alive = true
+		player.regen_timer = 0.0
+
+	
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			if GameManager.localPlayer.is_in_group("alivePlayers"):
 				node.show()
-		# Remove bullets
-		for bullet in get_tree().get_nodes_in_group("bullet"):
-			bullet.queue_free()
-		# Remove explosions
-		for explosions in get_tree().get_nodes_in_group("explosions"):
-			explosions.queue_free()
-		# Visibility and collision
-		player.show()
-		player.get_node("Collision").disabled = false
-		if not player.is_in_group("alivePlayers"):
-			player.add_to_group("alivePlayers")
+
 	if multiplayer.is_server():
 		if get_tree().get_nodes_in_group("alivePlayers").size() == 1:
 			await get_tree().process_frame

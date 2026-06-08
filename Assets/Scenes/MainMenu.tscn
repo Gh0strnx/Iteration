@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b75fdcljlniv1"]
+[gd_scene load_steps=17 format=3 uid="uid://b75fdcljlniv1"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/MultiplayerController.gd" id="1_sli30"]
 [ext_resource type="FontFile" uid="uid://d3itx1lwd6ecj" path="res://Assets/Fonts/Geo/Geo-Regular.ttf" id="2_n7cds"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bd6gqc3tui3j7" path="res://Assets/Textures/buttonClicked.png" id="7_5fs4q"]
 [ext_resource type="AudioStream" uid="uid://ci7sq6bjega7f" path="res://Assets/Audio/Tone1A.wav" id="9_fvbs2"]
 [ext_resource type="AudioStream" uid="uid://bgxw6i82k0lnn" path="res://Assets/Audio/typing.wav" id="10_qvr4b"]
+[ext_resource type="AudioStream" uid="uid://dbdt802pd4ia5" path="res://Assets/Audio/Stray - Main Menu Music.ogg" id="11_vc5p0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ja12v"]
 
@@ -63,8 +64,8 @@ script = ExtResource("3_7qn0k")
 
 [node name="Label" type="Label" parent="TitleScreen"]
 layout_mode = 0
-offset_left = -1.0
-offset_right = 488.0
+offset_left = 10.0
+offset_right = 499.0
 offset_bottom = 124.0
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 120
@@ -75,8 +76,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = 10.0
 offset_top = -111.0
-offset_right = 278.0
+offset_right = 303.0
 offset_bottom = 187.0
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -167,8 +169,8 @@ offset_bottom = 40.0
 
 [node name="TITLE" type="Label" parent="HostScreen"]
 layout_mode = 0
-offset_left = -1.0
-offset_right = 488.0
+offset_left = 10.0
+offset_right = 499.0
 offset_bottom = 124.0
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 120
@@ -176,8 +178,9 @@ text = "HOSTING "
 
 [node name="CODE" type="LineEdit" parent="HostScreen"]
 layout_mode = 0
+offset_left = 10.0
 offset_top = 78.0
-offset_right = 1293.0
+offset_right = 1303.0
 offset_bottom = 202.0
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("5_h45bj")
@@ -200,8 +203,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = 10.0
 offset_top = 300.0
-offset_right = 278.0
+offset_right = 382.0
 offset_bottom = 598.0
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -233,8 +237,8 @@ offset_bottom = 40.0
 
 [node name="TITLE" type="Label" parent="JoinScreen"]
 layout_mode = 0
-offset_left = -1.0
-offset_right = 488.0
+offset_left = 10.0
+offset_right = 565.0
 offset_bottom = 124.0
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 120
@@ -242,8 +246,9 @@ text = "ENTER CODE "
 
 [node name="CODE" type="LineEdit" parent="JoinScreen"]
 layout_mode = 0
+offset_left = 10.0
 offset_top = 78.0
-offset_right = 1293.0
+offset_right = 1303.0
 offset_bottom = 202.0
 theme_override_colors/font_color = Color(0.754947, 0.837007, 1, 1)
 theme_override_fonts/font = ExtResource("5_h45bj")
@@ -257,8 +262,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = 10.0
 offset_top = 300.0
-offset_right = 278.0
+offset_right = 317.0
 offset_bottom = 598.0
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -286,17 +292,17 @@ alignment = 0
 [node name="ColorRect" type="ColorRect" parent="JoinScreen"]
 material = SubResource("ShaderMaterial_j0gmp")
 layout_mode = 0
-offset_left = 8.0
+offset_left = 18.0
 offset_top = 175.0
-offset_right = 208.0
+offset_right = 218.0
 offset_bottom = 183.0
 color = Color(0, 0, 0, 1)
 
 [node name="ERRORS" type="Label" parent="JoinScreen"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 13.0
 offset_top = 396.0
-offset_right = 121.0
+offset_right = 131.0
 offset_bottom = 423.0
 theme_override_colors/font_color = Color(1, 0.239216, 0.290196, 1)
 theme_override_fonts/font = ExtResource("2_n7cds")
@@ -311,8 +317,8 @@ offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="SettingsScreen"]
 layout_mode = 0
-offset_left = -1.0
-offset_right = 488.0
+offset_left = 10.0
+offset_right = 499.0
 offset_bottom = 124.0
 theme_override_fonts/font = ExtResource("2_n7cds")
 theme_override_font_sizes/font_size = 120
@@ -323,8 +329,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_left = 10.0
 offset_top = 194.0
-offset_right = 415.0
+offset_right = 425.0
 offset_bottom = 492.0
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -406,9 +413,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
+offset_left = 15.0
 offset_top = 531.0
-offset_right = 132.0
+offset_right = 142.0
 offset_bottom = 603.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 0.580392)
@@ -431,7 +438,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("5_h45bj")
 theme_override_font_sizes/font_size = 30
-text = "V5.2.0
+text = "V5.3.1
 CIRE INTERACTIVE"
 horizontal_alignment = 2
 
@@ -441,6 +448,11 @@ stream = ExtResource("9_fvbs2")
 [node name="AudioStreamPlayerClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_qvr4b")
 volume_db = -26.233
+
+[node name="AudioStreamPlayerMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_vc5p0")
+volume_db = -25.0
+parameters/looping = true
 
 [connection signal="button_down" from="TitleScreen/StartUp/PLAY" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="TitleScreen/StartUp/SETTINGS" to="." method="_on_settings_button_down"]

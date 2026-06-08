@@ -13,6 +13,8 @@ var joinScreen = false
 var mainscene = preload("res://Assets/Scenes/main.tscn")
 
 func _ready() -> void:
+	$AudioStreamPlayerMusic.play()
+	$AudioStreamPlayerMusic.volume_db = -25
 	GameManager.port = port
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
@@ -122,6 +124,7 @@ func _on_host_button_down() -> void:
 
 @rpc("any_peer", "call_local")
 func StartGame():
+	$AudioStreamPlayerMusic.playing = false
 	if allowStart:
 		var scene = mainscene.instantiate()
 		get_tree().root.add_child(scene)
@@ -265,6 +268,7 @@ func return_to_title_local():
 		gameover.hide()
 	self.show()
 	$TitleScreen.show()
+	$AudioStreamPlayerMusic.playing = true
 	$TitleScreen/StartUp.show()
 	$TitleScreen/Selection.hide()
 	$HostScreen.hide()

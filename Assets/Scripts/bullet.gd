@@ -8,7 +8,7 @@ var bulletBounces: int = 0
 var bulletRange = 3.5
 var poison = 0
 var explodingBullets = false
-var selfDamage = true
+var selfDamage = false
 
 # State
 var left = false
@@ -52,7 +52,7 @@ func _physics_process(delta):
 						_spawn_bounce_explosion(collision.get_position())
 				return
 			var hit_player_id = int(str(collider.name))
-			if collider.name == GameManager.localPlayer.name:
+			if collider == shooter:
 				if selfDamage == true:
 					collider.hurt_player.rpc_id(hit_player_id, damage)
 					if poison > 0:
@@ -141,6 +141,8 @@ func _spawn_explosion_at(pos: Vector2) -> void:
 			continue
 		if not body.alive:
 			continue
+		if body == shooter and not selfDamage:
+			continue
 		var hit_player_id = int(str(body.name))
 		body.hurt_player.rpc_id(hit_player_id, explode_damage)
 
@@ -176,6 +178,8 @@ func _spawn_bounce_explosion(pos: Vector2) -> void:
 		if not body.has_method("hurt_player"):
 			continue
 		if not body.alive:
+			continue
+		if body == shooter and not selfDamage:
 			continue
 		var hit_player_id = int(str(body.name))
 		body.hurt_player.rpc_id(hit_player_id, explode_damage)

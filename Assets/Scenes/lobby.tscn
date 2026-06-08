@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://5hjp882cwyi0"]
+[gd_scene load_steps=13 format=3 uid="uid://5hjp882cwyi0"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/Lobby.gd" id="1_1vnxw"]
 [ext_resource type="Texture2D" uid="uid://d0av8gaq6si3m" path="res://Assets/Textures/base.png" id="2_2r7m5"]
@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://ci7sq6bjega7f" path="res://Assets/Audio/Tone1A.wav" id="10_3otn1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n6ime"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxft3"]
 
 [node name="Lobby" type="CanvasLayer"]
 script = ExtResource("1_1vnxw")
@@ -472,6 +474,7 @@ offset_right = 277.0
 offset_bottom = 45.0
 theme_override_fonts/font = ExtResource("6_sqx2p")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lxft3")
 text = "GAME OPTIONS    "
 flat = true
 

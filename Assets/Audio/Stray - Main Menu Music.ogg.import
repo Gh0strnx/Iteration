@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dbdt802pd4ia5"
+path="res://.godot/imported/Stray - Main Menu Music.ogg-af53b6a50e5650d68ef909a3039bb3dd.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Stray - Main Menu Music.ogg"
+dest_files=["res://.godot/imported/Stray - Main Menu Music.ogg-af53b6a50e5650d68ef909a3039bb3dd.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
