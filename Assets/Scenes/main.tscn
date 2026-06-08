@@ -412,7 +412,6 @@ color = Color(0, 0, 0, 1)
 process_mode = 3
 stream = ExtResource("15_yrifx")
 volume_db = -22.0
-pitch_scale = 0.9
 mix_target = 1
 parameters/looping = true
 

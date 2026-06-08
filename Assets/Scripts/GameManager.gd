@@ -173,7 +173,6 @@ func RemoveScores():
 
 @rpc("authority", "call_local", "reliable")
 func ShowCards(picked: Array):
-	get_tree().get_first_node_in_group("SceneManager").changeAudio()
 	await get_tree().process_frame
 	get_tree().paused = true
 	var card_manager = get_tree().get_first_node_in_group("CardManager")
@@ -184,7 +183,6 @@ func ShowCards(picked: Array):
 func HideCards():
 	get_tree().paused = false
 	await get_tree().process_frame
-	get_tree().get_first_node_in_group("SceneManager").changeAudioback()
 	get_tree().get_first_node_in_group("CardManager").hide()
 
 func Map():
