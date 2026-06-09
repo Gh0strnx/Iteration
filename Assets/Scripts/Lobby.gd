@@ -175,6 +175,7 @@ func ColourChanger():
 	GameManager.Players[id].hex = hex
 	var colour = Color("#" + hex)
 	
+	
 	match index:
 		0:
 			$"Control2/HBoxContainer/1/Face".modulate = colour

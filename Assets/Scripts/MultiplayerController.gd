@@ -9,7 +9,6 @@ var hostScreen = false
 var titleScreen = true
 var joinScreen = false
 
-
 var mainscene = preload("res://Assets/Scenes/main.tscn")
 
 func _ready() -> void:

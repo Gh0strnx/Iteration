@@ -74,7 +74,6 @@ func handleRoundEnd():
 		HalfPointWin()
 		ShowDrawText.rpc()
 		
-
 @rpc("authority", "call_local")
 func ShowBigWin():
 	get_tree().paused = true

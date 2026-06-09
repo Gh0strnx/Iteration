@@ -88,8 +88,6 @@ func _on_host_button_down() -> void:
 		
 		
 
-
-
 func _on_join_button_down() -> void:
 	get_tree().get_first_node_in_group("MultiplayerController").playAudio()
 	$"/root/Control/JoinScreen/ERRORS".hide()

@@ -88,7 +88,7 @@ func _physics_process(_delta: float) -> void:
 			"explodingBullets": explodingBullets,
 			"selfDamage": selfDamage,
 		}
-		# Decrement locally first, then broadcast with the new amount
+		#local then send to all players **
 		currentBulletAmount -= bulletsShot
 		if currentBulletAmount < 0:
 			currentBulletAmount = 0

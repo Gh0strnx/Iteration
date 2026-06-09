@@ -6,7 +6,6 @@ func _ready() -> void:
 	hide()
 	await get_tree().process_frame
 	
-	
 		
 	if GameManager.localPlayer == get_parent():
 		show()

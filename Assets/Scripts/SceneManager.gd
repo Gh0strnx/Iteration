@@ -73,7 +73,6 @@ func applyMap(map_index: int):
 	print("ApplyMap is actually happening")
 
 func resetPlayers():
-	# Clear projectiles FIRST before any player state is touched
 	for bullet in get_tree().get_nodes_in_group("bullet"):
 		bullet.queue_free()
 	for explosion in get_tree().get_nodes_in_group("explosions"):

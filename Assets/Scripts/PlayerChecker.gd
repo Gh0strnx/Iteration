@@ -6,7 +6,6 @@ func _ready() -> void:
 	if str(multiplayer.get_unique_id()) == str(get_parent().name):
 		GameManager.localPlayer = get_parent()
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass

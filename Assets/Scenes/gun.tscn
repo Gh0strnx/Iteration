@@ -109,7 +109,7 @@ offset_top = -90.0
 offset_right = 27.0
 offset_bottom = -21.0
 theme_override_fonts/font = ExtResource("5_b8ieh")
-theme_override_font_sizes/font_size = 70
+theme_override_font_sizes/font_size = 72
 text = "4"
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]

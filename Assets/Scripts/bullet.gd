@@ -19,7 +19,6 @@ var _exploded = false
 var shooter = null
 var explosion_scene = preload("res://Assets/Scenes/explosion.tscn")
 
-
 func start(_position: Vector2, _direction: float) -> void:
 	collision_layer = 0
 	set_collision_layer_value(4, true) 

@@ -5,6 +5,7 @@ extends Node2D
 
 var _owner_peer_id: int = 1
 
+
 func _ready() -> void:
 	_owner_peer_id = int(str(get_parent().name))
 	sync.set_multiplayer_authority(_owner_peer_id)
