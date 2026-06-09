@@ -337,7 +337,7 @@ func Cannon():
 	gun.autoFire = false
 
 func Tether():
-	gun.bulletRange -= gun.bulletRange * 0.3
+	gun.bulletRange -= gun.bulletRange * 0.5
 	gun.reloadTime -= gun.reloadTime * 0.8
 	gun.attackSpeed -= gun.attackSpeed * 0.8
 	gun.autoFire = true
