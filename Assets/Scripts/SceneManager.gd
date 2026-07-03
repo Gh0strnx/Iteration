@@ -86,7 +86,6 @@ func resetPlayers():
 
 		
 		player.show()
-		player.get_node("Collision").disabled = false
 		if not player.is_in_group("alivePlayers"):
 			player.add_to_group("alivePlayers")
 
@@ -129,8 +128,8 @@ func resetPlayers():
 		player.death_processed = false
 		GameManager.Players[player.id].alive = true
 		player.regen_timer = 0.0
-
-	
+		player.get_node("Collision").disabled = false
+		
 		for node in get_tree().get_nodes_in_group("global_canvas_modulate"):
 			if GameManager.localPlayer.is_in_group("alivePlayers"):
 				node.show()

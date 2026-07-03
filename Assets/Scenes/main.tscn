@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cpiybb75qq6ww"]
+[gd_scene load_steps=20 format=4 uid="uid://cpiybb75qq6ww"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/SceneManager.gd" id="1_ctwyd"]
 [ext_resource type="PackedScene" uid="uid://4dlhlr0hus0i" path="res://Assets/Scenes/card_manager.tscn" id="3_g3bwo"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/wallLight.gd" id="5_3mtd7"]
 [ext_resource type="Texture2D" uid="uid://7en50qkgx7rg" path="res://Assets/Textures/CircleOutline.png" id="5_rpc1y"]
 [ext_resource type="Texture2D" uid="uid://dxjvfaardof0r" path="res://Assets/Textures/2d_lights_and_shadows_neutral_point_light.webp" id="6_8ftyi"]
+[ext_resource type="Texture2D" uid="uid://j61iuoghma4x" path="res://Assets/Textures/MatchesWon/Matches10.png" id="7_i2vtt"]
 [ext_resource type="Texture2D" uid="uid://cyallwv0o5wrx" path="res://Assets/Textures/matcheswon.png" id="7_ojvro"]
 [ext_resource type="FontFile" uid="uid://b8nq8yqys2o7i" path="res://Assets/Fonts/Iceland/Iceland-Regular.ttf" id="8_eqtx7"]
 [ext_resource type="Script" path="res://Assets/Scripts/Code.gd" id="9_5h156"]
@@ -28,6 +29,7 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="Node2D" type="Node2D" groups=["SceneManager"]]
+process_mode = 3
 script = ExtResource("1_ctwyd")
 PlayerScene = ExtResource("4_wx5bt")
 
@@ -151,11 +153,13 @@ scale = Vector2(0.28, 0.28)
 z_index = 10
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_06ihn")
+clip_contents = true
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 max_value = 10.0
 step = 0.5
-texture_under = ExtResource("7_ojvro")
-texture_progress = ExtResource("7_ojvro")
+texture_under = ExtResource("7_i2vtt")
+texture_progress = ExtResource("7_i2vtt")
 tint_under = Color(0.993372, 0.993372, 0.993372, 0.290196)
 
 [node name="Player2Score" type="TextureProgressBar" parent="Score tracker/VBoxContainer"]

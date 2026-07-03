@@ -11,6 +11,7 @@ var colorWarning = false
 var alreadyClicked = false
 var optionsShown = false
 var matchStart = false
+var Secret_enabled = false
 
 func _ready() -> void:
 	$"Control2/Control/GameOptions".disabled = !multiplayer.is_server()
@@ -130,6 +131,13 @@ func _process(delta: float) -> void:
 			cancel_countdown.rpc()
 		else:
 			request_cancel_countdown.rpc_id(1)
+		
+	if Input.is_action_just_pressed("Secret"):
+		if Secret_enabled == false:
+			Secret_enabled = true
+		elif Secret_enabled == true:
+			Secret_enabled = false
+			
 
 	if Input.is_action_just_pressed("ui_cancel") && !canChange && !matchStart:
 		unready()
@@ -393,10 +401,14 @@ func _on_game_options_button_down() -> void:
 
 func _on_roundAmount_right_button_down() -> void:
 	$AudioStreamPlayer.play()
-	if GameManager.MaxScore < 10 && counting_down == false:
-		GameManager.MaxScore += 1
-		$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
-		sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
+	if Secret_enabled:
+		if GameManager.MaxScore < 50 && counting_down == false:
+			GameManager.MaxScore += 1
+	elif !Secret_enabled:
+		if GameManager.MaxScore < 10 && counting_down == false:
+			GameManager.MaxScore += 1
+	$Control2/Control/Options/RoundAmount/Number.text = str(GameManager.MaxScore)
+	sync_options.rpc(GameManager.MaxScore, GameManager.CardsShown)
 
 func _on_roundAmount_left_button_down() -> void:
 	$AudioStreamPlayer.play()

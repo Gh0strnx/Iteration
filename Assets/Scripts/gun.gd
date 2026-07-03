@@ -15,7 +15,7 @@ extends Node2D
 @export_range (0, 99999) var bulletSpread: float = 0.1
 @export_range (0.005, 99999) var attackSpeed: float = 0.4
 @export_range (0.001, 99999) var timerSpeed := 0.2
-@export var autoFire = false
+@export var autoFire = true
 
 #Reload
 @export_range (0.01, 99999) var reloadTime: float = 3.0
@@ -26,6 +26,7 @@ var can_shoot := true
 var reloading := false
 var require_shoot_release := true
 var _owner_peer_id: int = 1
+var _owner_alive = true
 
 #References
 var Bullet = preload("res://Assets/Scenes/bullet.tscn")
@@ -54,6 +55,12 @@ func _update_bullet_text(amount: int) -> void:
 func _physics_process(_delta: float) -> void:
 	if multiplayer.get_unique_id() != _owner_peer_id:
 		return
+		
+
+	if GameManager.Players[_owner_peer_id].get("alive", false) == true:
+		_owner_alive = true
+	else:
+		_owner_alive = false
 
 	if require_shoot_release:
 		if Input.is_action_pressed("Shoot"):
@@ -61,12 +68,13 @@ func _physics_process(_delta: float) -> void:
 		require_shoot_release = false
 
 	var should_shoot = false
-	if autoFire:
+	if autoFire && _owner_alive:
 		should_shoot = Input.is_action_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0
 	else:
 		should_shoot = Input.is_action_just_pressed("Shoot") and can_shoot and not reloading and currentBulletAmount > 0
 
-	if should_shoot:
+	if should_shoot && _owner_alive:
+		print("I am alive" + str(_owner_alive))
 		var aim_dir: Vector2 = (get_global_mouse_position() - global_position).normalized()
 		if aim_dir == Vector2.ZERO:
 			aim_dir = Vector2.RIGHT

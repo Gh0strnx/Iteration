@@ -16,10 +16,10 @@ var uncommon_count = 7
 var rare_count = 5
 var epic_count = 4
 
-var common_weight = 0.60 / common_count
-var uncommon_weight = 0.25 / uncommon_count
-var rare_weight = 0.11 / rare_count
-var epic_weight = 0.04 / epic_count
+var common_weight = 0.65 / common_count
+var uncommon_weight = 0.22 / uncommon_count
+var rare_weight = 0.105 / rare_count
+var epic_weight = 0.025 / epic_count
 
 var cards = [
 	"Bounce",
@@ -258,13 +258,13 @@ func Fastball():
 	gun.autoFire = true
 
 func Bandaid():
-	player.max_health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.4
 	player.health = player.max_health
 
 func Medicine():
-	player.max_health += player.max_health * 0.1
+	player.max_health += player.max_health * 0.225
 	player.health = player.max_health
-	player.Regeneration += player.max_health * 0.1
+	player.Regeneration += player.max_health * 0.15
 	gun.attackSpeed += gun.attackSpeed * 0.1
 
 func Charge():
@@ -281,7 +281,7 @@ func Rage():
 	player.blockCooldown += player.blockCooldown * 1.0
 
 func Heavy():
-	player.max_health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.5
 	player.health = player.max_health
 	player.scale += Vector2(0.1, 0.1)
 
@@ -320,13 +320,13 @@ func Assassin():
 	player.speed += player.speed * 0.4
 	player.scale -= Vector2(0.1, 0.1)
 	gun.damage -= gun.damage * 0.1
-	player.max_health -= player.max_health * 0.1
+	player.max_health -= player.max_health * 0.15
 	player.health = player.max_health
 
 func Medkit():
-	player.max_health += player.max_health * 0.25
+	player.max_health += player.max_health * 0.4
 	player.health = player.max_health
-	player.Regeneration += player.max_health * 0.1
+	player.Regeneration += player.max_health * 0.15
 
 # RARE
 func Cannon():
@@ -366,15 +366,15 @@ func Shrapnel():
 # EPIC
 func BubbleWrap():
 	gun.selfDamage = false
-	player.max_health += player.max_health * 0.1
+	player.max_health += player.max_health * 0.15
 	player.health = player.max_health
 	gun.bulletBounces += 3
-	player.speed -= player.speed * 0.1
+	player.speed -= player.speed * 0.2
 
 func Minigun():
 	gun.bulletAmount += 6
 	gun.bulletsShot += 1
-	gun.attackSpeed -= gun.attackSpeed * 0.25
+	gun.attackSpeed -= gun.attackSpeed * 0.35
 	player.speed -= player.speed * 0.25
 	gun.autoFire = true
 
